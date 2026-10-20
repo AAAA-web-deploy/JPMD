@@ -1619,7 +1619,7 @@ h2 {
 }
 .token-ledger {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
   gap: 56px;
   align-items: center;
   max-width: 1440px;
@@ -1660,7 +1660,7 @@ h2 {
   object-fit: contain;
 }
 .ledger-panel {
-  padding: 24px;
+  padding: 30px;
   border-left: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   background: linear-gradient(120deg, #fffdf9, #eae2d6);
@@ -1675,7 +1675,7 @@ h2 {
   padding-bottom: 24px;
   border-bottom: 3px double #b5a795;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
 }
 .ledger-panel dl {
@@ -1686,34 +1686,34 @@ h2 {
   justify-content: space-between;
   align-items: center;
   gap: 24px;
-  padding: 14px 0;
+  padding: 17px 0;
   border-bottom: 1px solid var(--line);
 }
 .ledger-row dt {
-  font-size: 12px;
+  font-size: 15px;
 }
 .ledger-row dd {
   margin: 0;
   text-align: right;
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 800;
   overflow-wrap: anywhere;
 }
 .ledger-contract {
-  margin-top: 20px;
-  padding: 16px;
+  margin-top: 24px;
+  padding: 20px;
   background: #8a542b0a;
 }
 .ledger-contract h3 {
-  margin: 0 0 20px;
-  font-size: 14px;
+  margin: 0 0 18px;
+  font-size: 17px;
 }
 .ledger-address {
   display: block;
   margin: 0 0 20px;
   overflow-wrap: anywhere;
   color: var(--muted);
-  font: 14px/1.6 var(--mono);
+  font: 16px/1.6 var(--mono);
 }
 .ledger-contract-actions {
   display: flex;
@@ -1725,20 +1725,20 @@ h2 {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 14px;
+  padding: 14px 18px;
   border: 1px solid var(--accent);
   background: var(--accent);
   color: var(--paper);
-  font: 700 12px var(--mono);
+  font: 700 14px var(--mono);
 }
 .ledger-contract-actions .icon {
-  width: 15px;
-  height: 15px;
+  width: 17px;
+  height: 17px;
 }
 .ledger-security {
-  margin: 16px 0;
+  margin: 18px 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 .ledger-badges {
@@ -1749,18 +1749,18 @@ h2 {
 .ledger-badges > div {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   border: 1px solid var(--line);
-  padding: 10px;
+  padding: 12px;
 }
 .ledger-badges img {
-  width: 48px;
-  height: 58px;
+  width: 56px;
+  height: 66px;
   object-fit: contain;
 }
 .ledger-badges span {
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   line-height: 1.6;
 }
@@ -2403,7 +2403,7 @@ h2 {
     gap: 36px;
   }
   .ledger-panel {
-    padding: 24px;
+    padding: 28px;
   }
   .ledger-mascot {
     width: 220px;
@@ -2639,11 +2639,11 @@ h2 {
     bottom: -15px;
   }
   .ledger-panel {
-    width: min(100%, 440px);
+    width: min(100%, 520px);
     margin: 0 auto;
   }
   .ledger-row dd {
-    font-size: 17px;
+    font-size: 19px;
   }
   .ledger-badges img {
     width: 60px;
