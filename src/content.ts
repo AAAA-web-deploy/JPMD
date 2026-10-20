@@ -170,9 +170,9 @@ export const roadmap = [
     image: "images/roadmap/city.png",
     intro: "A familiar face. Your own point of view.",
     points: [
-      "Try the Shiba studio",
-      "Create in your browser",
-      "Share a static image",
+      "Ride the Bull Run mini-game",
+      "Jump the red candles",
+      "Beat your best score",
     ],
   },
   {

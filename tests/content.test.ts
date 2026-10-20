@@ -39,7 +39,7 @@ test("full page preserves section order, image reuse, and static-only content", 
       "home",
       "lore",
       "memes",
-      "studio",
+      "bull-run",
       "token",
       "buy",
       "roadmap",
@@ -69,6 +69,18 @@ test("full page preserves section order, image reuse, and static-only content", 
     assert.equal(document.querySelectorAll(".roadmap-card").length, 4);
     assert.equal(document.querySelectorAll(".chain-leaves i").length, 22);
     assert.equal(document.querySelectorAll("iframe").length, 0);
+    assert.equal(
+      document.querySelectorAll('input[type="file"], [data-studio], .studio').length,
+      0,
+      "The photo editor is gone.",
+    );
+    assert.doesNotMatch(html, /images\/editor\/|Shiba Studio|MAKE IT YOURS/i);
+    assert.ok(document.querySelector('.navigation a[href="#bull-run"]'), "Nav links to Bull Run.");
+    assert.match(
+      document.querySelector('#home a[href="#bull-run"]')?.textContent ?? "",
+      /PLAY\s*BULL RUN/,
+    );
+    assert.ok(document.querySelector("#bull-run canvas"));
     const videos = [...document.querySelectorAll("video")];
     assert.equal(videos.length, heroVideo ? 1 : 0);
     if (heroVideo) {

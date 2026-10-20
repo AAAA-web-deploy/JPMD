@@ -36,6 +36,15 @@ try {
     67,
   );
   assert.equal(document.querySelectorAll("iframe").length, 0);
+  assert.ok(
+    document.querySelector("#bull-run [data-bull-run] canvas"),
+    "The Bull Run game must be prerendered.",
+  );
+  assert.equal(
+    document.querySelectorAll('input[type="file"], [data-studio]').length,
+    0,
+    "The retired photo editor must not ship.",
+  );
   const videos = [...document.querySelectorAll("video")];
   const videoSources = [
     ...document.querySelectorAll('video source, source[type^="video/"]'),
@@ -76,7 +85,7 @@ try {
     );
     assert.ok(
       css.includes(".story-book") &&
-        css.includes(".studio-workspace") &&
+        css.includes(".bull-run-frame") &&
         css.includes(".chain-reveal"),
     );
     for (const match of css.matchAll(/url\(["']?(\/[^\s)"']+)["']?\)/g))

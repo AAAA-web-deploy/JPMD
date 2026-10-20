@@ -17,14 +17,14 @@ import {
   renderMemeDialog,
   renderStrip,
 } from "./gallery.ts";
-import { renderStudio } from "./studio.ts";
+import { renderBullRun } from "./bullRun.ts";
 
 const nav = [
   ["#lore", "Lore"],
   ["#token", "Token"],
   ["#buy", "Buy"],
   ["#memes", "Memes"],
-  ["#studio", "Shiba Studio"],
+  ["#bull-run", "Bull Run"],
   ["#community", "Community"],
 ] as const;
 const socialNames: Record<SocialKey, string> = {
@@ -108,5 +108,5 @@ function footer(): string {
 }
 
 export function renderPage(): string {
-  return `<div data-shiba-site>${header()}<main>${renderHero()}${ticker()}${renderBook()}<section id="memes" class="meme-gallery" aria-labelledby="meme-title"><div class="meme-gallery-inner">${renderGalleryIntro()}${renderStudio()}<section class="brand-motion" aria-labelledby="motion-title"><div class="meme-section-heading"><div><p class="meme-greeting">One character. Every side of the conversation.</p><h2 id="motion-title">A Shiba for every <span>moment.</span></h2></div></div>${renderStrip("left")}${renderStrip("right")}</section>${communityCards()}<section class="meme-interlude" aria-label="Shiba on the group chat call">${image("images/community/phone-call-interlude.png", "A close-up of the Shiba banker taking a phone call.")}<p>THE GROUP CHAT IS CALLING.</p></section>${ledger()}${buying()}${roadmapSection()}${reveal()}${renderArchive()}</div></section>${closing()}</main>${footer()}${renderMemeDialog()}<div id="toast" class="toast fixed bottom-6 left-1/2 z-100 -translate-x-1/2 rounded-lg px-5 py-3 text-sm shadow-lg" role="status" aria-live="polite" hidden></div></div>`;
+  return `<div data-shiba-site>${header()}<main>${renderHero()}${ticker()}${renderBook()}<section id="memes" class="meme-gallery" aria-labelledby="meme-title"><div class="meme-gallery-inner">${renderGalleryIntro()}${renderBullRun()}<section class="brand-motion" aria-labelledby="motion-title"><div class="meme-section-heading"><div><p class="meme-greeting">One character. Every side of the conversation.</p><h2 id="motion-title">A Shiba for every <span>moment.</span></h2></div></div>${renderStrip("left")}${renderStrip("right")}</section>${communityCards()}<section class="meme-interlude" aria-label="Shiba on the group chat call">${image("images/community/phone-call-interlude.png", "A close-up of the Shiba banker taking a phone call.")}<p>THE GROUP CHAT IS CALLING.</p></section>${ledger()}${buying()}${roadmapSection()}${reveal()}${renderArchive()}</div></section>${closing()}</main>${footer()}${renderMemeDialog()}<div id="toast" class="toast fixed bottom-6 left-1/2 z-100 -translate-x-1/2 rounded-lg px-5 py-3 text-sm shadow-lg" role="status" aria-live="polite" hidden></div></div>`;
 }

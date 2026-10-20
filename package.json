@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "typecheck": "tsc --noEmit",
-    "test": "node --test tests/gallery.test.ts tests/editor.test.ts tests/content.test.ts tests/hero.test.ts tests/server.test.mjs",
+    "test": "node --test tests/gallery.test.ts tests/effects.test.ts tests/content.test.ts tests/hero.test.ts tests/bull-run.test.ts tests/bull-run-ui.test.ts tests/server.test.mjs",
     "check:assets": "node scripts/check-assets.mjs",
     "build": "npm run typecheck && npm run check:assets && vite build && node scripts/prerender.ts && npm run check:dist",
     "check:dist": "node scripts/check-dist.mjs",

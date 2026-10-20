@@ -1,5 +1,5 @@
 {
-  "media_file_count": 120,
+  "media_file_count": 118,
   "duplicate_binary_groups": [
     {
       "sha256": "433327688a660bc7095b6ed24760757bfec5f8ab575edcc1707043116a2a04d7",
@@ -326,36 +326,6 @@
       "has_alpha": false,
       "fully_transparent_pixels": 0,
       "transparent_pixel_fraction": 0
-    },
-    {
-      "path": "images/editor/shiba-base.png",
-      "role": "photo-editor base",
-      "kind": "AI-generated artwork",
-      "mime_type": "image/png",
-      "bytes": 2687982,
-      "sha256": "1c4f60810b0cde5aaa4539957fb566bab7983a8cd3b97b8420aa20ec5c5ba1b7",
-      "width": 1254,
-      "height": 1254,
-      "mode": "RGB",
-      "frames": 1,
-      "has_alpha": false,
-      "fully_transparent_pixels": 0,
-      "transparent_pixel_fraction": 0
-    },
-    {
-      "path": "images/editor/shiba-ears-overlay.png",
-      "role": "photo-editor accessory overlay",
-      "kind": "AI-generated artwork",
-      "mime_type": "image/png",
-      "bytes": 1773810,
-      "sha256": "ca5474dc4507251f6440fb166543b11d9badf481492956fcbb288a274aca9c03",
-      "width": 2172,
-      "height": 724,
-      "mode": "RGBA",
-      "frames": 1,
-      "has_alpha": true,
-      "fully_transparent_pixels": 922657,
-      "transparent_pixel_fraction": 0.586735
     },
     {
       "path": "images/editorial/vitalik-buterin-romanpoet-2016.jpg",

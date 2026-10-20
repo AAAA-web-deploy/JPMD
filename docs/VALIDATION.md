@@ -85,6 +85,15 @@ Checked in Chrome on the dev server and on `npm start`, with an instrumented pag
 - Safari and Firefox decoding.
 - The Groklet character animation, which did not render in this browser.
 
+## Bull Run mini-game (20 October 2026)
+
+The photo editor was replaced by the Bull Run game. The editor code, its tests, and its two images (`images/editor/*`) were removed; the asset manifest now lists 118 files. Older studio notes below are historical.
+
+- `npm run check`: 35 of 35 tests passed. 11 engine tests cover the jump arc at three step sizes, no double jump, jump buffering, candles moving right to left, exactly-once scoring, hitboxes (landing on top, wick grazes, swept fast frames), about 8,900 generated obstacles that all fit one jump, a timing bot surviving 150 s on three seeds, pause, retry, and storage. 7 DOM tests cover copy and aliases, keyboard/tap/JUMP controls, pause, the crash panel, the best score across a reload, blocked storage, auto-pause on hidden tab and off-screen, ignored typing, reduced motion, cleanup, and the device-pixel-ratio cap.
+- Chrome at 1920 × 1080, 1366 × 768, 768, 390, and 320px: no horizontal overflow; the score bar stays inside the frame; the stage stays 16:9 and fits the viewport height at 1366 × 768. All game buttons are at least 44px tall; the phone JUMP bar is 64px tall.
+- A seeded run was rendered frame by frame through the real renderer: approach, mid-jump, "+1" popups, taller candles at higher speed, and the crash with the flying tie and "!!" reaction all drew correctly.
+- Not verified: real-time play on a physical touch device, sound output, and Safari/Firefox. This embedded browser throttles animation frames when its panel is in the background, so live play there runs slowly; the logic is covered by the tests above.
+
 ## Browser verification (refinement pass, 20 October 2026)
 
 Re-run with Node.js 24.21.0: `npm run check` exited 0 (16/16 tests, typecheck, assets, build, prerender, 97 dist references). A `BASE_PATH=/JPMD/` build also passed `check:dist`.

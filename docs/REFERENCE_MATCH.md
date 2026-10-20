@@ -10,7 +10,7 @@ Reference: https://www.robincoinrhcto.xyz/. This implements the Shiba adaptation
 | Storybook          | `book.ts`                                       | Cover plus five chapters; spine, 700ms manual turn, six positions, phone cover                                  |
 | Gallery            | `gallery.ts`, `lib/gallery.ts`                  | 67 identities; seven filters; 8 → 16 → … → 64 → 67; category reset to eight                                     |
 | Viewer             | `gallery.ts`                                    | Modal dialog, contained image, editable caption, download/copy/share, Escape and focus return                   |
-| Photo studio       | `studio.ts`, `lib/editor.ts`, `lib/geometry.ts` | 1,000px square canvas, base and separate ears, sliders, colors, layers, drag/rotation, local upload, PNG export |
+| Photo studio slot  | `bullRun.ts`, `src/game/`                       | Replaced at the user's request by the Bull Run mini-game (see `BULL_RUN.md`); the editor and its images are removed |
 | Image strips       | `gallery.ts`                                    | 34/33 split, repeated clones, opposite 160-second loops, hover/focus pause                                      |
 | Video grid         | Omitted                                         | User requires no videos or replacement video panels                                                             |
 | Social cards       | `page.ts`                                       | Four slots; approved destinations configurable                                                                  |
@@ -26,7 +26,7 @@ Reference: https://www.robincoinrhcto.xyz/. This implements the Shiba adaptation
 
 - At 800px and below: compact menu, stacked hero, two-column gallery, smaller strips, one-column social cards, stacked registry/purchase guide, vertical roadmap, three-column archive.
 - At 600–1,000px: 55/45 book arrangement. At 599px and below: portrait cover and stacked chapters.
-- The studio retains the reference's compact two-column phone workspace; pointer mapping accounts for a contained square canvas.
+- Bull Run keeps a 16:9 stage at every width. At 640px and below its panels move under the stage and a full-width JUMP bar appears while running.
 - Below 360px: one-column main gallery. At 390px and below: stacked roadmap card internals.
 - Registry panel stays at most 440px. Closing copy enters normal flow above the panorama on phones.
 - Reduced motion stops major loops and page turns; reveal content becomes visible without scroll transforms; strips become horizontally scrollable.

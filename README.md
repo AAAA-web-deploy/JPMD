@@ -33,7 +33,7 @@ The production server defaults to `http://127.0.0.1:3000` and serves only `dist/
 - Sticky navigation/mobile menu; hero portrait, backdrop, four action slots, and repeating text band.
 - A cover and five illustrated chapters with manual 3D turns, keyboard navigation, transition locking, and a dedicated phone cover.
 - All 67 collection images, seven filters, eight-at-a-time expansion, editable caption viewer, original-image download, caption copy, and X share links.
-- A local photo studio: static-photo upload, draggable ear layers, rotation, size/position/colors, flip, add/remove layers, reset, and clean 1,000 × 1,000 PNG export.
+- **Bull Run — Ride the Red!**, a canvas mini-game: Shiba rides his bull down Wall Street and jumps red candlesticks. Keyboard, tap, and on-screen jump controls; score, best score saved on the device, pause, retry, and optional sound.
 - Two opposing image strips, four social cards, interlude, project registry, purchase guide, illustrated roadmap, sticky Ethereum reveal, genuine Vitalik photograph, archive, closing panorama, and footer.
 - Reduced-motion styles, focus treatments, Escape dismissal, accessible labels, lazy images, local fonts, and a static SVG icon sprite.
 - Original assets, inventory checksums, placement records, credits, source code, dependency lockfile, tests, and a production server.
@@ -46,15 +46,15 @@ Edit `src/config.ts` for approved launch details: ticker, network, supply, contr
 
 Chapters, captions, and creative roadmap copy live in `src/content.ts`. Section structure/copy lives in `src/components/page.ts`; component-specific copy lives alongside its renderer. Palette and responsive rules are in `src/styles/main.css`. Metadata defaults are in `index.html`; configured title and canonical URL are applied during the production build.
 
-Current copy, exact palette, new scenes, and the ear accessory are implementation material for review, not additional user approvals. See `docs/APPROVED_REQUIREMENTS.md`.
+Current copy, exact palette, new scenes, and the Bull Run character art are implementation material for review, not additional user approvals. See `docs/APPROVED_REQUIREMENTS.md`.
 
 The financiers, cat, frog, and Shiba form a fictional story. The historical Vitalik photograph is editorial context; neither it nor the story establishes a partnership or endorsement.
 
-## Photo studio
+## Bull Run mini-game
 
-Photos are read through local browser object URLs. There is no upload endpoint, analytics, wallet connection, or external processing service. Accepted formats are static PNG, JPEG, and WebP, up to 20 MiB and 40 million decoded pixels. GIF, animated PNG, and animated WebP are rejected. Photos are centered and cropped to the square canvas; controls support up to 12 ear layers. Reset removes the uploaded photo from the studio.
+The section at `#bull-run` (old `#studio` and `#shiba-studio` links still land there) replaced the former photo editor. Press **Start running**, then jump the red candles with **Space** or **Arrow Up**, a tap on the game, or the **JUMP** button on phones. **P** or **Escape** pauses, **R** retries. Each candle cleared scores one point; the course speeds up as the score rises. The best score is stored only in this browser (`localStorage` key `jpmd-bull-run-best-v1`). There is no trading, wallet, account, or network request.
 
-PNG export draws a separate canvas without selection guides or added lettering. Gallery downloads retain original image bytes. Caption copying and X sharing are separate text operations; the share link contains text and an image URL rather than automatically attaching a local upload.
+Gameplay, tuning, character art, and integration notes: [`docs/BULL_RUN.md`](docs/BULL_RUN.md).
 
 ## Verification
 
@@ -64,7 +64,7 @@ npm run check
 
 This runs behavioral tests, strict TypeScript checking, media integrity checks, Vite production build, prerendering, and output reference checks. Individual commands are `npm test`, `npm run typecheck`, `npm run check:assets`, and `npm run check:dist` after building.
 
-Production HTML contains the full page, initial gallery batch, both strips, and all 67 archive entries before JavaScript runs. JavaScript enables book turns, filtering, viewer controls, studio, mobile navigation, and scroll effects.
+Production HTML contains the full page, initial gallery batch, both strips, and all 67 archive entries before JavaScript runs. JavaScript enables book turns, filtering, viewer controls, the Bull Run game, mobile navigation, and scroll effects.
 
 Read `docs/VALIDATION.md` for results and remaining browser checks. This environment did not permit browser QA; real-device appearance, native downloads, touch gestures, and canvas PNG encoding require browser review.
 
@@ -72,8 +72,9 @@ Read `docs/VALIDATION.md` for results and remaining browser checks. This environ
 
 | Location          | Purpose                                                             |
 | ----------------- | ------------------------------------------------------------------- |
-| `src/components/` | Page, storybook, gallery/viewer, and studio                         |
-| `src/lib/`        | Geometry, safe HTML/URLs, gallery state, canvas drawing             |
+| `src/components/` | Page, storybook, gallery/viewer, hero, and Bull Run section         |
+| `src/game/`       | Bull Run engine, physics, obstacles, collision, storage, renderer   |
+| `src/lib/`        | Scroll math, safe HTML/URLs, gallery state                          |
 | `src/styles/`     | Tailwind entry, theme, responsive layout, local fonts               |
 | `src/data/`       | Stable collection identities and integrity manifest                 |
 | `public/`         | Required images, icons, and fonts                                   |

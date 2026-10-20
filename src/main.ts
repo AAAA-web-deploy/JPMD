@@ -4,7 +4,7 @@ import { renderPage } from "./components/page.ts";
 import { initBook } from "./components/book.ts";
 import { initGallery } from "./components/gallery.ts";
 import { initHero } from "./components/hero.ts";
-import { initStudio } from "./components/studio.ts";
+import { initBullRun } from "./components/bullRun.ts";
 import { announce, copyText, mustQuery } from "./lib/browser.ts";
 import { icon, safeExternalUrl } from "./lib/html.ts";
 import { revealProgress } from "./lib/geometry.ts";
@@ -83,9 +83,7 @@ function initNavigation(): () => void {
 
 function initEffects(): () => void {
   const section = mustQuery<HTMLElement>("#ethereum");
-  const studio = mustQuery<HTMLElement>("#studio");
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const small = window.matchMedia("(max-width:800px)");
   let frame = 0;
   const update = (): void => {
     frame = 0;
@@ -99,13 +97,6 @@ function initEffects(): () => void {
     section.style.setProperty("--chain-blend", String(progress.blend));
     section.style.setProperty("--chain-reveal", String(progress.name));
     section.style.setProperty("--chain-photo", String(progress.photo));
-    const studioRect = studio.getBoundingClientRect();
-    document.body.classList.toggle(
-      "studio-editing",
-      small.matches &&
-        studioRect.top < 120 &&
-        studioRect.bottom > window.innerHeight * 0.5,
-    );
   };
   const queue = (): void => {
     if (!frame) frame = requestAnimationFrame(update);
@@ -114,14 +105,11 @@ function initEffects(): () => void {
   window.addEventListener("scroll", queue, { passive: true });
   window.addEventListener("resize", queue);
   reduced.addEventListener("change", queue);
-  small.addEventListener("change", queue);
   return () => {
     cancelAnimationFrame(frame);
     window.removeEventListener("scroll", queue);
     window.removeEventListener("resize", queue);
     reduced.removeEventListener("change", queue);
-    small.removeEventListener("change", queue);
-    document.body.classList.remove("studio-editing");
   };
 }
 
@@ -168,7 +156,7 @@ for (const initialize of [
   initHero,
   initBook,
   initGallery,
-  initStudio,
+  () => initBullRun(),
   initEffects,
   initContract,
 ]) {

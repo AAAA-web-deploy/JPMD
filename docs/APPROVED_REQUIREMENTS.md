@@ -20,7 +20,8 @@ This ledger uses only visible context in this conversation. Rejected proposals a
 
 - Exact ivory, stone, copper, and tan palette; typography fitting for the longer name.
 - New narrative wording, section headings, image captions, and creative roadmap wording.
-- Individual new scenes and Shiba-ear studio accessory from the preceding asset pack.
+- Individual new scenes from the preceding asset pack. (Its Shiba-ear editor accessory was retired with the photo editor.)
+- Bull Run's code-drawn bull, rider, candles, and street scene, its difficulty tuning, and its sound effects.
 - Vite, vanilla TypeScript components, Tailwind CSS 4, prerendering, and a Node production server.
 
 These are concrete editable work, not newly approved decisions. No ticker, supply, network deployment, contract, listing, account, or destination has been invented. Those fields remain unannounced until supplied in `src/config.ts`.
@@ -30,6 +31,7 @@ These are concrete editable work, not newly approved decisions. No ticker, suppl
 - The user later instructed: "Push the source code to the GitHub repository and then deploy the site. GitHub Link: https://github.com/AAAA-web-deploy/JPMD.git Deploy: Deploy website via GitHub until you have a proper domain." The source is hosted there and deployed with GitHub Pages through `.github/workflows/pages.yml`. No domain, token, account, or transaction was created.
 - The hero restyle after https://thegroklet.com/ (dark charcoal hero with copper glow and an enlarged transparent movie; the orbit lines, greeting, and pause/play control were later removed at the user's request) follows the user's hero prompts. Its exact colours and sizes are implementation choices for review. Existing copy, CTA labels, and destinations are unchanged.
 - Refinements in the 20 October 2026 pass (reference-style headings, purchase-guide treatment, phone hero buttons, book sizing, viewer Escape handling, subpath hosting) are implementation choices for review, not newly approved creative decisions.
+- The user's "JPMD Bull Run mini-game" prompt replaced the photo editor section with the playable **Bull Run — Ride the Red!** game, using the prompt's headings and copy. The game is entertainment only: no trading, wallet, staking, or transaction. Its art is drawn in code; no artwork, third-party mascots, or videos were added.
 - The narrative is fiction; it does not assert that a bank selected, recognized, or endorsed this independent token.
 - Vitalik's photograph is historical context, not an endorsement or announcement photograph.
 - Build and behavioral checks pass. Browser checks against the reference are recorded in `VALIDATION.md` and `REFERENCE_MATCH.md`; no pixel-for-pixel equivalence is claimed.
