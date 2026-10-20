@@ -1,5 +1,6 @@
 import rawMemes from "./data/meme-catalog.json" with { type: "json" };
-import { isCatalogTheme } from "./lib/gallery.ts";
+import rawMoodGallery from "./data/mood-gallery.json" with { type: "json" };
+import { isCatalogTheme, isCollection } from "./lib/gallery.ts";
 import type { Meme, MoodImage } from "./lib/gallery.ts";
 
 /** Implementation copy for review, based only on the narrative in this thread. */
@@ -83,18 +84,30 @@ export const memes: readonly Meme[] = rawMemes.map((meme, index) => {
 /**
  * Images of the "Meet the many moods of Shiba" gallery, in display order. Each belongs to one
  * filter button (`collection`); "All Shibas" shows every entry. New images go in
- * `public/images/moods/` and are listed here (and in `src/data/asset-manifest.json`).
- * Wall Street, Ethereum, Trading Desk, and Shiba Culture are waiting for their images.
+ * `public/images/memes/`, `src/data/mood-gallery.json`, and `src/data/asset-manifest.json`.
+ * Shiba Culture is waiting for its images.
  */
-export const moodImages: readonly MoodImage[] = memes
-  .filter((meme) => meme.category === "Community")
-  .map(({ id, path, alt, caption }) => ({
-    id,
-    path,
-    alt,
-    caption,
-    collection: "Shiba Society",
-  }));
+export const moodImages: readonly MoodImage[] = [
+  ...rawMoodGallery.map(({ file, collection, title, description }) => {
+    if (!isCollection(collection)) throw new Error(`Invalid gallery collection for ${file}`);
+    return {
+      id: file.replace(/\.png$/, ""),
+      path: `images/memes/${file}`,
+      alt: description,
+      caption: title,
+      collection,
+    };
+  }),
+  ...memes
+    .filter((meme) => meme.category === "Community")
+    .map(({ id, path, alt, caption }): MoodImage => ({
+      id,
+      path,
+      alt,
+      caption,
+      collection: "Shiba Society",
+    })),
+];
 
 export interface Chapter {
   title: string;

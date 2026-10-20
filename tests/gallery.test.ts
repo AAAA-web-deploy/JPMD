@@ -8,6 +8,7 @@ import {
   filterMoods,
   shareUrl,
 } from "../src/lib/gallery.ts";
+import type { Category } from "../src/lib/gallery.ts";
 import {
   initGallery,
   renderArchive,
@@ -29,21 +30,50 @@ test("gallery pages grow by eight and category changes restart at eight", () => 
   assert.equal(state.visible, 8);
 });
 
-test("the moods gallery has the six new filters; only Shiba Society has images so far", () => {
+test("the moods gallery filters hold the new collections and keep Shiba Society", () => {
   assert.deepEqual(
     [...categories],
     ["All Shibas", "Wall Street", "Ethereum", "Trading Desk", "Shiba Culture", "Shiba Society"],
   );
+  const ids = (category: Category) => filterMoods(moodImages, category).map((image) => image.id);
+  assert.deepEqual(ids("Wall Street"), [
+    "wall-street-01-boardroom-diplomacy",
+    "wall-street-02-the-arrival",
+    "wall-street-03-corner-office-nap",
+    "wall-street-04-after-hours-business",
+    "wall-street-05-coffee-by-the-bull",
+    "wall-street-06-private-dinner",
+  ]);
+  assert.deepEqual(ids("Ethereum"), [
+    "ethereum-01-the-first-necklace",
+    "ethereum-02-the-community-embrace",
+    "ethereum-03-at-home-on-ethereum",
+    "ethereum-04-through-the-storm",
+    "ethereum-05-the-builders-garden",
+    "ethereum-06-ethereum-rising",
+    "ethereum-07-repairing-together",
+    "ethereum-08-the-ethereum-circle",
+  ]);
+  assert.deepEqual(ids("Trading Desk"), [
+    "trading-desk-01-full-setup",
+    "trading-desk-02-chart-study",
+    "trading-desk-03-the-waiting-game",
+    "trading-desk-05-three-traders-three-opinions",
+    "trading-desk-06-done-for-today",
+  ]);
+  assert.deepEqual(ids("Shiba Culture"), []);
   const society = memes.filter((meme) => meme.category === "Community");
   assert.equal(society.length, 10);
-  assert.deepEqual(
-    moodImages.map((image) => image.id),
-    society.map((meme) => meme.id),
-  );
-  assert.equal(filterMoods(moodImages, "All Shibas").length, 10);
-  assert.equal(filterMoods(moodImages, "Shiba Society").length, 10);
-  for (const empty of ["Wall Street", "Ethereum", "Trading Desk", "Shiba Culture"] as const)
-    assert.equal(filterMoods(moodImages, empty).length, 0);
+  assert.deepEqual(ids("Shiba Society"), society.map((meme) => meme.id));
+  const all = ids("All Shibas");
+  assert.equal(all.length, 29);
+  assert.equal(new Set(all).size, 29);
+  assert.equal(new Set(moodImages.map((image) => image.path)).size, 29);
+  assert.equal(new Set([...memes, ...moodImages].map((image) => image.id)).size, 67 + 19);
+  const arrival = moodImages.find((image) => image.id === "wall-street-02-the-arrival")!;
+  assert.equal(arrival.path, "images/memes/wall-street-02-the-arrival.png");
+  assert.equal(arrival.caption, "The Arrival");
+  assert.equal(arrival.alt, "An ivory-suited Shiba steps from a graphite car outside a bank.");
 });
 
 test("live filter / expansion sequence produces no stale ninth card or duplicate", async () => {
@@ -66,22 +96,41 @@ test("live filter / expansion sequence produces no stale ninth card or duplicate
     const empty = () => document.querySelectorAll("[data-meme-grid] .meme-empty").length;
     assert.equal(document.querySelectorAll("[data-meme-filter]").length, 6);
     assert.equal(cards().length, 8);
-    assert.equal(count(), "Showing 8 of 10 images");
+    assert.equal(count(), "Showing 8 of 29 images");
     assert.equal(more.hidden, false);
     more.click();
-    assert.equal(cards().length, 10);
+    more.click();
+    more.click();
+    assert.equal(cards().length, 29);
     assert.equal(more.hidden, true);
     assert.equal(
       new Set(cards().map((card) => card.getAttribute("data-meme-card"))).size,
-      10,
+      29,
     );
+    select("Ethereum");
+    assert.equal(cards().length, 8);
+    assert.equal(more.hidden, true);
+    assert.equal(count(), "Showing 8 of 8 images · Ethereum");
+    document
+      .querySelector<HTMLButtonElement>('[data-meme-grid] [data-open-meme="ethereum-05-the-builders-garden"]')!
+      .click();
+    const modalImage = dialog.querySelector<HTMLImageElement>("[data-modal-image]")!;
+    assert.equal(dialog.open, true);
+    assert.match(modalImage.getAttribute("src")!, /images\/memes\/ethereum-05-the-builders-garden\.png$/);
+    assert.equal(modalImage.alt, "Shiba exchanges ideas with researchers in a garden.");
+    assert.equal(dialog.querySelector<HTMLTextAreaElement>("#meme-caption")!.value, "The Builders’ Garden");
+    dialog.close();
     select("Wall Street");
+    assert.equal(cards().length, 6);
+    select("Trading Desk");
+    assert.equal(cards().length, 5);
+    select("Shiba Culture");
     assert.equal(cards().length, 0);
     assert.equal(empty(), 1);
     assert.equal(more.hidden, true);
-    assert.equal(count(), "New images coming soon · Wall Street");
+    assert.equal(count(), "New images coming soon · Shiba Culture");
     assert.equal(
-      document.querySelector('[data-meme-filter="Wall Street"]')!.getAttribute("aria-pressed"),
+      document.querySelector('[data-meme-filter="Shiba Culture"]')!.getAttribute("aria-pressed"),
       "true",
     );
     select("Shiba Society");

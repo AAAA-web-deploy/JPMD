@@ -8,7 +8,7 @@ Reference: https://www.robincoinrhcto.xyz/. This implements the Shiba adaptation
 | Hero               | `hero.ts`, `main.css`                           | Follows https://thegroklet.com/ hero: dark stage and glow; the user's enlarged movie, not the reference art (no orbits or greeting, by request) |
 | Text band          | `page.ts`, `content.ts`                         | Repeated HTML groups; 38-second loop                                                                            |
 | Storybook          | `book.ts`                                       | Cover plus five chapters; spine, 700ms manual turn, six positions, phone cover                                  |
-| Gallery            | `gallery.ts`, `lib/gallery.ts`                  | Six user-defined filters (All Shibas … Shiba Society); own image list; 8 at a time; category reset to eight      |
+| Gallery            | `gallery.ts`, `lib/gallery.ts`                  | Six user-defined filters (All Shibas … Shiba Society); own 29-image list (`mood-gallery.json` + Shiba Society); 8 at a time; category reset to eight      |
 | Viewer             | `gallery.ts`                                    | Modal dialog, contained image, editable caption, download/copy/share, Escape and focus return                   |
 | Photo studio slot  | `bullRun.ts`, `src/game/`                       | Replaced at the user's request by the Bull Run mini-game (see `BULL_RUN.md`); the editor and its images are removed |
 | Image strips       | `gallery.ts`                                    | 34/33 split, repeated clones, opposite 160-second loops, hover/focus pause                                      |

@@ -44,6 +44,9 @@ export const PAGE_SIZE = 8;
 export function isCategory(value: unknown): value is Category {
   return categories.some((category) => category === value);
 }
+export function isCollection(value: unknown): value is Collection {
+  return value !== ALL_CATEGORY && isCategory(value);
+}
 export function isCatalogTheme(value: unknown): value is CatalogTheme {
   return catalogThemes.some((theme) => theme === value);
 }
