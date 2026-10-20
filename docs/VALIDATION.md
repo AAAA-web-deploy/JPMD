@@ -24,10 +24,25 @@ The final full `npm run check` completed with exit code 0. Dependencies were ins
 - Unannounced launch fields stay explicit; unsafe external URL schemes are rejected.
 - The production file resolver serves HTML/assets, distinguishes missing files, handles HEAD/method validation, and rejects traversal and symlink escapes without opening a server listener during tests.
 
-## Remaining browser verification
+## Browser verification (refinement pass, 20 October 2026)
 
-The managed environment did not provide the browser control supported by the Sites workflow, so no development/preview server or browser was launched. Happy DOM was used only as a DOM emulator for unit and output checks; it is not a browser rendering test.
+Re-run with Node.js 24.21.0: `npm run check` exited 0 (16/16 tests, typecheck, assets, build, prerender, 97 dist references). A `BASE_PATH=/JPMD/` build also passed `check:dist`.
 
-The following remain unverified in an actual browser: measured visual parity at desktop/phone widths, font fitting, hover and scroll appearance, touch/pointer gestures, real image decoding, native clipboard/download behavior, canvas PNG encoding, external share flow, and deployed response behavior. Review these with `npm run dev` and a production build on the intended hosting platform.
+Checked in a Chromium-based browser against `npm run dev`, `npm start` (port 3000), and `vite preview` of the `/JPMD/` build, side by side with the reference at emulated viewports:
 
-No screenshots, deployment, live market transactions, wallet operations, or external account changes were performed. The codebase is delivered for local use and iterative review.
+- **1363 × 936:** header, hero, gallery/strip/archive headings, purchase guide, social cards, registry, roadmap, reveal (2621px scroll region, 936px sticky stage), and closing/footer were measured against the reference. Section heading heights differ by about 1px. The hero headline wraps to two lines because the name is longer.
+- **Breakpoints:** 1005, 1001/1000, 801/800, 600/599, 390, 360, and 320 widths showed no horizontal overflow. The book is 420px tall between 600 and 1000px, a stacked phone chapter at 599px, and a 55/45 split at 600px. The gallery is 2 columns at 360px and 1 column at 320px. At 801px the navigation wraps to two rows, as it does on the reference.
+- **Book:** 0.7s turns with input locking, cover and last-page boundaries, keyboard arrows, and the 3D sheet visible mid-turn.
+- **Gallery:** batches 8→64→67 without duplicates. Every filter resets the batch, and the categories sum to 67.
+- **Viewer:** contained image. Caption edits update the X intent text and image URL. Escape closes it, restores scrolling, and returns focus.
+- **Studio:**
+  - PNG upload is accepted. GIF and animated PNG are rejected.
+  - Sliders, colour, flip, add/remove lettering, reset, and drag work.
+  - The export is a 1000 × 1000 PNG without guides.
+- **Mobile menu:** opens, and a link closes it and navigates.
+- **Reduced motion** (emulated `prefers-reduced-motion: reduce`): ticker, strip, leaf, and mascot animations are `none`. Strips scroll manually, the reveal variables are 1, and book turns are immediate with no flipping sheet.
+- **Assets:** every referenced image, srcset, font, stylesheet, script, and icon URL returned OK on the dev server, the production server, and the `/JPMD/` preview. All three font families loaded, and no console errors were captured.
+
+Still not verified: real touch gestures on a physical device, native clipboard and file download prompts, the external X share flow beyond the generated URL, and Safari/Firefox rendering. Pixel-level parity with the reference is not claimed; comparisons were measured element sizes and screenshots.
+
+No live market transactions, wallet operations, token issuance, or account creation were performed.

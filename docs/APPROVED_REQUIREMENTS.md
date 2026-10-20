@@ -26,7 +26,8 @@ These are concrete editable work, not newly approved decisions. No ticker, suppl
 
 ## Scope and accuracy
 
-- This is a local project ZIP, not a deployment.
+- The user later instructed: "Push the source code to the GitHub repository and then deploy the site. GitHub Link: https://github.com/AAAA-web-deploy/JPMD.git Deploy: Deploy website via GitHub until you have a proper domain." The source is hosted there and deployed with GitHub Pages through `.github/workflows/pages.yml`. No domain, token, account, or transaction was created.
+- Refinements in the 20 October 2026 pass (reference-style headings, purchase-guide treatment, phone hero buttons, book sizing, viewer Escape handling, subpath hosting) are implementation choices for review, not newly approved creative decisions.
 - The narrative is fiction; it does not assert that a bank selected, recognized, or endorsed this independent token.
 - Vitalik's photograph is historical context, not an endorsement or announcement photograph.
-- Build and behavioral checks pass. Rendered browser parity remains unverified; this delivery does not claim measured pixel-for-pixel equivalence.
+- Build and behavioral checks pass. Browser checks against the reference are recorded in `VALIDATION.md` and `REFERENCE_MATCH.md`; no pixel-for-pixel equivalence is claimed.

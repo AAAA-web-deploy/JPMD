@@ -34,4 +34,23 @@ Reference: https://www.robincoinrhcto.xyz/. This implements the Shiba adaptation
 
 Layout and interactions were derived from the live reference source and stylesheet, then implemented in original TypeScript and CSS. The reference's application bundles, token details, original mascot rasters, and videos are not shipped as this project's implementation.
 
-The longer name, replacement artwork/copy, palette, and no-video exception produce visible differences. Browser screenshots were unavailable in this managed environment; review desktop and phone rendering before asserting visual parity. No deployment was performed.
+The longer name, replacement artwork/copy, palette, and no-video exception produce visible differences.
+
+## Browser comparison (20 October 2026)
+
+The local build and the reference were compared side by side at 1363 × 936, 800 × 1024, 390 × 844, and 320 × 740, plus the 1000/1001, 800/801, and 600/599 transitions. Comparisons used measured element boxes and screenshots. This is not a pixel diff. Changes made in this pass to follow the reference:
+
+- Gallery, strip, and archive headings use the reference's large two-part heading treatment, with an accent span and a short intro line.
+- The purchase guide follows the reference layout: a 0.75fr/1.25fr grid, a tilted lined field-guide card with a speech bubble and dark route bar, arrowed steps with step tags, and a four-column link row (two columns on phones).
+- On phones, the hero's secondary buttons sit side by side and wrap their text.
+- Between 600 and 1000px the book is a fixed 420px tall (it overflowed at 801px), and share buttons wrap at every width.
+- "P." in the display font gets a manual kerning span, because Reika has no P/period pair.
+
+Remaining known differences:
+
+- The hero headline wraps to two lines.
+- The header at 801px is a few pixels shorter than the reference's two-row navigation.
+- The reference's video grid is intentionally omitted.
+- Colours, artwork, and copy are this project's own.
+
+The site is published as a GitHub Pages project page under `/JPMD/` until a custom domain is configured (see `README.md`).

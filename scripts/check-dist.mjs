@@ -5,6 +5,17 @@ import assert from "node:assert/strict";
 import { Window } from "happy-dom";
 
 const root = fileURLToPath(new URL("../dist/", import.meta.url));
+const base = `/${(process.env.BASE_PATH ?? "").replace(/^\/+|\/+$/g, "")}/`.replace(
+  /^\/\/$/,
+  "/",
+);
+const local = (reference) => {
+  assert.ok(
+    reference.startsWith(base),
+    `Asset outside base path ${base}: ${reference}`,
+  );
+  return path.join(root, reference.slice(base.length));
+};
 const html = await readFile(path.join(root, "index.html"), "utf8");
 const window = new Window({ url: "https://example.test" });
 window.document.write(html);
@@ -44,7 +55,7 @@ try {
   );
   for (const stylesheet of stylesheets) {
     const css = await readFile(
-      path.join(root, stylesheet.getAttribute("href").slice(1)),
+      local(stylesheet.getAttribute("href")),
       "utf8",
     );
     assert.ok(
@@ -57,7 +68,7 @@ try {
   }
   for (const reference of references) {
     assert.ok(
-      (await stat(path.join(root, reference.slice(1)))).isFile(),
+      (await stat(local(reference))).isFile(),
       `Missing production asset: ${reference}`,
     );
   }
@@ -70,7 +81,9 @@ try {
     !html.includes("/src/main.ts"),
     "Production must reference compiled JavaScript.",
   );
-  assert.ok(document.querySelector('script[type="module"][src^="/assets/"]'));
+  assert.ok(
+    document.querySelector(`script[type="module"][src^="${base}assets/"]`),
+  );
   console.log(
     `Verified prerendered production HTML, ${references.size} local asset references, stylesheet, and all used icon symbols.`,
   );

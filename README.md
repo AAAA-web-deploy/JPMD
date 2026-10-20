@@ -22,7 +22,11 @@ npm run build
 npm start
 ```
 
-The production server defaults to `http://127.0.0.1:3000` and serves only `dist/`. Set `HOST` and `PORT` in the hosting environment if needed. A static host can also serve the generated `dist/` at the domain root. Public asset paths are absolute from `/`; subdirectory hosting needs corresponding path changes.
+The production server defaults to `http://127.0.0.1:3000` and serves only `dist/`. Set `HOST` and `PORT` in the hosting environment if needed. A static host can also serve the generated `dist/`. Builds target the domain root by default; for a subdirectory, build with `BASE_PATH` set (for example `BASE_PATH=/JPMD/ npm run build`).
+
+### GitHub Pages
+
+`.github/workflows/pages.yml` runs the tests and deploys to GitHub Pages on every push to `main`. It builds with the repository's Pages base path (`/JPMD/` for a project page, `/` once a custom domain is attached). In the repository settings, Pages must use **GitHub Actions** as its source; the workflow tries to enable this automatically.
 
 ## Included
 
