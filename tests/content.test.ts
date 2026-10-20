@@ -45,7 +45,7 @@ test("full page preserves section order, image reuse, and static-only content", 
     );
     assert.equal(document.querySelectorAll("[data-book-page]").length, 6);
     assert.equal(
-      document.querySelectorAll(".meme-archive-grid button").length,
+      document.querySelectorAll(".meme-archive-scroll > .meme-archive-grid button").length,
       67,
     );
     assert.equal(

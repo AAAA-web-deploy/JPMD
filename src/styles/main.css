@@ -991,10 +991,25 @@ h2 {
   padding-top: 64px;
   border-top: 1px solid var(--line);
 }
+.meme-archive-scroll {
+  container-type: inline-size;
+}
+/* Shows 30 images (cols × rows); the rest scroll inside the box. */
 .meme-archive-grid {
+  --archive-cols: 10;
+  --archive-rows: 3;
+  --archive-gap: 10px;
   display: grid;
-  grid-template-columns: repeat(10, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(var(--archive-cols), minmax(0, 1fr));
+  gap: var(--archive-gap);
+  max-height: calc(
+    var(--archive-rows) * (100cqw - (var(--archive-cols) - 1) * var(--archive-gap)) /
+      var(--archive-cols) + (var(--archive-rows) - 1) * var(--archive-gap) + 8px
+  );
+  padding: 4px 0;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  scrollbar-color: var(--accent-light) transparent;
 }
 .meme-archive-grid button {
   aspect-ratio: 1;
@@ -2584,7 +2599,8 @@ h2 {
     height: 180px;
   }
   .meme-archive-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    --archive-cols: 3;
+    --archive-rows: 10;
   }
   .community-links-grid {
     grid-template-columns: 1fr;
