@@ -181,6 +181,12 @@ export function initGallery(): () => void {
     dialog.close();
   };
   dialog.addEventListener("cancel", cancel);
+  const escape = (event: KeyboardEvent): void => {
+    if (event.key !== "Escape" || !dialog.open) return;
+    event.preventDefault();
+    dialog.close();
+  };
+  dialog.addEventListener("keydown", escape);
   caption.addEventListener("input", updateModalShare);
   updateShares();
   return () => {
@@ -189,6 +195,7 @@ export function initGallery(): () => void {
     dialog.removeEventListener("click", modalClick);
     dialog.removeEventListener("close", closed);
     dialog.removeEventListener("cancel", cancel);
+    dialog.removeEventListener("keydown", escape);
     caption.removeEventListener("input", updateModalShare);
   };
 }

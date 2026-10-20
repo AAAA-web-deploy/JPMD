@@ -485,6 +485,7 @@ h2 {
 }
 .story-turn {
   position: relative;
+  width: 100%;
   aspect-ratio: 2;
   min-height: 460px;
 }
@@ -785,6 +786,7 @@ h2 {
 }
 .meme-share-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-top: 14px;
 }
@@ -2011,8 +2013,14 @@ h2 {
   }
 }
 @media (min-width: 600px) and (max-width: 1000px) {
+  .story-turn {
+    aspect-ratio: auto;
+    height: 420px;
+    min-height: 0;
+  }
   .story-page {
     grid-template-columns: 55% 45%;
+    min-height: 0;
   }
   .story-page-copy {
     padding: 26px 20px 48px;
