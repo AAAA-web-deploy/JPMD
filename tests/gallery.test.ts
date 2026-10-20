@@ -61,15 +61,37 @@ test("the moods gallery filters hold the new collections and keep Shiba Society"
     "trading-desk-05-three-traders-three-opinions",
     "trading-desk-06-done-for-today",
   ]);
-  assert.deepEqual(ids("Shiba Culture"), []);
+  assert.deepEqual(ids("Shiba Culture"), [
+    "shiba-culture-01-riders-of-the-first-dawn",
+    "shiba-culture-02-the-shiba-of-giza",
+    "shiba-culture-03-shiba-of-the-golden-garden",
+    "shiba-culture-04-the-guardian-fresco",
+    "shiba-culture-05-bronze-ascendant",
+    "shiba-culture-06-beyond-the-frame",
+    "shiba-culture-07-the-shiba-geographer",
+    "shiba-culture-08-the-opening-move",
+  ]);
   const society = memes.filter((meme) => meme.category === "Community");
   assert.equal(society.length, 10);
   assert.deepEqual(ids("Shiba Society"), society.map((meme) => meme.id));
   const all = ids("All Shibas");
-  assert.equal(all.length, 29);
-  assert.equal(new Set(all).size, 29);
-  assert.equal(new Set(moodImages.map((image) => image.path)).size, 29);
-  assert.equal(new Set([...memes, ...moodImages].map((image) => image.id)).size, 67 + 19);
+  assert.equal(all.length, 37);
+  assert.equal(new Set(all).size, 37);
+  assert.deepEqual(
+    all,
+    ["Wall Street", "Ethereum", "Trading Desk", "Shiba Culture", "Shiba Society"].flatMap((category) =>
+      ids(category as Category),
+    ),
+  );
+  assert.equal(new Set(moodImages.map((image) => image.path)).size, 37);
+  assert.equal(new Set([...memes, ...moodImages].map((image) => image.id)).size, 67 + 27);
+  const frame = moodImages.find((image) => image.id === "shiba-culture-06-beyond-the-frame")!;
+  assert.equal(frame.path, "images/memes/shiba-culture-06-beyond-the-frame.png");
+  assert.equal(frame.caption, "Beyond the Frame");
+  assert.equal(
+    frame.alt,
+    "An armored Shiba on a rearing horse thrusts an Ethereum-shaped spear downward; the gripping paw, spear and horse's raised legs project beyond a gold frame.",
+  );
   const arrival = moodImages.find((image) => image.id === "wall-street-02-the-arrival")!;
   assert.equal(arrival.path, "images/memes/wall-street-02-the-arrival.png");
   assert.equal(arrival.caption, "The Arrival");
@@ -96,16 +118,18 @@ test("live filter / expansion sequence produces no stale ninth card or duplicate
     const empty = () => document.querySelectorAll("[data-meme-grid] .meme-empty").length;
     assert.equal(document.querySelectorAll("[data-meme-filter]").length, 6);
     assert.equal(cards().length, 8);
-    assert.equal(count(), "Showing 8 of 29 images");
+    assert.equal(count(), "Showing 8 of 37 images");
     assert.equal(more.hidden, false);
     more.click();
     more.click();
     more.click();
-    assert.equal(cards().length, 29);
+    assert.equal(more.textContent!.trim(), "Show 5 more");
+    more.click();
+    assert.equal(cards().length, 37);
     assert.equal(more.hidden, true);
     assert.equal(
       new Set(cards().map((card) => card.getAttribute("data-meme-card"))).size,
-      29,
+      37,
     );
     select("Ethereum");
     assert.equal(cards().length, 8);
@@ -125,13 +149,40 @@ test("live filter / expansion sequence produces no stale ninth card or duplicate
     select("Trading Desk");
     assert.equal(cards().length, 5);
     select("Shiba Culture");
-    assert.equal(cards().length, 0);
-    assert.equal(empty(), 1);
+    assert.equal(cards().length, 8);
+    assert.equal(empty(), 0);
     assert.equal(more.hidden, true);
-    assert.equal(count(), "New images coming soon · Shiba Culture");
+    assert.equal(count(), "Showing 8 of 8 images · Shiba Culture");
     assert.equal(
       document.querySelector('[data-meme-filter="Shiba Culture"]')!.getAttribute("aria-pressed"),
       "true",
+    );
+    assert.deepEqual(
+      cards().map((card) => card.querySelector("h3")!.textContent),
+      [
+        "Riders of the First Dawn",
+        "The Shiba of Giza",
+        "Shiba of the Golden Garden",
+        "The Guardian Fresco",
+        "Bronze Ascendant",
+        "Beyond the Frame",
+        "The Shiba Geographer",
+        "The Opening Move",
+      ],
+    );
+    document
+      .querySelector<HTMLButtonElement>('[data-meme-grid] [data-open-meme="shiba-culture-06-beyond-the-frame"]')!
+      .click();
+    assert.equal(dialog.open, true);
+    assert.match(modalImage.getAttribute("src")!, /images\/memes\/shiba-culture-06-beyond-the-frame\.png$/);
+    assert.equal(dialog.querySelector<HTMLTextAreaElement>("#meme-caption")!.value, "Beyond the Frame");
+    dialog.close();
+    const share = document.querySelector<HTMLAnchorElement>(
+      '[data-share-meme="shiba-culture-02-the-shiba-of-giza"]',
+    )!;
+    assert.match(
+      new URL(share.href).searchParams.get("text")!,
+      /^The Shiba of Giza\n.*images\/memes\/shiba-culture-02-the-shiba-of-giza\.png$/,
     );
     select("Shiba Society");
     assert.equal(empty(), 0);

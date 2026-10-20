@@ -95,15 +95,15 @@ export const packMemes: readonly Meme[] = memes.filter((meme) => !leftOutOfPack.
  * Images of the "Meet the many moods of Shiba" gallery, in display order. Each belongs to one
  * filter button (`collection`); "All Shibas" shows every entry. New images go in
  * `public/images/memes/`, `src/data/mood-gallery.json`, and `src/data/asset-manifest.json`.
- * Shiba Culture is waiting for its images.
+ * An entry's optional `alt` is its image description; without it, `description` is used.
  */
 export const moodImages: readonly MoodImage[] = [
-  ...rawMoodGallery.map(({ file, collection, title, description }) => {
+  ...rawMoodGallery.map(({ file, collection, title, description, alt }) => {
     if (!isCollection(collection)) throw new Error(`Invalid gallery collection for ${file}`);
     return {
       id: file.replace(/\.png$/, ""),
       path: `images/memes/${file}`,
-      alt: description,
+      alt: alt ?? description,
       caption: title,
       collection,
     };
