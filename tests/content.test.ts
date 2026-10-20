@@ -59,7 +59,8 @@ test("the Lore book renders the version 3.0.0 Ethereum story exactly", () => {
   assert.ok(cover.includes("<span>THE STORY OF</span>"));
   const book = renderBook();
   assert.ok(book.includes(`<span class="eyebrow block">${storyContent.section.eyebrow}</span>`));
-  assert.ok(book.includes(`<h2 id="story-title">${storyContent.section.title}</h2>`));
+  assert.equal(storyContent.section.title, "ETHEREUM GREW. SO DID SHIBA.");
+  assert.ok(book.includes('<h2 id="story-title">ETHEREUM GREW.<br />SO DID SHIBA.</h2>'));
   assert.ok(book.includes(`<p>${storyContent.section.introduction}</p>`));
   assert.ok(book.includes('aria-label="Chapter 5: Ethereum&#39;s Next Dawn"'));
   assert.ok(!/images\/story\//.test(book + [0, 1, 2, 3, 4, 5].map(storyView).join("")));

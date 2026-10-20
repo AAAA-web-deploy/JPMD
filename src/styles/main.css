@@ -677,13 +677,14 @@ h2 {
 }
 .book-cover-title > span {
   display: block;
-  font: 700 10px var(--mono);
+  font: 700 12px var(--mono);
   letter-spacing: 2px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 .book-cover-title strong {
   display: block;
-  font: 400 clamp(24px, 2.5vw, 40px)/1.1 var(--brand);
+  font: 400 clamp(32px, 3.6vw, 56px)/1.1 var(--brand);
+  text-wrap: balance;
 }
 .story-flipping-sheet {
   position: absolute;
@@ -2853,7 +2854,7 @@ h2 {
     right: 10%;
   }
   .book-cover-title strong {
-    font-size: 28px;
+    font-size: 32px;
   }
   .book-arrow {
     width: 34px;
