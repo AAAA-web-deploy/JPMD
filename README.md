@@ -38,7 +38,7 @@ The production server defaults to `http://127.0.0.1:3000` and serves only `dist/
 - Reduced-motion styles, focus treatments, Escape dismissal, accessible labels, lazy images, local fonts, and a static SVG icon sprite.
 - Original assets, inventory checksums, placement records, credits, source code, dependency lockfile, tests, and a production server.
 
-**No videos or animated image files are included.** Motion comes from CSS and UI transitions. Names, captions, and project records are separate HTML text; the generated artwork is unchanged and unlettered. The reference's video grid is omitted as requested.
+**The only video is the user-supplied hero movie.** It is configured in one place, `heroVideo` in `src/config.ts`: `public/videos/banner_movie_v2.mp4` (H.264/AAC MP4, 1280 × 720, 5 s, opaque) with its first-frame poster `public/videos/banner_movie_v2-poster.jpg`. Set `heroVideo` to `null` to show the still portrait instead. The movie plays muted and looped, pauses off-screen or on request, and stays on the poster with reduced motion until the visitor presses play. `npm run check:assets` hash-verifies both files and still rejects any other video or animated image. Other motion comes from CSS and UI transitions. Names, captions, and project records are separate HTML text; the generated artwork is unchanged and unlettered. The reference's video grid is omitted as requested.
 
 ## Configure the project
 

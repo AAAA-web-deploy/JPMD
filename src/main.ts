@@ -3,6 +3,7 @@ import { siteConfig } from "./config.ts";
 import { renderPage } from "./components/page.ts";
 import { initBook } from "./components/book.ts";
 import { initGallery } from "./components/gallery.ts";
+import { initHero } from "./components/hero.ts";
 import { initStudio } from "./components/studio.ts";
 import { announce, copyText, mustQuery } from "./lib/browser.ts";
 import { icon, safeExternalUrl } from "./lib/html.ts";
@@ -164,6 +165,7 @@ if (!root.querySelector("[data-shiba-site]")) root.innerHTML = renderPage();
 const cleanup: (() => void)[] = [];
 for (const initialize of [
   initNavigation,
+  initHero,
   initBook,
   initGallery,
   initStudio,

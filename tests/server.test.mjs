@@ -3,7 +3,20 @@ import assert from "node:assert/strict";
 import { mkdtemp, mkdir, writeFile, rm, symlink } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { resolvePublicFile, securityHeaders } from "../server.ts";
+import { parseRange, resolvePublicFile, securityHeaders } from "../server.ts";
+
+test("byte ranges support media seeking and reject unsatisfiable requests", () => {
+  assert.equal(parseRange(undefined, 100), null);
+  assert.deepEqual(parseRange("bytes=0-", 100), { start: 0, end: 99 });
+  assert.deepEqual(parseRange("bytes=10-19", 100), { start: 10, end: 19 });
+  assert.deepEqual(parseRange("bytes=90-500", 100), { start: 90, end: 99 });
+  assert.deepEqual(parseRange("bytes=-30", 100), { start: 70, end: 99 });
+  assert.equal(parseRange("bytes=100-", 100), "invalid");
+  assert.equal(parseRange("bytes=20-10", 100), "invalid");
+  assert.equal(parseRange("bytes=-0", 100), "invalid");
+  assert.equal(parseRange("bytes=0-1,5-6", 100), "invalid");
+  assert.equal(parseRange("items=0-1", 100), "invalid");
+});
 
 test("production resolver serves assets and protects the source tree without opening a listener", async (t) => {
   const folder = await mkdtemp(path.join(tmpdir(), "shiba-codebase-test-"));
@@ -16,6 +29,8 @@ test("production resolver serves assets and protects the source tree without ope
     "export const ready=true;",
   );
   await writeFile(path.join(folder, "private.txt"), "private");
+  await mkdir(path.join(root, "videos"));
+  await writeFile(path.join(root, "videos/hero.mp4"), "mp4");
   try {
     const index = await resolvePublicFile(root, "/");
     assert.equal(index.status, 200);
@@ -25,6 +40,10 @@ test("production resolver serves assets and protects the source tree without ope
     assert.equal(js.status, 200);
     assert.equal(js.type, "text/javascript; charset=utf-8");
     assert.match(js.cache, /immutable/);
+    const movie = await resolvePublicFile(root, "/videos/hero.mp4", "HEAD");
+    assert.equal(movie.status, 200);
+    assert.equal(movie.type, "video/mp4");
+    assert.match(securityHeaders["Content-Security-Policy"], /media-src 'self'/);
     assert.equal((await resolvePublicFile(root, "/missing.png")).status, 404);
     assert.equal(
       (await resolvePublicFile(root, "/%2e%2e/private.txt")).status,

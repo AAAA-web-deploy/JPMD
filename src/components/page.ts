@@ -10,6 +10,7 @@ import {
   officialLink,
 } from "../lib/html.ts";
 import { renderBook } from "./book.ts";
+import { renderHero } from "./hero.ts";
 import {
   renderArchive,
   renderGalleryIntro,
@@ -38,9 +39,6 @@ const links = (items: readonly (readonly [string, string])[]): string =>
 
 function header(): string {
   return `<header class="header"><a href="#home" class="home-badge" aria-label="${e(siteConfig.name)} home">${image("images/brand/header-mascot.png", "Shiba banker home badge", "", true, 1536, 1024)}</a><button type="button" class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="navigation" data-menu-toggle>${icon("menu")}</button><nav id="navigation" class="navigation" aria-label="Main navigation">${links(nav)}${socialKeys.map((key) => officialLink(siteConfig.socials[key], `${icon(`social-${key}`)}<span>${key === "x" ? "Follow" : socialNames[key]}</span>`, "social", socialNames[key])).join("")}</nav></header>`;
-}
-function hero(): string {
-  return `<section id="home" class="hero" aria-labelledby="hero-title"><div class="atmosphere" aria-hidden="true">${image("images/hero/city-office-background-v2.png", "", "hero-background", true, 1774, 887)}<div class="hero-overlay"></div></div><div class="hero-copy"><p class="eyebrow"><span aria-hidden="true"></span>A SHIBA. A SUIT. AN ETHEREUM STORY.</p><h1 id="hero-title">${siteConfig.headlineLines.map((line) => `<span>${brandText(line)}</span>`).join("")}</h1><h2>WALL STREET’S<br class="desktop-break" /> NEW BEST FRIEND.</h2><p class="description">Old money. Open ledgers. A very different Shiba. Follow a fictional Wall Street journey into Ethereum—and meet the dog who steals the room.</p><div class="actions"><a class="buy-button" href="#lore">MEET SHIBA<span class="arrow">${icon("arrow-up-right")}</span></a><a class="secondary-button exchange-button" href="#studio">${icon("plus")}<span><small>MAKE IT YOURS</small>SHIBA STUDIO</span></a>${officialLink(siteConfig.chartUrl, `${icon("chart")}<span><small>${siteConfig.chartUrl ? "VIEW THE" : "COMING SOON"}</small>OFFICIAL CHART</span>`, "secondary-button exchange-button", "Official chart")}<a class="secondary-button exchange-button" href="#community">${icon("social-telegram")}<span><small>FIND THE</small>COMMUNITY</span></a></div></div><div class="mascot-shell">${image("images/brand/shiba-portrait-clean.png", "The black-and-tan Shiba banker in a charcoal suit, without a name or token symbol in the artwork.", "mascot-image", true)}</div></section>`;
 }
 function ticker(): string {
   const group = (clone: boolean): string =>
@@ -110,5 +108,5 @@ function footer(): string {
 }
 
 export function renderPage(): string {
-  return `<div data-shiba-site>${header()}<main>${hero()}${ticker()}${renderBook()}<section id="memes" class="meme-gallery" aria-labelledby="meme-title"><div class="meme-gallery-inner">${renderGalleryIntro()}${renderStudio()}<section class="brand-motion" aria-labelledby="motion-title"><div class="meme-section-heading"><div><p class="meme-greeting">One character. Every side of the conversation.</p><h2 id="motion-title">A Shiba for every <span>moment.</span></h2></div></div>${renderStrip("left")}${renderStrip("right")}</section>${communityCards()}<section class="meme-interlude" aria-label="Shiba on the group chat call">${image("images/community/phone-call-interlude.png", "A close-up of the Shiba banker taking a phone call.")}<p>THE GROUP CHAT IS CALLING.</p></section>${ledger()}${buying()}${roadmapSection()}${reveal()}${renderArchive()}</div></section>${closing()}</main>${footer()}${renderMemeDialog()}<div id="toast" class="toast fixed bottom-6 left-1/2 z-100 -translate-x-1/2 rounded-lg px-5 py-3 text-sm shadow-lg" role="status" aria-live="polite" hidden></div></div>`;
+  return `<div data-shiba-site>${header()}<main>${renderHero()}${ticker()}${renderBook()}<section id="memes" class="meme-gallery" aria-labelledby="meme-title"><div class="meme-gallery-inner">${renderGalleryIntro()}${renderStudio()}<section class="brand-motion" aria-labelledby="motion-title"><div class="meme-section-heading"><div><p class="meme-greeting">One character. Every side of the conversation.</p><h2 id="motion-title">A Shiba for every <span>moment.</span></h2></div></div>${renderStrip("left")}${renderStrip("right")}</section>${communityCards()}<section class="meme-interlude" aria-label="Shiba on the group chat call">${image("images/community/phone-call-interlude.png", "A close-up of the Shiba banker taking a phone call.")}<p>THE GROUP CHAT IS CALLING.</p></section>${ledger()}${buying()}${roadmapSection()}${reveal()}${renderArchive()}</div></section>${closing()}</main>${footer()}${renderMemeDialog()}<div id="toast" class="toast fixed bottom-6 left-1/2 z-100 -translate-x-1/2 rounded-lg px-5 py-3 text-sm shadow-lg" role="status" aria-live="polite" hidden></div></div>`;
 }

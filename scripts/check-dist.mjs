@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 import assert from "node:assert/strict";
 import { Window } from "happy-dom";
+import { heroVideo } from "../src/config.ts";
 
 const root = fileURLToPath(new URL("../dist/", import.meta.url));
 const base = `/${(process.env.BASE_PATH ?? "").replace(/^\/+|\/+$/g, "")}/`.replace(
@@ -34,10 +35,24 @@ try {
     document.querySelectorAll(".meme-archive-grid button").length,
     67,
   );
-  assert.equal(
-    document.querySelectorAll('video,iframe,source[type^="video/"]').length,
-    0,
-  );
+  assert.equal(document.querySelectorAll("iframe").length, 0);
+  const videos = [...document.querySelectorAll("video")];
+  const videoSources = [
+    ...document.querySelectorAll('video source, source[type^="video/"]'),
+  ];
+  if (heroVideo) {
+    assert.equal(videos.length, 1, "Only the hero movie may be a video.");
+    assert.ok(videos[0].closest("#home"), "The video must be in the hero.");
+    assert.deepEqual(
+      videoSources.map((source) => source.getAttribute("src")),
+      [`${base}${heroVideo.src}`],
+    );
+    for (const name of ["autoplay", "muted", "loop", "playsinline"])
+      assert.ok(videos[0].hasAttribute(name), `Hero video needs ${name}.`);
+    references.add(videos[0].getAttribute("poster"));
+  } else {
+    assert.equal(videos.length + videoSources.length, 0);
+  }
   for (const element of document.querySelectorAll(
     "[src],link[href],use[href],source[srcset]",
   )) {

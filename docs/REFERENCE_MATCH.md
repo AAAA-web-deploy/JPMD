@@ -4,7 +4,8 @@ Reference: https://www.robincoinrhcto.xyz/. This implements the Shiba adaptation
 
 | Reference area     | Implementation                                  | Adaptation                                                                                                      |
 | ------------------ | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| Header and hero    | `page.ts`, `main.ts`, `main.css`                | Navigation/action roles and two-column composition; Shiba art and live text                                     |
+| Header             | `page.ts`, `main.ts`, `main.css`                | Navigation/action roles; Shiba art and live text                                                                |
+| Hero               | `hero.ts`, `main.css`                           | Follows https://thegroklet.com/ hero: dark stage, glow, orbits, greeting bubble; the user's movie, not the reference art |
 | Text band          | `page.ts`, `content.ts`                         | Repeated HTML groups; 38-second loop                                                                            |
 | Storybook          | `book.ts`                                       | Cover plus five chapters; spine, 700ms manual turn, six positions, phone cover                                  |
 | Gallery            | `gallery.ts`, `lib/gallery.ts`                  | 67 identities; seven filters; 8 → 16 → … → 64 → 67; category reset to eight                                     |
@@ -52,5 +53,15 @@ Remaining known differences:
 - The header at 801px is a few pixels shorter than the reference's two-row navigation.
 - The reference's video grid is intentionally omitted.
 - Colours, artwork, and copy are this project's own.
+
+## Hero comparison with thegroklet.com (20 October 2026)
+
+The hero was rebuilt after the live Groklet hero, which was inspected at 1440, 1024, and 390px. Its stylesheet gives a 1fr / 0.9fr grid from 900px, a character-first stack below 900px, a radial halo, two slowly rotating orbit ellipses, a drifting glow, and a speech bubble with a tail. Adaptations:
+
+- The Groklet character is a tall transparent cutout (560:1084). The supplied movie is an opaque 16:9 street scene, so it sits in a framed 16:9 stage with `object-fit: contain`. The stage uses balanced 1fr / 1fr columns rather than the reference's narrow portrait figure, and the movie is never masked, cropped, scaled, or mirrored.
+- The greeting sits above the frame because the Shiba's ears reach the top edge of the footage.
+- The colours are charcoal and copper instead of the reference's navy, violet, and teal. The display font and existing copy are kept, and the name is set in two deliberate lines.
+- The reference's scroll cue, X symbols, "Proof" section, and token details are not copied.
+- In this browser the reference's own character animation did not render (its poster stays hidden), so only its layout and stylesheet were compared, not its footage.
 
 The site is published as a GitHub Pages project page under `/JPMD/` until a custom domain is configured (see `README.md`).

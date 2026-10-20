@@ -6,7 +6,7 @@ Checked on 20 October 2026 with Node.js **24.19.0** and the committed npm lockfi
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `npm test`             | 16 tests passed; 0 failed, cancelled, or skipped                                                                                                             |
 | `npm run typecheck`    | Strict TypeScript check passed, including source, tests, build scripts, and server                                                                           |
-| `npm run check:assets` | All 120 original media files matched their SHA-256 manifest; 67 unique collection paths and IDs; local icon sprite present; no video or animated image files |
+| `npm run check:assets` | All 120 original media files matched their SHA-256 manifest; 67 unique collection paths and IDs; local icon sprite present; only the configured hero movie/poster (hash-verified), no other video or animated image |
 | `npm run build`        | Vite production build, full-page prerendering, and production output check passed                                                                            |
 | `npm run check:dist`   | Prerendered page and compiled stylesheet present; all 97 distinct local references exist; every used SVG symbol resolves                                     |
 
@@ -20,9 +20,59 @@ The final full `npm run check` completed with exit code 0. Dependencies were ins
 - Canvas geometry handles rotated/flipped layers, clamps slider and pointer values, positions the rotation handle, and crops photos without distorting their aspect ratio.
 - The clean export drawing path omits selection guides and added lettering. Static PNG input passes; GIF, animated PNG, and animated WebP input is rejected.
 - Scroll reveal calculations are bounded and fully visible with reduced motion.
-- The rendered page contains the expected sections in order, 67 archive entries, 34/33 strip groups, four social cards, 22 leaves, real photo attribution, resolvable internal anchors, and no video or iframe elements.
+- The rendered page contains the expected sections in order, 67 archive entries, 34/33 strip groups, four social cards, 22 leaves, real photo attribution, resolvable internal anchors, no iframe elements, and exactly one video: the configured hero movie.
 - Unannounced launch fields stay explicit; unsafe external URL schemes are rejected.
 - The production file resolver serves HTML/assets, distinguishes missing files, handles HEAD/method validation, and rejects traversal and symlink escapes without opening a server listener during tests.
+
+## Hero movie update (20 October 2026)
+
+**Source file.** `banner_movie_v2.mp4` was inspected from its MP4 boxes and in the browser:
+
+- H.264 High profile (`avc1.640020`) with AAC stereo, 1280 × 720, 24 fps, 5.0 s, 4,355,719 bytes.
+- The index is at the front of the file (fast start).
+- It is 24-bit with no alpha channel. Its corner pixels are opaque scenery.
+
+It is copied byte-for-byte to `public/videos/` (SHA-256 `84210b72…3d88`). No conversion was needed. The poster is the movie's own first frame, captured in the browser as a 1280 × 720 JPEG.
+
+**Checks.**
+
+- `npm run check`: 20 of 20 tests passed. The four new tests cover the hero playback lifecycle and byte ranges.
+- The asset check hash-verified the movie and poster. A temporary stray `.mp4` was rejected.
+- The dist check verified 98 references and exactly one hero video with `autoplay`, `muted`, `loop`, and `playsinline`.
+
+**Layout.** Measured in the browser at 1440 × 900, 900, 899, 390, and 320px:
+
+- No horizontal overflow at any width.
+- The movie keeps a 1.7778 ratio.
+- The greeting stays above the frame and inside the viewport.
+- The title fits on two lines: 569/628px at 1440, 305/342 at 390, and 253/272 at 320.
+- Columns are balanced from 900px up. At 899px and below, the movie comes first, then the copy.
+- The hero ends at the fold below the measured header height, including the taller wrapped header around 900px.
+
+**Playback.**
+
+- Autoplay is muted and looping.
+- Pause holds through scrolling off-screen and back.
+- Resume works, and the movie pauses off-screen and resumes on return.
+- With reduced motion, the poster stays at 0.00s, every hero animation is `none`, and Play is available.
+- A broken source restores the poster and hides the control, with no errors or unhandled rejections.
+
+**Serving.**
+
+- Vite dev server: range requests return 206 with a `Content-Range`. HEAD returns 200 with `video/mp4`.
+- Production server (`npm start`):
+  - GET and HEAD return 200 `video/mp4` with `Accept-Ranges`. Byte ranges return 206: a suffix range returned the original's last 500 bytes, and an open-ended range was correct. An unsatisfiable range returns 416. Path traversal still returns 404.
+  - The CSP adds `media-src 'self'`.
+  - In the browser, the movie streamed as a 206 response, seeking to 3.5s worked, and all 89 page asset URLs resolved.
+
+**Rest of the page.** The book, gallery batches, filters, archive, section order, sticky header, and phone menu were spot-checked and still work.
+
+**Not verified:**
+
+- The hidden-tab pause, which is covered by code and unit-test structure but not exercised in the browser.
+- Real autoplay blocking on iOS or low-power devices.
+- Safari and Firefox decoding.
+- The Groklet character animation, which did not render in this browser.
 
 ## Browser verification (refinement pass, 20 October 2026)
 

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { memes, chapters, roadmap } from "../src/content.ts";
-import { siteConfig } from "../src/config.ts";
+import { heroVideo, siteConfig } from "../src/config.ts";
 import { renderPage } from "../src/components/page.ts";
 import { storyView } from "../src/components/book.ts";
 import { filterMemes } from "../src/lib/gallery.ts";
@@ -68,13 +68,28 @@ test("full page preserves section order, image reuse, and static-only content", 
     );
     assert.equal(document.querySelectorAll(".roadmap-card").length, 4);
     assert.equal(document.querySelectorAll(".chain-leaves i").length, 22);
-    assert.equal(document.querySelectorAll("video,iframe").length, 0);
+    assert.equal(document.querySelectorAll("iframe").length, 0);
+    const videos = [...document.querySelectorAll("video")];
+    assert.equal(videos.length, heroVideo ? 1 : 0);
+    if (heroVideo) {
+      const video = videos[0]!;
+      assert.ok(video.closest("#home"), "The only video belongs to the hero.");
+      for (const name of ["autoplay", "muted", "loop", "playsinline", "poster"])
+        assert.ok(video.hasAttribute(name), `Hero video needs ${name}.`);
+      assert.deepEqual(
+        [...video.querySelectorAll("source")].map((s) => s.getAttribute("src")),
+        [`/${heroVideo.src}`],
+      );
+      assert.ok(document.querySelector("#home .hero-hello"));
+      assert.ok(document.querySelector("#home [data-hero-toggle]"));
+    }
     assert.ok(
       document.querySelector('img[src*="vitalik-buterin-romanpoet-2016.jpg"]'),
     );
     assert.match(html, /creativecommons\.org\/licenses\/by-sa\/4\.0/);
+    const heroMedia = heroVideo ? [heroVideo.src, heroVideo.poster] : [];
     assert.doesNotMatch(
-      html,
+      heroMedia.reduce((text, file) => text.replaceAll(`/${file}`, ""), html),
       /0x11B70|robincoinrbh|BUY \$ROBIN|robin-vlad|\/videos\//i,
     );
     const allIds = [...document.querySelectorAll("[id]")].map((n) => n.id);

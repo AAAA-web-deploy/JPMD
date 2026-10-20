@@ -11,7 +11,26 @@ const inventory = JSON.parse(
 const memes = JSON.parse(
   await readFile(path.join(root, "src/data/meme-catalog.json"), "utf8"),
 );
+const { heroVideo } = await import("../src/config.ts");
 const errors = [];
+const heroFiles = heroVideo
+  ? [
+      [heroVideo.src, heroVideo.sha256],
+      [heroVideo.poster, heroVideo.posterSha256],
+    ]
+  : [];
+for (const [file, sha256] of heroFiles) {
+  try {
+    const content = await readFile(path.join(publicRoot, file));
+    if (createHash("sha256").update(content).digest("hex") !== sha256)
+      errors.push(`Changed hero media bytes: ${file}`);
+  } catch {
+    errors.push(`Missing hero media: ${file}`);
+  }
+}
+const allowedVideo = heroVideo
+  ? path.join(publicRoot, heroVideo.src)
+  : null;
 for (const asset of inventory.assets) {
   try {
     const content = await readFile(path.join(publicRoot, asset.path));
@@ -37,7 +56,10 @@ async function scan(folder) {
     if (entry.isSymbolicLink())
       errors.push(`Public symlinks are not allowed: ${full}`);
     else if (entry.isDirectory()) await scan(full);
-    else if (/\.(mp4|webm|mov|gif|apng|m4v|avi)$/i.test(entry.name))
+    else if (
+      /\.(mp4|webm|mov|gif|apng|m4v|avi)$/i.test(entry.name) &&
+      full !== allowedVideo
+    )
       errors.push(`Video or animated image found: ${full}`);
     else if (entry.name.endsWith(".svg")) {
       const text = await readFile(full, "utf8");
@@ -57,5 +79,5 @@ if (!(await stat(sprite)).isFile())
   errors.push("The local interface sprite is missing.");
 if (errors.length) throw new Error(errors.join("\n"));
 console.log(
-  `Verified ${inventory.assets.length} original media assets, 67 unique memes, local fonts, and the static icon sprite. No videos or animated image files.`,
+  `Verified ${inventory.assets.length} original media assets, 67 unique memes, local fonts, and the static icon sprite. ${heroVideo ? `Only video: the configured hero movie (${heroVideo.src}) and poster, hash-verified.` : "No videos."} No animated image files.`,
 );

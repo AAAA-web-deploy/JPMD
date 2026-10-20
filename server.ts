@@ -18,6 +18,7 @@ const types: Record<string, string> = {
   ".woff": "font/woff",
   ".otf": "font/otf",
   ".ico": "image/x-icon",
+  ".mp4": "video/mp4",
   ".txt": "text/plain; charset=utf-8",
   ".map": "application/json",
 };
@@ -26,7 +27,7 @@ export const securityHeaders = {
   "Referrer-Policy": "strict-origin-when-cross-origin",
   "Cross-Origin-Opener-Policy": "same-origin",
   "Content-Security-Policy":
-    "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'",
+    "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; media-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'",
 };
 export interface FileResponse {
   status: number;
@@ -94,6 +95,28 @@ export async function resolvePublicFile(
   }
 }
 
+/** A single `bytes=` range; null means serve the whole file, "invalid" means 416. */
+export function parseRange(
+  header: string | undefined,
+  size: number,
+): { start: number; end: number } | null | "invalid" {
+  if (!header) return null;
+  const match = /^bytes=(\d*)-(\d*)$/.exec(header.trim());
+  if (!match || (!match[1] && !match[2])) return "invalid";
+  let start: number, end: number;
+  if (!match[1]) {
+    const suffix = Number(match[2]);
+    if (suffix === 0) return "invalid";
+    start = Math.max(0, size - suffix);
+    end = size - 1;
+  } else {
+    start = Number(match[1]);
+    end = match[2] ? Math.min(Number(match[2]), size - 1) : size - 1;
+  }
+  if (start >= size || start > end) return "invalid";
+  return { start, end };
+}
+
 export function createProductionServer(
   root = fileURLToPath(new URL("./dist", import.meta.url)),
 ) {
@@ -129,15 +152,29 @@ export function createProductionServer(
       response.end();
       return;
     }
-    response.writeHead(200, {
-      "Content-Type": result.type!,
-      "Content-Length": result.size!,
-    });
+    response.setHeader("Accept-Ranges", "bytes");
+    const range = parseRange(request.headers.range, result.size!);
+    if (range === "invalid") {
+      response.writeHead(416, { "Content-Range": `bytes */${result.size}` });
+      response.end();
+      return;
+    }
+    if (range)
+      response.writeHead(206, {
+        "Content-Type": result.type!,
+        "Content-Length": range.end - range.start + 1,
+        "Content-Range": `bytes ${range.start}-${range.end}/${result.size}`,
+      });
+    else
+      response.writeHead(200, {
+        "Content-Type": result.type!,
+        "Content-Length": result.size!,
+      });
     if (request.method === "HEAD") {
       response.end();
       return;
     }
-    const stream = createReadStream(result.file);
+    const stream = createReadStream(result.file, range ?? {});
     stream.on("error", () => response.destroy());
     response.on("close", () => stream.destroy());
     stream.pipe(response);
