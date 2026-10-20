@@ -955,7 +955,7 @@ h2 {
 .image-strip-track {
   display: flex;
   width: max-content;
-  animation: image-scroll 160s linear infinite;
+  animation: image-scroll 113s linear infinite;
 }
 .image-strip-group {
   display: flex;

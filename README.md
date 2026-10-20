@@ -32,7 +32,7 @@ The production server defaults to `http://127.0.0.1:3000` and serves only `dist/
 
 - Sticky navigation/mobile menu; hero portrait, backdrop, four action slots, and repeating text band.
 - A cover and five illustrated chapters with manual 3D turns, keyboard navigation, transition locking, and a dedicated phone cover.
-- "Meet the many moods of Shiba" gallery with six filters (All Shibas, Wall Street, Ethereum, Trading Desk, Shiba Culture, Shiba Society), eight-at-a-time expansion, editable caption viewer, original-image download, caption copy, and X share links. Its images are listed in `moodImages` in `src/content.ts`: Wall Street (6), Ethereum (8), and Trading Desk (5) come from `src/data/mood-gallery.json` (file, filter, title used as the caption, description used as the alt text), and Shiba Society holds the 10 former Community images, 29 in All Shibas. Shiba Culture shows a "coming soon" note until its images are added. The strips and archive still show all 67 collection images.
+- "Meet the many moods of Shiba" gallery with six filters (All Shibas, Wall Street, Ethereum, Trading Desk, Shiba Culture, Shiba Society), eight-at-a-time expansion, editable caption viewer, original-image download, caption copy, and X share links. Its images are listed in `moodImages` in `src/content.ts`: Wall Street (6), Ethereum (8), and Trading Desk (5) come from `src/data/mood-gallery.json` (file, filter, title used as the caption, description used as the alt text), and Shiba Society holds the 10 former Community images, 29 in All Shibas. Shiba Culture shows a "coming soon" note until its images are added. The strips and archive show 48 of the 67 collection images (`packMemes` in `src/content.ts`).
 - **Bull Run — Ride the Red!**, a canvas mini-game: Shiba rides his bull down Wall Street and jumps red candlesticks. Keyboard, tap, and on-screen jump controls; score, best score saved on the device, pause, retry, and optional sound.
 - Two opposing image strips, four social cards, interlude, project registry, purchase guide, illustrated roadmap, sticky Ethereum reveal, genuine Vitalik photograph, archive, closing panorama, and footer.
 - Reduced-motion styles, focus treatments, Escape dismissal, accessible labels, lazy images, local fonts, and a static SVG icon sprite.
@@ -64,7 +64,7 @@ npm run check
 
 This runs behavioral tests, strict TypeScript checking, media integrity checks, Vite production build, prerendering, and output reference checks. Individual commands are `npm test`, `npm run typecheck`, `npm run check:assets`, and `npm run check:dist` after building.
 
-Production HTML contains the full page, initial gallery batch, both strips, and all 67 archive entries before JavaScript runs. JavaScript enables book turns, filtering, viewer controls, the Bull Run game, mobile navigation, and scroll effects.
+Production HTML contains the full page, initial gallery batch, both strips, and all 48 archive entries before JavaScript runs. JavaScript enables book turns, filtering, viewer controls, the Bull Run game, mobile navigation, and scroll effects.
 
 Read `docs/VALIDATION.md` for results and remaining browser checks. This environment did not permit browser QA; real-device appearance, native downloads, touch gestures, and canvas PNG encoding require browser review.
 

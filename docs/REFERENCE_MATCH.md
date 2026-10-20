@@ -19,7 +19,7 @@ Reference: https://www.robincoinrhcto.xyz/. This implements the Shiba adaptation
 | Purchase guide     | `page.ts`                                       | Illustration/instructions, four steps and four actions; no assumed listing                                      |
 | Roadmap            | `page.ts`, `content.ts`                         | Four cards arranged 1/2 then 4/3, dashed path; creative chapters                                                |
 | Ecosystem reveal   | `page.ts`, `main.ts`                            | Sticky scroll blend, heading/photo reveal, 22 leaves, attributed Vitalik portrait                               |
-| Archive            | `gallery.ts`                                    | Same 67 identities; ten desktop columns                                                                         |
+| Archive            | `gallery.ts`                                    | 48 of the 67 identities; ten desktop columns                                                                         |
 | Closing and footer | `page.ts`                                       | 3:1 panorama, live copy/actions, navigation, project record                                                     |
 
 ## Responsive rules

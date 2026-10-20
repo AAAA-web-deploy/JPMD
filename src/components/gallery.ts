@@ -1,4 +1,4 @@
-import { memes, moodImages } from "../content.ts";
+import { memes, moodImages, packMemes } from "../content.ts";
 import { siteConfig } from "../config.ts";
 import {
   ALL_CATEGORY,
@@ -47,7 +47,7 @@ export function renderGalleryIntro(): string {
   return `<p class="meme-greeting">A sharp suit. Every possible mood.</p><h2 id="meme-title">Meet the many moods of <span>Shiba.</span></h2><p class="meme-intro">Find your reaction. Make it your caption. Take the Shiba with you.</p><div class="meme-filters" role="group" aria-label="Filter memes by category">${categories.map((category) => `<button type="button" data-meme-filter="${escapeHtml(category)}" aria-pressed="${category === ALL_CATEGORY}">${escapeHtml(category)}</button>`).join("")}</div><p class="meme-count" data-meme-count aria-live="polite">${countText(first.length, moodImages.length, ALL_CATEGORY)}</p><div class="meme-grid" data-meme-grid>${first.length ? first.map(memeCard).join("") : emptyState(ALL_CATEGORY)}</div><button type="button" class="meme-more" data-meme-more${remaining ? "" : " hidden"}>Show ${Math.min(PAGE_SIZE, remaining)} more ${icon("plus")}</button>`;
 }
 export function renderStrip(direction: "left" | "right"): string {
-  const items = memes.filter(
+  const items = packMemes.filter(
     (_, index) => index % 2 === (direction === "left" ? 0 : 1),
   );
   const group = (clone: boolean): string =>
@@ -55,7 +55,7 @@ export function renderStrip(direction: "left" | "right"): string {
   return `<div class="image-strip image-strip-${direction}" aria-label="Shiba image collection moving ${direction}"><div class="image-strip-track">${group(false)}${group(true)}</div></div>`;
 }
 export function renderArchive(): string {
-  return `<section class="meme-archive" aria-labelledby="archive-title"><h2 id="archive-title">The whole <span>pack.</span></h2><p class="meme-intro">${memes.length} images. Scroll the pack to find the face for your next message.</p><div class="meme-archive-scroll"><div class="meme-archive-grid">${memes.map((meme) => `<button type="button" data-open-meme="${meme.id}" aria-label="Open image: ${escapeHtml(meme.caption)}">${image(meme.path, meme.alt)}</button>`).join("")}</div></div></section>`;
+  return `<section class="meme-archive" aria-labelledby="archive-title"><h2 id="archive-title">The whole <span>pack.</span></h2><p class="meme-intro">${packMemes.length} images. Scroll the pack to find the face for your next message.</p><div class="meme-archive-scroll"><div class="meme-archive-grid">${packMemes.map((meme) => `<button type="button" data-open-meme="${meme.id}" aria-label="Open image: ${escapeHtml(meme.caption)}">${image(meme.path, meme.alt)}</button>`).join("")}</div></div></section>`;
 }
 export function renderMemeDialog(): string {
   return `<dialog class="meme-modal" id="meme-dialog" aria-labelledby="meme-modal-title"><div class="meme-modal-heading"><h3 id="meme-modal-title">Your Shiba moment.</h3><button type="button" data-modal-close aria-label="Close image">${icon("close")}</button></div><img class="meme-modal-image" data-modal-image alt="" width="1254" height="1254" /><label for="meme-caption">Make the caption yours</label><textarea id="meme-caption" rows="3" maxlength="1000" spellcheck="true"></textarea><div class="meme-share-actions"><button type="button" data-modal-download>${icon("download")}Download</button><button type="button" data-modal-copy>${icon("copy")}Copy caption</button><a data-modal-share href="https://x.com/intent/tweet" target="_blank" rel="noopener noreferrer">${icon("social-x")}Share on X</a></div><p class="meme-modal-note">Captions stay separate. The downloaded artwork has no added text.</p></dialog>`;

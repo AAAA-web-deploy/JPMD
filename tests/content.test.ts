@@ -83,20 +83,29 @@ test("full page preserves section order, image reuse, and static-only content", 
     assert.equal(document.querySelectorAll("[data-book-page]").length, 6);
     assert.equal(
       document.querySelectorAll(".meme-archive-scroll > .meme-archive-grid button").length,
-      67,
+      48,
     );
     assert.equal(
       document.querySelectorAll(
         ".image-strip-left .image-strip-group:first-child button",
       ).length,
-      34,
+      24,
     );
     assert.equal(
       document.querySelectorAll(
         ".image-strip-right .image-strip-group:first-child button",
       ).length,
-      33,
+      24,
     );
+    const shown = [
+      ...document.querySelectorAll(
+        ".meme-archive-grid [data-open-meme], .image-strip-group:first-child [data-open-meme]",
+      ),
+    ].map((button) => button.getAttribute("data-open-meme"));
+    for (const number of [6, 9, 10, 15, 21, 22, 23, 25, 28, 30, 34, 41, 42, 44, 53, 57, 60, 62, 64])
+      assert.ok(!shown.includes(`meme-${String(number).padStart(2, "0")}`));
+    assert.equal(new Set(shown).size, 48);
+    assert.match(html, /48 images\. Scroll the pack/);
     assert.equal(document.querySelectorAll(".roadmap-card").length, 4);
     assert.equal(document.querySelectorAll(".chain-leaves i").length, 22);
     assert.equal(document.querySelectorAll("iframe").length, 0);

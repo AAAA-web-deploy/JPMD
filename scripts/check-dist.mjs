@@ -33,7 +33,7 @@ try {
   );
   assert.equal(
     document.querySelectorAll(".meme-archive-grid button").length,
-    67,
+    48,
   );
   assert.equal(document.querySelectorAll("iframe").length, 0);
   assert.ok(

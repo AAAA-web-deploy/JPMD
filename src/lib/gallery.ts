@@ -11,7 +11,7 @@ export type Category = (typeof categories)[number];
 export const ALL_CATEGORY: Category = "All Shibas";
 export type Collection = Exclude<Category, "All Shibas">;
 
-/** Themes recorded in the original 67-image catalog (strips and archive). */
+/** Themes recorded in the original 67-image catalog. */
 export const catalogThemes = [
   "Bullish",
   "Bearish",

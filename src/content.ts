@@ -82,6 +82,15 @@ export const memes: readonly Meme[] = rawMemes.map((meme, index) => {
   return { ...meme, category: meme.category, caption: captions[index] };
 });
 
+/** Collection images left out of "The whole pack" archive and the moving strips. */
+const leftOutOfPack = new Set(
+  [6, 9, 10, 15, 21, 22, 23, 25, 28, 30, 34, 41, 42, 44, 53, 57, 60, 62, 64].map(
+    (number) => `meme-${String(number).padStart(2, "0")}`,
+  ),
+);
+/** Images shown in "The whole pack" archive and the moving strips, in catalog order. */
+export const packMemes: readonly Meme[] = memes.filter((meme) => !leftOutOfPack.has(meme.id));
+
 /**
  * Images of the "Meet the many moods of Shiba" gallery, in display order. Each belongs to one
  * filter button (`collection`); "All Shibas" shows every entry. New images go in
@@ -142,7 +151,7 @@ export const roadmap = [
     image: "images/roadmap/bell.png",
     intro: "The market has a mood for every moment.",
     points: [
-      "Explore all 67 scenes",
+      `Explore all ${packMemes.length} scenes`,
       "Choose your reaction",
       "Bring your own caption",
     ],

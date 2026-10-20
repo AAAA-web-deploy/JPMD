@@ -33,5 +33,5 @@ if (canonical) {
 }
 await writeFile(path, html);
 console.log(
-  "Prerendered every section, the initial 8 cards, both strips, and the full 67-image archive.",
+  "Prerendered every section, the initial 8 cards, both strips, and the full 48-image archive.",
 );
