@@ -37,7 +37,7 @@ It is copied byte-for-byte to `public/videos/` (SHA-256 `baa9ea39…04d0`). No c
 
 - `npm run check`: 22 of 22 tests passed. The hero tests cover a first-open start from 0, repeated visibility callbacks without a reset, pausing on leave and a single restart from 0 on return, tab hide/show, `pagehide`/`pageshow`, a late `play()` promise after leaving, seeking only after metadata, a manual pause, reduced motion, blocked autoplay, a source error, and listener teardown. The server test checks `.webm` is served as `video/webm`.
 - The asset check hash-verified the movie and poster.
-- The dist check verified 98 references and exactly one hero video with `autoplay`, `muted`, `loop`, and `playsinline`.
+- The dist check verified 98 references and exactly one hero video with `autoplay`, `muted`, and `playsinline` (`loop` was required until the 9-second cycle replaced it; see below).
 
 **Layout.** Measured in the browser at 1440 × 900, 900, 899, 390, and 320px:
 
@@ -59,6 +59,13 @@ Checked in Chrome on the dev server and on `npm start`, with an instrumented pag
 - The transparent movie sits directly on the hero background: the frame's background is transparent and the poster is hidden while playing.
 - Listener count stayed constant (22), with no errors or unhandled rejections.
 - Not exercisable in this browser: real tab hiding (it pins `document.hidden`), real autoplay blocking, and Safari/iOS, which does not render WebM alpha and falls back to the poster. These paths are covered by unit tests only.
+
+**Hero simplification (later the same day).** At the user's request, the orbit circles, the "Hey, I’m Shiba." bubble, and the play/pause control were removed, and native `loop` was replaced by a scheduled replay: 5 s of playback, a 4 s hold, then a replay from 0 (a 9-second cycle). This supersedes the native-loop and manual-Pause notes above.
+
+- `npm run check`: 22 of 22 tests passed. Mock timers confirm there is no replay at 3,999 ms and a replay from 0 at 4,000 ms over three cycles. Leaving during the hold cancels the replay, and returning restarts immediately. If autoplay is blocked, one retry happens on the first interaction. The content and dist checks now require no `loop` attribute and no button, orbits, or greeting in the hero stage.
+- Production build in Chrome at 1440 × 900: the movie frame grew from 628 × 353 to 848 × 476 and doesn't reach the copy column, which ends at 684px. At 390px the frame spans the full 390px width, above the copy, with no horizontal overflow.
+- Measured cycle: `ended` to the next `playing` took 4,028 ms twice. The clip played for 5.06 s, and the full cycle was about 9.1 s.
+- This embedded browser pauses media by itself when its panel goes into the background, without reporting `hidden` to the page. Pause tracing confirmed the site's code made no `pause()` call in those cases.
 
 **Serving.**
 

@@ -47,8 +47,9 @@ try {
       videoSources.map((source) => source.getAttribute("src")),
       [`${base}${heroVideo.src}`],
     );
-    for (const name of ["autoplay", "muted", "loop", "playsinline"])
+    for (const name of ["autoplay", "muted", "playsinline"])
       assert.ok(videos[0].hasAttribute(name), `Hero video needs ${name}.`);
+    assert.ok(!videos[0].hasAttribute("loop"), "Hero replays are scheduled, not looped.");
     references.add(videos[0].getAttribute("poster"));
   } else {
     assert.equal(videos.length + videoSources.length, 0);

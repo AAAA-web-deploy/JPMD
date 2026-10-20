@@ -1,12 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { initHero, renderHero } from "../src/components/hero.ts";
+import { heroReplayDelayMs, initHero, renderHero } from "../src/components/hero.ts";
 import { installDom } from "./dom.ts";
 
 interface FakeMedia {
   video: HTMLVideoElement;
   frame: HTMLElement;
-  toggle: HTMLButtonElement;
   resets: number;
   plays: number;
   reject: boolean;
@@ -15,7 +14,8 @@ interface FakeMedia {
   readyState: number;
   setVisible(visible: boolean): void;
   setHidden(hidden: boolean): void;
-  advance(seconds: number): void;
+  /** Plays the clip to its last frame. */
+  end(): void;
 }
 
 function fakeMedia(): FakeMedia {
@@ -27,7 +27,6 @@ function fakeMedia(): FakeMedia {
   const state: FakeMedia = {
     video,
     frame: document.querySelector<HTMLElement>("[data-hero-frame]")!,
-    toggle: document.querySelector<HTMLButtonElement>("[data-hero-toggle]")!,
     resets: 0,
     plays: 0,
     reject: false,
@@ -38,8 +37,11 @@ function fakeMedia(): FakeMedia {
       hidden = value;
       document.dispatchEvent(new Event("visibilitychange"));
     },
-    advance(seconds) {
-      if (!paused) time = (time + seconds) % 5;
+    end() {
+      assert.equal(paused, false, "Only a playing clip can end.");
+      time = 5;
+      paused = true;
+      video.dispatchEvent(new Event("ended"));
     },
   };
   Object.defineProperty(document, "hidden", { configurable: true, get: () => hidden });
@@ -91,53 +93,65 @@ function fakeMedia(): FakeMedia {
   return state;
 }
 
-const tick = () => new Promise((resolve) => setTimeout(resolve, 0));
+const flush = () => new Promise((resolve) => setImmediate(resolve));
 
-test("hero clip starts at 0, loops natively, and restarts only when the hero is re-entered", async () => {
+test("hero clip plays from 0, waits 4 s after each play-through, and restarts on return", async (t) => {
   const window = installDom(`<div id="app">${renderHero()}</div>`);
+  t.mock.timers.enable({ apis: ["setTimeout"] });
   try {
     const media = fakeMedia();
     const dispose = initHero();
-    assert.ok(media.video.loop && media.video.muted && media.video.autoplay);
+    assert.equal(heroReplayDelayMs, 4000);
+    assert.ok(media.video.muted && media.video.autoplay);
+    assert.equal(media.video.loop, false, "Replays are scheduled, not looped.");
+    assert.equal(media.frame.querySelector("button"), null, "No play/pause control.");
     media.setVisible(true);
     assert.equal(media.video.paused, false);
     assert.equal(media.resets, 1, "First entry starts from the beginning.");
     assert.equal(media.video.playbackRate, 1);
     assert.ok(media.frame.classList.contains("is-playing"));
 
-    media.advance(3.2);
-    media.setVisible(true);
     media.setVisible(true);
     assert.equal(media.resets, 1, "Repeated visibility callbacks do not reset.");
-    assert.equal(media.video.currentTime.toFixed(1), "3.2");
 
+    for (let cycle = 2; cycle <= 4; cycle++) {
+      media.end();
+      t.mock.timers.tick(heroReplayDelayMs - 1);
+      assert.equal(media.video.paused, true, "Waits after the clip finishes.");
+      assert.equal(media.resets, cycle - 1);
+      t.mock.timers.tick(1);
+      assert.equal(media.resets, cycle, "Plays again from 0 after 4 s.");
+      assert.equal(media.video.paused, false);
+    }
+
+    media.end();
     media.setVisible(false);
-    assert.equal(media.video.paused, true, "Leaving the hero pauses.");
-    media.setVisible(false);
+    t.mock.timers.tick(heroReplayDelayMs * 2);
+    assert.equal(media.resets, 4, "Leaving cancels the pending replay.");
+    assert.equal(media.video.paused, true);
     media.setVisible(true);
-    assert.equal(media.resets, 2, "Returning restarts once from 0.");
-    assert.equal(media.video.currentTime, 0);
+    assert.equal(media.resets, 5, "Returning restarts once from 0 immediately.");
     assert.equal(media.video.paused, false);
 
-    media.advance(2);
     media.setHidden(true);
     assert.equal(media.video.paused, true, "A hidden tab pauses.");
     media.setHidden(false);
-    assert.equal(media.resets, 3);
-    assert.equal(media.video.paused, false);
+    assert.equal(media.resets, 6);
 
     window.dispatchEvent(new window.Event("pagehide"));
     assert.equal(media.video.paused, true);
     window.dispatchEvent(new window.Event("pageshow"));
-    assert.equal(media.resets, 4, "Back/forward cache restore restarts.");
-    assert.equal(media.video.paused, false);
+    assert.equal(media.resets, 7, "Back/forward cache restore restarts.");
 
+    media.end();
     dispose();
+    t.mock.timers.tick(heroReplayDelayMs);
     media.setHidden(true);
     media.setHidden(false);
     window.dispatchEvent(new window.Event("pageshow"));
-    assert.equal(media.resets, 4, "No listeners remain after teardown.");
+    assert.equal(media.resets, 7, "No timers or listeners remain after teardown.");
   } finally {
+    t.mock.timers.reset();
     await window.happyDOM.close();
   }
 });
@@ -151,7 +165,7 @@ test("a late play() promise cannot restart a hero the visitor has left", async (
     media.setVisible(true);
     media.setVisible(false);
     media.deferred.forEach((resolve) => resolve());
-    await tick();
+    await flush();
     assert.equal(media.video.paused, true);
     dispose();
   } finally {
@@ -180,58 +194,44 @@ test("seeking waits for metadata, once, even across repeated entries", async () 
   }
 });
 
-test("a manual pause and reduced motion keep the clip stopped on return", async () => {
-  const window = installDom(`<div id="app">${renderHero()}</div>`);
-  try {
-    const media = fakeMedia();
-    const dispose = initHero();
-    media.setVisible(true);
-    media.toggle.click();
-    assert.equal(media.video.paused, true);
-    assert.equal(media.toggle.getAttribute("aria-label"), "Play the Shiba movie");
-    media.setVisible(false);
-    media.setVisible(true);
-    assert.equal(media.video.paused, true, "A manual pause is respected.");
-    media.toggle.click();
-    assert.equal(media.video.paused, false);
-    dispose();
-  } finally {
-    await window.happyDOM.close();
-  }
-  const reduced = installDom(`<div id="app">${renderHero()}</div>`, true);
+test("reduced motion keeps the still poster", async () => {
+  const window = installDom(`<div id="app">${renderHero()}</div>`, true);
   try {
     const media = fakeMedia();
     const dispose = initHero();
     media.setVisible(true);
     assert.equal(media.plays, 0);
     assert.equal(media.frame.classList.contains("is-playing"), false);
-    assert.equal(media.toggle.getAttribute("aria-label"), "Play the Shiba movie");
-    media.toggle.click();
-    assert.equal(media.video.paused, false);
     dispose();
   } finally {
-    await reduced.happyDOM.close();
+    await window.happyDOM.close();
   }
 });
 
-test("blocked autoplay keeps the still and offers Play; a missing source hides the control", async () => {
+test("blocked autoplay keeps the still until the first interaction; a missing source falls back", async () => {
   const window = installDom(`<div id="app">${renderHero()}</div>`);
   try {
     const media = fakeMedia();
     media.reject = true;
     const dispose = initHero();
     media.setVisible(true);
-    await tick();
+    await flush();
+    media.setVisible(false);
+    media.setVisible(true);
+    await flush();
     assert.equal(media.frame.classList.contains("is-playing"), false);
-    assert.equal(media.toggle.getAttribute("aria-label"), "Play the Shiba movie");
 
     media.reject = false;
-    media.toggle.click();
+    const plays = media.plays;
+    document.dispatchEvent(new Event("pointerdown"));
+    document.dispatchEvent(new Event("keydown"));
+    assert.equal(media.plays, plays + 1, "One retry per interaction, not one per refusal.");
     assert.ok(media.frame.classList.contains("is-playing"));
     assert.equal(media.video.currentTime, 0);
+
     media.video.querySelector("source")!.dispatchEvent(new Event("error"));
     assert.equal(media.frame.classList.contains("is-playing"), false);
-    assert.equal(media.toggle.hidden, true);
+    assert.equal(media.video.paused, true);
     dispose();
   } finally {
     await window.happyDOM.close();

@@ -5,7 +5,7 @@ Reference: https://www.robincoinrhcto.xyz/. This implements the Shiba adaptation
 | Reference area     | Implementation                                  | Adaptation                                                                                                      |
 | ------------------ | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
 | Header             | `page.ts`, `main.ts`, `main.css`                | Navigation/action roles; Shiba art and live text                                                                |
-| Hero               | `hero.ts`, `main.css`                           | Follows https://thegroklet.com/ hero: dark stage, glow, orbits, greeting bubble; the user's movie, not the reference art |
+| Hero               | `hero.ts`, `main.css`                           | Follows https://thegroklet.com/ hero: dark stage and glow; the user's enlarged movie, not the reference art (no orbits or greeting, by request) |
 | Text band          | `page.ts`, `content.ts`                         | Repeated HTML groups; 38-second loop                                                                            |
 | Storybook          | `book.ts`                                       | Cover plus five chapters; spine, 700ms manual turn, six positions, phone cover                                  |
 | Gallery            | `gallery.ts`, `lib/gallery.ts`                  | 67 identities; seven filters; 8 → 16 → … → 64 → 67; category reset to eight                                     |
@@ -59,7 +59,7 @@ Remaining known differences:
 The hero was rebuilt after the live Groklet hero, which was inspected at 1440, 1024, and 390px. Its stylesheet gives a 1fr / 0.9fr grid from 900px, a character-first stack below 900px, a radial halo, two slowly rotating orbit ellipses, a drifting glow, and a speech bubble with a tail. Adaptations:
 
 - The Groklet character is a tall transparent cutout (560:1084). The supplied movie is a 16:9 transparent WebM, so like the reference it sits directly on the hero background with no frame, box, or poster behind it, inside a 16:9 stage with `object-fit: contain`. The stage uses balanced 1fr / 1fr columns rather than the reference's narrow portrait figure, and the movie is never masked, cropped, scaled, or mirrored.
-- The greeting sits above the frame because the Shiba's ears reach the top edge of the footage.
+- At the user's request the reference's orbit ellipses and speech bubble are not used, and the movie is enlarged (1.35× from 900px, 1.14× on phones) so the figure dominates the right column.
 - The colours are charcoal and copper instead of the reference's navy, violet, and teal. The display font and existing copy are kept, and the name is set in two deliberate lines.
 - The reference's scroll cue, X symbols, "Proof" section, and token details are not copied.
 - In this browser the reference's own character animation did not render (its poster stays hidden), so only its layout and stylesheet were compared, not its footage.

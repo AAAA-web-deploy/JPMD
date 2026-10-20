@@ -74,14 +74,19 @@ test("full page preserves section order, image reuse, and static-only content", 
     if (heroVideo) {
       const video = videos[0]!;
       assert.ok(video.closest("#home"), "The only video belongs to the hero.");
-      for (const name of ["autoplay", "muted", "loop", "playsinline", "poster"])
+      for (const name of ["autoplay", "muted", "playsinline", "poster"])
         assert.ok(video.hasAttribute(name), `Hero video needs ${name}.`);
+      assert.equal(video.hasAttribute("loop"), false, "Replays are scheduled, not native loops.");
       assert.deepEqual(
         [...video.querySelectorAll("source")].map((s) => s.getAttribute("src")),
         [`/${heroVideo.src}`],
       );
-      assert.ok(document.querySelector("#home .hero-hello"));
-      assert.ok(document.querySelector("#home [data-hero-toggle]"));
+      assert.equal(
+        document.querySelectorAll("#home .hero-stage button, #home .hero-orbits, #home .hero-hello")
+          .length,
+        0,
+        "The hero stage has no play control, orbit circles, or greeting.",
+      );
     }
     assert.ok(
       document.querySelector('img[src*="vitalik-buterin-romanpoet-2016.jpg"]'),
