@@ -285,11 +285,18 @@ h2 {
   font-weight: 600;
   line-height: 1.5;
 }
+/* Two by two: Meet Shiba + Bull Run, then Official Chart + Community. */
 .actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
+  max-width: 460px;
+}
+.actions > * {
+  min-width: 0;
+}
+.actions .buy-button {
+  min-width: 0;
 }
 .buy-button {
   display: flex;
@@ -308,6 +315,7 @@ h2 {
 }
 .arrow {
   display: grid;
+  flex-shrink: 0;
   width: 38px;
   height: 38px;
   place-items: center;
@@ -2515,10 +2523,10 @@ h2 {
     font-size: 17px;
     margin-bottom: 30px;
   }
+  .actions {
+    gap: 10px;
+  }
   .actions .secondary-button {
-    flex: 1 1 calc(50% - 7px);
-    min-width: 0;
-    max-width: 240px;
     gap: 10px;
     padding: 12px;
   }
