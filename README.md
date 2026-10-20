@@ -26,7 +26,7 @@ The production server defaults to `http://127.0.0.1:3000` and serves only `dist/
 
 ### GitHub Pages
 
-`.github/workflows/pages.yml` runs the tests and deploys to GitHub Pages on every push to `main`. It builds with the repository's Pages base path (`/JPMD/` for a project page, `/` once a custom domain is attached). In the repository settings, Pages must use **GitHub Actions** as its source; the workflow tries to enable this automatically.
+`.github/workflows/pages.yml` runs the tests and deploys to GitHub Pages on every push to `main`. It builds with the repository's Pages base path (`/JPMD/` for a project page, `/` once a custom domain is attached). In the repository settings, Pages must use **GitHub Actions** as its source; the workflow tries to enable this automatically. Live site: https://aaaa-web-deploy.github.io/JPMD/
 
 ## Included
 
