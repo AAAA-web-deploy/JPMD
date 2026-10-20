@@ -32,7 +32,7 @@ The production server defaults to `http://127.0.0.1:3000` and serves only `dist/
 
 - Sticky navigation/mobile menu; hero portrait, backdrop, four action slots, and repeating text band.
 - A cover and five illustrated chapters with manual 3D turns, keyboard navigation, transition locking, and a dedicated phone cover.
-- All 67 collection images, seven filters, eight-at-a-time expansion, editable caption viewer, original-image download, caption copy, and X share links.
+- "Meet the many moods of Shiba" gallery with six filters (All Shibas, Wall Street, Ethereum, Trading Desk, Shiba Culture, Shiba Society), eight-at-a-time expansion, editable caption viewer, original-image download, caption copy, and X share links. Its images are listed in `moodImages` in `src/content.ts`; Shiba Society holds the 10 former Community images, and the other four filters show a "coming soon" note until their images are added. The strips and archive still show all 67 collection images.
 - **Bull Run — Ride the Red!**, a canvas mini-game: Shiba rides his bull down Wall Street and jumps red candlesticks. Keyboard, tap, and on-screen jump controls; score, best score saved on the device, pause, retry, and optional sound.
 - Two opposing image strips, four social cards, interlude, project registry, purchase guide, illustrated roadmap, sticky Ethereum reveal, genuine Vitalik photograph, archive, closing panorama, and footer.
 - Reduced-motion styles, focus treatments, Escape dismissal, accessible labels, lazy images, local fonts, and a static SVG icon sprite.

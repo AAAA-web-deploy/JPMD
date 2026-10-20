@@ -1,5 +1,18 @@
+/** Filter buttons of the "Meet the many moods of Shiba" gallery, in display order. */
 export const categories = [
-  "All",
+  "All Shibas",
+  "Wall Street",
+  "Ethereum",
+  "Trading Desk",
+  "Shiba Culture",
+  "Shiba Society",
+] as const;
+export type Category = (typeof categories)[number];
+export const ALL_CATEGORY: Category = "All Shibas";
+export type Collection = Exclude<Category, "All Shibas">;
+
+/** Themes recorded in the original 67-image catalog (strips and archive). */
+export const catalogThemes = [
   "Bullish",
   "Bearish",
   "GM / GN",
@@ -7,13 +20,19 @@ export const categories = [
   "Lifestyle",
   "Community",
 ] as const;
-export type Category = (typeof categories)[number];
-export interface Meme {
+export type CatalogTheme = (typeof catalogThemes)[number];
+
+export interface ImageEntry {
   id: string;
   path: string;
-  category: Exclude<Category, "All">;
   alt: string;
   caption: string;
+}
+export interface Meme extends ImageEntry {
+  category: CatalogTheme;
+}
+export interface MoodImage extends ImageEntry {
+  collection: Collection;
 }
 
 export interface GalleryState {
@@ -25,13 +44,16 @@ export const PAGE_SIZE = 8;
 export function isCategory(value: unknown): value is Category {
   return categories.some((category) => category === value);
 }
+export function isCatalogTheme(value: unknown): value is CatalogTheme {
+  return catalogThemes.some((theme) => theme === value);
+}
 
-export function filterMemes(
-  memes: readonly Meme[],
+export function filterMoods(
+  images: readonly MoodImage[],
   category: Category,
-): Meme[] {
-  return memes.filter(
-    (meme) => category === "All" || meme.category === category,
+): MoodImage[] {
+  return images.filter(
+    (image) => category === ALL_CATEGORY || image.collection === category,
   );
 }
 
@@ -52,7 +74,7 @@ export function shareUrl(caption: string, imageUrl: string): string {
   return url.href;
 }
 
-export function downloadName(meme: Pick<Meme, "id" | "path">): string {
+export function downloadName(meme: Pick<ImageEntry, "id" | "path">): string {
   const base = meme.path.split("/").pop() ?? `${meme.id}.png`;
   return `shiba-p-morgan-inu-${base.replace(/[^a-zA-Z0-9._-]/g, "-")}`;
 }

@@ -4,7 +4,7 @@ import { memes, chapters, roadmap } from "../src/content.ts";
 import { heroVideo, siteConfig } from "../src/config.ts";
 import { renderPage } from "../src/components/page.ts";
 import { storyView } from "../src/components/book.ts";
-import { filterMemes } from "../src/lib/gallery.ts";
+import { catalogThemes } from "../src/lib/gallery.ts";
 import { safeExternalUrl } from "../src/lib/html.ts";
 import { installDom } from "./dom.ts";
 
@@ -12,16 +12,7 @@ test("complete collection and story assets preserve the required counts", () => 
   assert.equal(memes.length, 67);
   assert.equal(new Set(memes.map((m) => m.id)).size, 67);
   assert.deepEqual(
-    [
-      "Bullish",
-      "Bearish",
-      "GM / GN",
-      "Reactions",
-      "Lifestyle",
-      "Community",
-    ].map(
-      (c) => filterMemes(memes, c as (typeof memes)[number]["category"]).length,
-    ),
+    catalogThemes.map((theme) => memes.filter((m) => m.category === theme).length),
     [16, 5, 2, 19, 15, 10],
   );
   assert.equal(chapters.length, 5);
@@ -48,7 +39,10 @@ test("full page preserves section order, image reuse, and static-only content", 
     ]);
     assert.equal(document.querySelectorAll("main").length, 1);
     assert.equal(document.querySelectorAll("h1").length, 1);
-    assert.equal(document.querySelectorAll("[data-meme-filter]").length, 7);
+    assert.deepEqual(
+      [...document.querySelectorAll("[data-meme-filter]")].map((b) => b.textContent),
+      ["All Shibas", "Wall Street", "Ethereum", "Trading Desk", "Shiba Culture", "Shiba Society"],
+    );
     assert.equal(document.querySelectorAll("[data-book-page]").length, 6);
     assert.equal(
       document.querySelectorAll(".meme-archive-grid button").length,

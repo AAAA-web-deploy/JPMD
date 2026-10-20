@@ -1,16 +1,17 @@
-import { memes } from "../content.ts";
+import { memes, moodImages } from "../content.ts";
 import { siteConfig } from "../config.ts";
 import {
+  ALL_CATEGORY,
   categories,
   chooseCategory,
   downloadName,
   expandGallery,
-  filterMemes,
+  filterMoods,
   isCategory,
   PAGE_SIZE,
   shareUrl,
 } from "../lib/gallery.ts";
-import type { Meme } from "../lib/gallery.ts";
+import type { Category, ImageEntry } from "../lib/gallery.ts";
 import {
   asset,
   escapeHtml,
@@ -20,16 +21,30 @@ import {
 } from "../lib/html.ts";
 import { announce, copyText, downloadFile, mustQuery } from "../lib/browser.ts";
 
-const byId = new Map(memes.map((meme) => [meme.id, meme]));
+const byId = new Map<string, ImageEntry>(
+  [...memes, ...moodImages].map((meme) => [meme.id, meme]),
+);
 
-function shareActions(meme: Meme): string {
+function countText(shown: number, total: number, category: Category): string {
+  const label = category === ALL_CATEGORY ? "" : ` · ${category}`;
+  return total
+    ? `Showing ${shown} of ${total} images${label}`
+    : `New images coming soon${label}`;
+}
+function emptyState(category: Category): string {
+  return `<p class="meme-empty">${escapeHtml(category === ALL_CATEGORY ? "Shiba" : category)} images are on their way. Check back soon.</p>`;
+}
+
+function shareActions(meme: ImageEntry): string {
   return `<div class="meme-share-actions"><button type="button" data-meme-action="download" data-meme-id="${meme.id}" aria-label="Download image: ${escapeHtml(meme.caption)}">${icon("download")}<span>Download</span></button><button type="button" data-meme-action="copy" data-meme-id="${meme.id}" aria-label="Copy caption: ${escapeHtml(meme.caption)}">${icon("copy")}<span>Copy</span></button><a data-share-meme="${meme.id}" href="${escapeHtml(shareUrl(meme.caption, ""))}" target="_blank" rel="noopener noreferrer" aria-label="Share caption on X: ${escapeHtml(meme.caption)}">${icon("social-x")}<span>Share</span></a></div>`;
 }
-export function memeCard(meme: Meme): string {
+export function memeCard(meme: ImageEntry): string {
   return `<article class="meme-card" data-meme-card="${meme.id}"><button type="button" class="meme-image-link" data-open-meme="${meme.id}" aria-label="Open image: ${escapeHtml(meme.caption)}">${image(meme.path, meme.alt)}</button><h3>${escapeHtml(meme.caption)}</h3>${shareActions(meme)}</article>`;
 }
 export function renderGalleryIntro(): string {
-  return `<p class="meme-greeting">A sharp suit. Every possible mood.</p><h2 id="meme-title">Meet the many moods of <span>Shiba.</span></h2><p class="meme-intro">Find your reaction. Make it your caption. Take the Shiba with you.</p><div class="meme-filters" role="group" aria-label="Filter memes by category">${categories.map((category) => `<button type="button" data-meme-filter="${escapeHtml(category)}" aria-pressed="${category === "All"}">${escapeHtml(category)}</button>`).join("")}</div><p class="meme-count" data-meme-count aria-live="polite">Showing 8 of 67 images</p><div class="meme-grid" data-meme-grid>${memes.slice(0, PAGE_SIZE).map(memeCard).join("")}</div><button type="button" class="meme-more" data-meme-more>Show 8 more ${icon("plus")}</button>`;
+  const first = moodImages.slice(0, PAGE_SIZE);
+  const remaining = moodImages.length - first.length;
+  return `<p class="meme-greeting">A sharp suit. Every possible mood.</p><h2 id="meme-title">Meet the many moods of <span>Shiba.</span></h2><p class="meme-intro">Find your reaction. Make it your caption. Take the Shiba with you.</p><div class="meme-filters" role="group" aria-label="Filter memes by category">${categories.map((category) => `<button type="button" data-meme-filter="${escapeHtml(category)}" aria-pressed="${category === ALL_CATEGORY}">${escapeHtml(category)}</button>`).join("")}</div><p class="meme-count" data-meme-count aria-live="polite">${countText(first.length, moodImages.length, ALL_CATEGORY)}</p><div class="meme-grid" data-meme-grid>${first.length ? first.map(memeCard).join("") : emptyState(ALL_CATEGORY)}</div><button type="button" class="meme-more" data-meme-more${remaining ? "" : " hidden"}>Show ${Math.min(PAGE_SIZE, remaining)} more ${icon("plus")}</button>`;
 }
 export function renderStrip(direction: "left" | "right"): string {
   const items = memes.filter(
@@ -56,12 +71,12 @@ export function initGallery(): () => void {
   const caption = mustQuery<HTMLTextAreaElement>("#meme-caption", dialog);
   const modalShare = mustQuery<HTMLAnchorElement>("[data-modal-share]", dialog);
   const modalClose = mustQuery<HTMLButtonElement>("[data-modal-close]", dialog);
-  let state = chooseCategory("All");
-  let selected: Meme | null = null;
+  let state = chooseCategory(ALL_CATEGORY);
+  let selected: ImageEntry | null = null;
   let returnFocus: HTMLElement | null = null;
   let savedOverflow = "";
 
-  const imageUrl = (meme: Meme): string =>
+  const imageUrl = (meme: ImageEntry): string =>
     new URL(
       asset(meme.path),
       safeExternalUrl(siteConfig.canonicalUrl) ?? window.location.origin,
@@ -75,10 +90,12 @@ export function initGallery(): () => void {
       });
   }
   function renderVisible(): void {
-    const filtered = filterMemes(memes, state.category);
+    const filtered = filterMoods(moodImages, state.category);
     const visible = filtered.slice(0, state.visible);
-    grid.innerHTML = visible.map(memeCard).join("");
-    count.textContent = `Showing ${visible.length} of ${filtered.length} images${state.category === "All" ? "" : ` · ${state.category}`}`;
+    grid.innerHTML = visible.length
+      ? visible.map(memeCard).join("")
+      : emptyState(state.category);
+    count.textContent = countText(visible.length, filtered.length, state.category);
     app
       .querySelectorAll<HTMLButtonElement>("[data-meme-filter]")
       .forEach((button) =>
@@ -95,7 +112,7 @@ export function initGallery(): () => void {
   function updateModalShare(): void {
     if (selected) modalShare.href = shareUrl(caption.value, imageUrl(selected));
   }
-  function open(meme: Meme, trigger: HTMLElement): void {
+  function open(meme: ImageEntry, trigger: HTMLElement): void {
     if (dialog.open) return;
     selected = meme;
     returnFocus = trigger;
@@ -132,7 +149,7 @@ export function initGallery(): () => void {
       state = chooseCategory(button.dataset.memeFilter);
       renderVisible();
     } else if (button.hasAttribute("data-meme-more")) {
-      state = expandGallery(state, filterMemes(memes, state.category).length);
+      state = expandGallery(state, filterMoods(moodImages, state.category).length);
       renderVisible();
     } else if (button.dataset.openMeme) {
       const meme = byId.get(button.dataset.openMeme);

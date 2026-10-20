@@ -1,10 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { memes } from "../src/content.ts";
+import { memes, moodImages } from "../src/content.ts";
 import {
+  categories,
   chooseCategory,
   expandGallery,
-  filterMemes,
+  filterMoods,
   shareUrl,
 } from "../src/lib/gallery.ts";
 import {
@@ -16,25 +17,33 @@ import {
 import { initBook, renderBook } from "../src/components/book.ts";
 import { emulateNativeDialog, installDom } from "./dom.ts";
 
-test("gallery pages end at 67 and category changes restart at eight", () => {
-  let state = chooseCategory("All");
+test("gallery pages grow by eight and category changes restart at eight", () => {
+  let state = chooseCategory("All Shibas");
   const counts = [state.visible];
   while (state.visible < 67) {
     state = expandGallery(state, 67);
     counts.push(state.visible);
   }
   assert.deepEqual(counts, [8, 16, 24, 32, 40, 48, 56, 64, 67]);
-  state = chooseCategory("Bearish");
-  assert.equal(
-    filterMemes(memes, state.category).slice(0, state.visible).length,
-    5,
-  );
-  state = chooseCategory("All");
+  state = chooseCategory("Shiba Society");
   assert.equal(state.visible, 8);
-  assert.equal(
-    new Set(filterMemes(memes, state.category).map((meme) => meme.id)).size,
-    67,
+});
+
+test("the moods gallery has the six new filters; only Shiba Society has images so far", () => {
+  assert.deepEqual(
+    [...categories],
+    ["All Shibas", "Wall Street", "Ethereum", "Trading Desk", "Shiba Culture", "Shiba Society"],
   );
+  const society = memes.filter((meme) => meme.category === "Community");
+  assert.equal(society.length, 10);
+  assert.deepEqual(
+    moodImages.map((image) => image.id),
+    society.map((meme) => meme.id),
+  );
+  assert.equal(filterMoods(moodImages, "All Shibas").length, 10);
+  assert.equal(filterMoods(moodImages, "Shiba Society").length, 10);
+  for (const empty of ["Wall Street", "Ethereum", "Trading Desk", "Shiba Culture"] as const)
+    assert.equal(filterMoods(moodImages, empty).length, 0);
 });
 
 test("live filter / expansion sequence produces no stale ninth card or duplicate", async () => {
@@ -53,27 +62,34 @@ test("live filter / expansion sequence produces no stale ninth card or duplicate
       ...document.querySelectorAll("[data-meme-grid] [data-meme-card]"),
     ];
     const more = document.querySelector<HTMLButtonElement>("[data-meme-more]")!;
-    select("Bullish");
-    more.click();
-    assert.equal(cards().length, 16);
-    select("Bearish");
-    assert.equal(cards().length, 5);
-    assert.equal(more.hidden, true);
-    select("All");
+    const count = () => document.querySelector("[data-meme-count]")!.textContent;
+    const empty = () => document.querySelectorAll("[data-meme-grid] .meme-empty").length;
+    assert.equal(document.querySelectorAll("[data-meme-filter]").length, 6);
     assert.equal(cards().length, 8);
+    assert.equal(count(), "Showing 8 of 10 images");
     assert.equal(more.hidden, false);
-    for (let n = 0; n < 8; n++) more.click();
-    assert.equal(cards().length, 67);
+    more.click();
+    assert.equal(cards().length, 10);
     assert.equal(more.hidden, true);
     assert.equal(
       new Set(cards().map((card) => card.getAttribute("data-meme-card"))).size,
-      67,
+      10,
     );
-    select("Community");
+    select("Wall Street");
+    assert.equal(cards().length, 0);
+    assert.equal(empty(), 1);
+    assert.equal(more.hidden, true);
+    assert.equal(count(), "New images coming soon · Wall Street");
+    assert.equal(
+      document.querySelector('[data-meme-filter="Wall Street"]')!.getAttribute("aria-pressed"),
+      "true",
+    );
+    select("Shiba Society");
+    assert.equal(empty(), 0);
     assert.equal(cards().length, 8);
     more.click();
     assert.equal(cards().length, 10);
-    select("All");
+    select("All Shibas");
     assert.equal(cards().length, 8);
   } finally {
     cleanup();

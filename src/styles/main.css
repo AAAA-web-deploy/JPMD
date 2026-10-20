@@ -852,6 +852,15 @@ h2 {
 .meme-card {
   min-width: 0;
 }
+.meme-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 72px 24px;
+  border: 1px dashed #9d9080;
+  color: var(--muted);
+  font: 500 15px/1.6 var(--mono);
+  text-align: center;
+}
 .meme-image-link {
   display: block;
   width: 100%;
