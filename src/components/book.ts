@@ -1,13 +1,13 @@
 import { chapters, story } from "../content.ts";
-import { asset, brandText, escapeHtml, icon, image } from "../lib/html.ts";
+import { asset, brandText, escapeHtml, icon, image, responsiveAttributes } from "../lib/html.ts";
 import { mustQuery } from "../lib/browser.ts";
 
 export function storyView(index: number): string {
   if (index === 0)
-    return `<div class="story-cover"><picture><source media="(max-width:599px)" srcset="${asset(story.cover.mobileImage)}" width="1254" height="1254" />${image(story.cover.wideImage, story.cover.wideAlt, "", false, 1774, 887)}</picture><div class="book-cover-title"><span>${escapeHtml(story.cover.eyebrow)}</span><strong>${brandText(story.cover.title)}</strong></div></div>`;
+    return `<div class="story-cover"><picture><source media="(max-width:599px)"${responsiveAttributes(story.cover.mobileImage, "coverMobile") || ` srcset="${asset(story.cover.mobileImage)}"`} width="1254" height="1254" />${image(story.cover.wideImage, story.cover.wideAlt, "", false, 1774, 887, "coverWide")}</picture><div class="book-cover-title"><span>${escapeHtml(story.cover.eyebrow)}</span><strong>${brandText(story.cover.title)}</strong></div></div>`;
   const chapter = chapters[index - 1];
   if (!chapter) throw new RangeError("Story page is outside the book");
-  return `<article class="story-page"><div class="story-art">${image(chapter.image, chapter.alt)}</div><div class="story-page-copy"><span class="story-label">${escapeHtml(chapter.label)}</span><h3>${escapeHtml(chapter.title)}</h3><div class="story-paragraphs">${chapter.paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join("")}</div><span class="page-number">${String(index).padStart(2, "0")} / 05</span></div></article>`;
+  return `<article class="story-page"><div class="story-art">${image(chapter.image, chapter.alt, "", false, 1254, 1254, "story")}</div><div class="story-page-copy"><span class="story-label">${escapeHtml(chapter.label)}</span><h3>${escapeHtml(chapter.title)}</h3><div class="story-paragraphs">${chapter.paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join("")}</div><span class="page-number">${String(index).padStart(2, "0")} / 05</span></div></article>`;
 }
 
 export function renderBook(): string {

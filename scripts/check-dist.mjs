@@ -3,7 +3,11 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 import assert from "node:assert/strict";
 import { Window } from "happy-dom";
+import sharp from "sharp";
 import { heroVideo } from "../src/config.ts";
+import { storyView } from "../src/components/book.ts";
+import { memeCard } from "../src/components/gallery.ts";
+import { memes, moodImages } from "../src/content.ts";
 
 const root = fileURLToPath(new URL("../dist/", import.meta.url));
 const base = `/${(process.env.BASE_PATH ?? "").replace(/^\/+|\/+$/g, "")}/`.replace(
@@ -22,6 +26,7 @@ const window = new Window({ url: "https://example.test" });
 window.document.write(html);
 const document = window.document;
 const references = new Set();
+const responsiveCandidates = new Set();
 try {
   assert.ok(
     document.querySelector("[data-shiba-site]"),
@@ -63,15 +68,39 @@ try {
   } else {
     assert.equal(videos.length + videoSources.length, 0);
   }
-  for (const element of document.querySelectorAll(
-    "[src],link[href],use[href],source[srcset]",
-  )) {
-    const value =
-      element.getAttribute("src") ??
-      element.getAttribute("href") ??
-      element.getAttribute("srcset");
+  for (const element of document.querySelectorAll("[src],link[href],use[href]")) {
+    const value = element.getAttribute("src") ?? element.getAttribute("href");
     if (value?.startsWith("/")) references.add(value.split("#")[0]);
   }
+  const responsive = [...document.querySelectorAll("img[srcset],source[srcset]")];
+  for (const img of document.querySelectorAll("img:not(.hero-poster):not([data-modal-image])"))
+    assert.ok(img.hasAttribute("srcset"), `Image without responsive candidates: ${img.getAttribute("src")}`);
+  const dynamic = new Window({ url: "https://example.test" });
+  dynamic.document.body.innerHTML = [
+    ...[0, 1, 2, 3, 4, 5].map(storyView),
+    ...[...memes, ...moodImages].map(memeCard),
+  ].join("");
+  responsive.push(...dynamic.document.querySelectorAll("img,source"));
+  for (const element of responsive) {
+    const srcset = element.getAttribute("srcset");
+    const label = `${element.tagName} ${element.getAttribute("src") ?? srcset}`;
+    assert.ok(srcset, `Missing srcset: ${label}`);
+    assert.ok(element.getAttribute("sizes"), `Missing sizes: ${label}`);
+    const original = element.getAttribute("src");
+    if (original) {
+      assert.match(original, /\/images\/.+\.(png|jpe?g)$/, `Fallback must be the original: ${label}`);
+      references.add(original);
+    }
+    for (const candidate of srcset.split(",")) {
+      const [url, descriptor, ...rest] = candidate.trim().split(/\s+/);
+      assert.ok(url && /^\d+w$/.test(descriptor ?? "") && !rest.length, `Bad srcset candidate in ${label}: ${candidate}`);
+      const { width } = await sharp(local(url)).metadata();
+      assert.equal(`${width}w`, descriptor, `Candidate width differs from the file: ${url}`);
+      references.add(url);
+      responsiveCandidates.add(url);
+    }
+  }
+  await dynamic.happyDOM.close();
   const stylesheets = [...document.querySelectorAll('link[rel="stylesheet"]')];
   assert.equal(
     stylesheets.length,
@@ -110,7 +139,7 @@ try {
     document.querySelector(`script[type="module"][src^="${base}assets/"]`),
   );
   console.log(
-    `Verified prerendered production HTML, ${references.size} local asset references, stylesheet, and all used icon symbols.`,
+    `Verified prerendered production HTML, ${references.size} local asset references (${responsiveCandidates.size} responsive candidates, including client-rendered story and gallery images), stylesheet, and all used icon symbols.`,
   );
 } finally {
   await window.happyDOM.close();

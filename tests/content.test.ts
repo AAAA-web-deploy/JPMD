@@ -46,8 +46,15 @@ test("the Lore book renders the version 3.0.0 Ethereum story exactly", () => {
     assert.ok(!page.includes(source.caption));
   });
   const cover = storyView(0);
-  assert.ok(cover.includes('srcset="/images/story-ethereum-v3/cover-mobile.png"'));
-  assert.ok(cover.includes('src="/images/story-ethereum-v3/cover-wide.png"'));
+  assert.equal(cover.match(/<picture>/g)?.length, 1);
+  const source = cover.match(/<source media="\(max-width:599px\)" srcset="([^"]+)" sizes="([^"]+)" width="1254" height="1254" \/>/);
+  assert.ok(source, "The phone cover keeps its own <source> inside the single <picture>.");
+  const mobile = source[1]!.split(", ");
+  assert.ok(mobile.every((c) => /^\/generated\/images\/story-ethereum-v3\/cover-mobile-\d+\.webp \d+w$/.test(c)));
+  assert.ok(mobile.includes("/generated/images/story-ethereum-v3/cover-mobile-1254.webp 1254w"));
+  assert.equal(source[2], "650px");
+  assert.ok(cover.includes('src="/images/story-ethereum-v3/cover-wide.png" srcset="/generated/images/story-ethereum-v3/cover-wide-540.webp 540w'));
+  assert.ok(cover.includes("/generated/images/story-ethereum-v3/cover-wide-1774.webp 1774w"));
   assert.ok(cover.includes(escapeHtml(storyContent.cover.wideAlt)));
   assert.ok(cover.includes("<span>THE STORY OF</span>"));
   const book = renderBook();

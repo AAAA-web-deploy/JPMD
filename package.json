@@ -8,10 +8,15 @@
     "node": ">=22.18.0"
   },
   "scripts": {
+    "images": "node scripts/build-images.ts",
+    "predev": "npm run images",
     "dev": "vite --host 127.0.0.1",
+    "pretypecheck": "npm run images",
     "typecheck": "tsc --noEmit",
+    "pretest": "npm run images",
     "test": "node --test tests/gallery.test.ts tests/effects.test.ts tests/content.test.ts tests/hero.test.ts tests/bull-run.test.ts tests/bull-run-ui.test.ts tests/server.test.mjs",
     "check:assets": "node scripts/check-assets.mjs",
+    "prebuild": "npm run images",
     "build": "npm run typecheck && npm run check:assets && vite build && node scripts/prerender.ts && npm run check:dist",
     "check:dist": "node scripts/check-dist.mjs",
     "start": "node server.ts",
@@ -23,6 +28,7 @@
     "@types/node": "26.6.5",
     "happy-dom": "21.0.3",
     "prettier": "3.9.10",
+    "sharp": "0.35.5",
     "tailwindcss": "4.3.3",
     "typescript": "7.0.2",
     "vite": "8.3.4"

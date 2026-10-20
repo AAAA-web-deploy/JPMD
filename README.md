@@ -46,6 +46,8 @@ Edit `src/config.ts` for approved launch details: ticker, network, supply, contr
 
 Chapters, captions, and creative roadmap copy live in `src/content.ts`. Section structure/copy lives in `src/components/page.ts`; component-specific copy lives alongside its renderer. Palette and responsive rules are in `src/styles/main.css`. Metadata defaults are in `index.html`; configured title and canonical URL are applied during the production build.
 
+**Responsive images.** `npm run images` (run automatically before `dev`, `test`, `typecheck`, and `build`) uses Sharp to write lossless WebP derivatives and favicons to `public/generated/` and the path-to-candidates map to `src/data/image-variants.json`. Both are gitignored and rebuilt only when a source's SHA-256 or the settings change. Display profiles (`sizes` plus candidate widths at 1×–3×) live in `src/lib/image-profiles.ts`; update them alongside CSS width changes. Originals in `public/images/` are never modified and remain the `src` fallback; the image viewer, downloads, share links, and the hero poster use them directly.
+
 Current copy, exact palette, new scenes, and the Bull Run character art are implementation material for review, not additional user approvals. See `docs/APPROVED_REQUIREMENTS.md`.
 
 The financiers, cat, frog, and Shiba form a fictional story. The historical Vitalik photograph is editorial context; neither it nor the story establishes a partnership or endorsement.
@@ -62,7 +64,7 @@ Gameplay, tuning, character art, and integration notes: [`docs/BULL_RUN.md`](doc
 npm run check
 ```
 
-This runs behavioral tests, strict TypeScript checking, media integrity checks, Vite production build, prerendering, and output reference checks. Individual commands are `npm test`, `npm run typecheck`, `npm run check:assets`, and `npm run check:dist` after building.
+This runs behavioral tests, strict TypeScript checking, media integrity checks, Vite production build, prerendering, and output reference checks (every `srcset` candidate, including client-rendered story and gallery images, must exist and match its width descriptor). Individual commands are `npm test`, `npm run typecheck`, `npm run check:assets`, and `npm run check:dist` after building.
 
 Production HTML contains the full page, initial gallery batch, both strips, and all 48 archive entries before JavaScript runs. JavaScript enables book turns, filtering, viewer controls, the Bull Run game, mobile navigation, and scroll effects.
 

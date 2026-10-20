@@ -16,6 +16,7 @@ import {
   renderMemeDialog,
 } from "../src/components/gallery.ts";
 import { initBook, renderBook } from "../src/components/book.ts";
+import { imageProfiles } from "../src/lib/image-profiles.ts";
 import { emulateNativeDialog, installDom } from "./dom.ts";
 
 test("gallery pages grow by eight and category changes restart at eight", () => {
@@ -135,12 +136,21 @@ test("live filter / expansion sequence produces no stale ninth card or duplicate
     assert.equal(cards().length, 8);
     assert.equal(more.hidden, true);
     assert.equal(count(), "Showing 8 of 8 images · Ethereum");
+    const cardImage = document.querySelector<HTMLImageElement>(
+      '[data-meme-card="ethereum-05-the-builders-garden"] img',
+    )!;
+    assert.match(cardImage.getAttribute("src")!, /^\/images\/memes\/ethereum-05-the-builders-garden\.png$/);
+    assert.match(cardImage.getAttribute("srcset")!, /^\/generated\/images\/memes\/ethereum-05-the-builders-garden-120\.webp 120w, .+-760\.webp 760w$/);
+    assert.equal(cardImage.getAttribute("sizes"), imageProfiles.card.sizes);
+    assert.equal(cardImage.getAttribute("loading"), "lazy");
+    assert.equal(cardImage.getAttribute("decoding"), "async");
     document
       .querySelector<HTMLButtonElement>('[data-meme-grid] [data-open-meme="ethereum-05-the-builders-garden"]')!
       .click();
     const modalImage = dialog.querySelector<HTMLImageElement>("[data-modal-image]")!;
     assert.equal(dialog.open, true);
     assert.match(modalImage.getAttribute("src")!, /images\/memes\/ethereum-05-the-builders-garden\.png$/);
+    assert.equal(modalImage.hasAttribute("srcset"), false, "The viewer shows the original artwork.");
     assert.equal(modalImage.alt, "Shiba exchanges ideas with researchers in a garden.");
     assert.equal(dialog.querySelector<HTMLTextAreaElement>("#meme-caption")!.value, "The Builders’ Garden");
     dialog.close();

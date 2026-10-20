@@ -1,3 +1,7 @@
+import imageVariants from "../data/image-variants.json" with { type: "json" };
+import { imageProfiles } from "./image-profiles.ts";
+import type { ImageProfile } from "./image-profiles.ts";
+
 export function escapeHtml(value: unknown): string {
   return String(value).replace(
     /[&<>"']/g,
@@ -61,6 +65,20 @@ export function officialLink(
     : `<button type="button" class="${escapeHtml(className)}" aria-label="${escapeHtml(label)} — official link not announced" title="Official link not announced" disabled>${body}</button>`;
 }
 
+/** Responsive candidates for an original image path, or "" when none were generated. */
+export function srcset(path: string): string {
+  const candidates =
+    (imageVariants as Record<string, readonly { width: number; file: string }[]>)[path] ?? [];
+  return candidates.map(({ width, file }) => `${asset(file)} ${width}w`).join(", ");
+}
+
+/** srcset and sizes for an <img> or <source>; the original path stays the fallback. */
+export function responsiveAttributes(path: string, profile?: ImageProfile): string {
+  if (!profile) return "";
+  const candidates = srcset(path);
+  return candidates ? ` srcset="${candidates}" sizes="${imageProfiles[profile].sizes}"` : "";
+}
+
 export function image(
   path: string,
   alt: string,
@@ -68,6 +86,7 @@ export function image(
   eager = false,
   width = 1254,
   height = 1254,
+  profile?: ImageProfile,
 ): string {
-  return `<img src="${asset(path)}" alt="${escapeHtml(alt)}" class="${escapeHtml(className)}" width="${width}" height="${height}" loading="${eager ? "eager" : "lazy"}" decoding="async"${eager ? ' fetchpriority="high"' : ""} />`;
+  return `<img src="${asset(path)}"${responsiveAttributes(path, profile)} alt="${escapeHtml(alt)}" class="${escapeHtml(className)}" width="${width}" height="${height}" loading="${eager ? "eager" : "lazy"}" decoding="async"${eager ? ' fetchpriority="high"' : ""} />`;
 }

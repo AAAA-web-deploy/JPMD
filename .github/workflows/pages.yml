@@ -24,6 +24,12 @@ jobs:
           node-version: "22.18"
           cache: npm
       - run: npm ci
+      - uses: actions/cache@v4
+        with:
+          path: |
+            public/generated
+            .cache
+          key: images-${{ hashFiles('public/images/**', 'scripts/build-images.ts', 'src/lib/image-profiles.ts', 'package-lock.json') }}
       - run: npm test
       - id: pages
         uses: actions/configure-pages@v5
