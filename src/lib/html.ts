@@ -12,6 +12,11 @@ export function escapeHtml(value: unknown): string {
   );
 }
 
+/** Escapes display-font text; Reika has no P/period kerning pair. */
+export function brandText(value: string): string {
+  return escapeHtml(value).replace(/P\./g, 'P<span class="brand-kern">.</span>');
+}
+
 export function asset(path: string): string {
   return `/${path.replace(/^\/+/, "")}`;
 }

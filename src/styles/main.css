@@ -248,6 +248,9 @@ h2 {
 .hero h1 > span {
   display: block;
 }
+.brand-kern {
+  margin-left: -0.16em;
+}
 .hero h2 {
   margin-bottom: 25px;
   font-size: clamp(30px, 3.2vw, 64px);
@@ -700,12 +703,16 @@ h2 {
   color: var(--muted);
   font-size: 18px;
 }
-.meme-gallery > .meme-gallery-inner > h2 {
+.meme-gallery-inner > h2,
+.meme-section-heading h2,
+.meme-archive > h2 {
   margin: 0 0 32px;
   font-size: clamp(52px, 6.3vw, 96px);
   line-height: 1.12;
 }
-.meme-gallery > .meme-gallery-inner > h2 span {
+.meme-gallery-inner > h2 span,
+.meme-section-heading h2 span,
+.meme-archive > h2 span {
   font-family: var(--brand);
   color: var(--accent);
   font-weight: 400;
@@ -822,18 +829,10 @@ h2 {
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  margin-bottom: 30px;
 }
-.meme-section-heading h3,
 .community-links h3 {
   margin: 0;
   font: 700 16px/1.5 var(--body);
-}
-.meme-section-heading p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.6;
 }
 .brand-motion {
   margin-top: 96px;
@@ -1343,22 +1342,29 @@ h2 {
 }
 .how-to-buy {
   display: grid;
-  grid-template-columns: minmax(0, 0.6fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
   align-items: center;
   gap: 64px;
-  margin: 60px 0 0;
+  margin-top: 96px;
+  padding-top: 64px;
+  border-top: 1px solid var(--line);
 }
 .buy-field-guide {
   position: relative;
-  padding: 30px 24px;
-  border: 1px solid var(--line);
-  background: linear-gradient(145deg, #ebe1d1, #fffaf2);
+  padding: 24px 16px 16px;
+  border: 2px solid #b98a5e;
+  background: repeating-linear-gradient(
+    -15deg,
+    #f4ecdf 0 46px,
+    #e8dac7 47px 48px
+  );
+  box-shadow: 14px 14px #29262233;
+  transform: rotate(-2deg);
 }
 .field-guide-label {
+  margin: 0 8px 20px;
   color: var(--accent);
-  text-align: center;
-  margin: 0 0 38px;
-  font: 800 12px var(--mono);
+  font: 700 12px var(--mono);
   letter-spacing: 1px;
 }
 .field-guide-character {
@@ -1366,50 +1372,42 @@ h2 {
   animation: guide-float 7s ease-in-out infinite;
 }
 .field-guide-character img {
-  width: min(100%, 360px);
+  display: block;
+  width: 100%;
   height: auto;
-  margin: auto;
-  object-fit: contain;
+  padding-top: 36px;
 }
 .field-guide-bubble {
   position: absolute;
-  z-index: 2;
+  z-index: 1;
   top: 0;
   right: -6px;
-  padding: 14px 18px;
-  background: var(--paper);
-  border: 1px solid var(--line);
-  color: var(--accent);
-  border-radius: 10px;
-  font: 800 13px/1.5 var(--mono);
-  transform: rotate(4deg);
+  width: 51%;
+  padding: 16px;
+  background: var(--accent);
+  color: var(--paper);
+  font: 400 clamp(21px, 2.4vw, 32px)/1.05 var(--heading);
+  box-shadow: 7px 7px #29262288;
 }
 .field-guide-bubble::after {
   content: "";
   position: absolute;
   bottom: -15px;
   left: 20px;
-  border-top: 15px solid var(--paper);
+  border-top: 18px solid var(--accent);
   border-right: 20px solid transparent;
 }
 .field-guide-route {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 24px;
-  color: var(--muted);
-  font: 800 9px var(--mono);
+  margin: 0;
+  padding: 16px 8px;
+  background: var(--ink);
+  color: var(--paper);
+  text-align: center;
+  font: 700 12px var(--mono);
 }
 .field-guide-route span {
-  padding: 7px 9px;
-  background: #8a542b0c;
-  border: 1px solid var(--line);
-}
-.field-guide-route .icon {
-  width: 13px;
-  height: 13px;
+  padding: 0 4px;
+  color: var(--accent-light);
 }
 @keyframes guide-float {
   0%,
@@ -1421,17 +1419,21 @@ h2 {
   }
 }
 .buy-guide-copy h2 {
-  font-size: clamp(30px, 4.3vw, 60px);
+  margin: 0 0 28px;
+  font: 400 clamp(30px, 4.3vw, 60px)/1.1 var(--heading);
   white-space: nowrap;
+}
+.buy-guide-copy h2 span {
+  color: var(--accent);
+  font-family: var(--brand);
 }
 .buy-guide-intro,
 .buy-steps p {
   color: var(--muted);
-  line-height: 1.6;
+  font: 400 17px/1.65 var(--mono);
 }
 .buy-guide-intro {
-  margin-bottom: 30px;
-  font-size: 16px;
+  margin: 0 0 36px;
 }
 .buy-steps {
   margin: 0;
@@ -1439,52 +1441,60 @@ h2 {
   list-style: none;
 }
 .buy-steps li {
-  padding: 20px 0;
-  border-bottom: 1px solid var(--line);
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
 }
 .buy-steps li:last-child {
-  border-bottom: 0;
+  border-bottom: 1px solid var(--line);
 }
 .buy-step-heading {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 .buy-step-heading h3 {
-  font: 700 17px var(--mono);
-  margin: 0 0 10px;
+  margin: 0;
+  font: 400 28px/1.2 var(--heading);
 }
 .step-arrow {
   color: var(--accent);
+  font-size: 22px;
+  font-weight: 800;
+}
+.buy-step-heading small {
+  margin-left: auto;
+  color: var(--accent);
+  text-align: right;
+  font: 700 10px var(--mono);
 }
 .buy-steps p {
-  margin: 0;
-  font-size: 14px;
+  margin: 14px 0 0 32px;
 }
 .buy-guide-links {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
-  margin-top: 26px;
+  margin-top: 28px;
 }
 .buy-guide-links > * {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 13px 16px;
-  border: 1px solid var(--line);
-  font: 700 12px var(--mono);
+  justify-content: space-between;
+  gap: 8px;
+  padding: 18px 12px;
+  border: 1px solid var(--accent);
+  background: none;
   color: var(--accent);
+  text-align: left;
+  font: 700 11px/1.5 var(--mono);
 }
 .buy-guide-links .icon {
+  flex-shrink: 0;
   width: 17px;
   height: 17px;
 }
 .buy-guide-links a:hover {
   background: var(--accent);
-  border-color: var(--accent);
   color: var(--paper);
 }
 
@@ -2101,6 +2111,22 @@ h2 {
     width: 72%;
     max-width: 345px;
   }
+  .actions .secondary-button {
+    flex: 1 1 calc(50% - 7px);
+    min-width: 0;
+    max-width: 240px;
+    gap: 10px;
+    padding: 12px;
+  }
+  .actions .secondary-button > .icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+  }
+  .actions .secondary-button > span {
+    font-size: 12px;
+    white-space: normal;
+  }
   .hero-overlay {
     background: linear-gradient(#faf7f2e0, #faf7f288);
   }
@@ -2290,8 +2316,9 @@ h2 {
   }
   .how-to-buy {
     grid-template-columns: 1fr;
-    gap: 40px;
-    margin-top: 30px;
+    gap: 48px;
+    margin-top: 64px;
+    padding-top: 40px;
   }
   .buy-guide-copy {
     order: -1;
@@ -2300,12 +2327,20 @@ h2 {
     font-size: clamp(27px, 7.5vw, 54px);
   }
   .buy-guide-links {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .buy-step-heading {
+    flex-wrap: wrap;
+  }
+  .buy-step-heading small {
+    font-size: 9px;
+  }
+  .buy-steps p {
+    font-size: 15px;
   }
   .buy-field-guide {
-    max-width: 430px;
-    width: 100%;
+    width: 90%;
+    max-width: 400px;
     margin: 0 auto;
   }
   .brand-roadmap {
@@ -2518,7 +2553,9 @@ h2 {
   .meme-grid {
     grid-template-columns: 1fr;
   }
-  .meme-gallery > .meme-gallery-inner > h2 {
+  .meme-gallery-inner > h2,
+  .meme-section-heading h2,
+  .meme-archive > h2 {
     font-size: 52px;
   }
   .meme-intro {

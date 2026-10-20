@@ -1,11 +1,11 @@
 import { chapters } from "../content.ts";
 import { siteConfig } from "../config.ts";
-import { asset, escapeHtml, icon, image } from "../lib/html.ts";
+import { asset, brandText, escapeHtml, icon, image } from "../lib/html.ts";
 import { mustQuery } from "../lib/browser.ts";
 
 export function storyView(index: number): string {
   if (index === 0)
-    return `<div class="story-cover"><picture><source media="(max-width:599px)" srcset="${asset("images/story/cover-mobile.png")}" />${image("images/story/cover-wide.png", "Unlettered ivory storybook cover featuring the Shiba banker between old financial architecture and a modern city.", "", false, 1774, 887)}</picture><div class="book-cover-title"><span>THE STORY OF</span><strong>${escapeHtml(siteConfig.name)}</strong></div></div>`;
+    return `<div class="story-cover"><picture><source media="(max-width:599px)" srcset="${asset("images/story/cover-mobile.png")}" />${image("images/story/cover-wide.png", "Unlettered ivory storybook cover featuring the Shiba banker between old financial architecture and a modern city.", "", false, 1774, 887)}</picture><div class="book-cover-title"><span>THE STORY OF</span><strong>${brandText(siteConfig.name)}</strong></div></div>`;
   const chapter = chapters[index - 1];
   if (!chapter) throw new RangeError("Story page is outside the book");
   return `<article class="story-page"><div class="story-art">${image(chapter.image, chapter.alt)}</div><div class="story-page-copy"><span class="story-label">${escapeHtml(chapter.label)}</span><h3>${escapeHtml(chapter.title)}</h3><div class="story-paragraphs">${chapter.paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join("")}</div><span class="page-number">${String(index).padStart(2, "0")} / 05</span></div></article>`;
