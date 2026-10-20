@@ -1,0 +1,99 @@
+{
+  "version": "3.0.0",
+  "status": "Review-ready proposal; not a deployment or record of user approval",
+  "projectName": "Shiba P. Morgan Inu",
+  "sourceSite": "https://aaaa-web-deploy.github.io/JPMD/",
+  "sectionId": "lore",
+  "section": {
+    "eyebrow": "FROM FIRST SPARK TO A NEW ERA",
+    "title": "ETHEREUM GREW. SO DID SHIBA.",
+    "introduction": "A young companion. A loyal guardian. A new era. An imagined Ethereum story, told as fiction."
+  },
+  "cover": {
+    "eyebrow": "THE STORY OF",
+    "title": "Shiba P. Morgan Inu",
+    "wideImage": "images/story-ethereum-v3/cover-wide.png",
+    "mobileImage": "images/story-ethereum-v3/cover-mobile.png",
+    "wideAlt": "Fictional Shiba banker wearing his original Ethereum pendant between an Ethereum community campus and Wall Street architecture in a bright riverfront city.",
+    "mobileAlt": "Mobile cover portrait of the fictional Shiba banker with his Ethereum pendant, a glass Ethereum emblem, and financial architecture behind him."
+  },
+  "chapters": [
+    {
+      "id": "first-spark",
+      "page": 1,
+      "label": "CHAPTER 01 · THE BEGINNING",
+      "title": "The First Spark",
+      "paragraphs": [
+        "In our imagined origin story, Vitalik introduced a small companion to Ethereum's first workshop: a young Shiba with bright eyes and oversized paws. He fastened an Ethereum pendant around the puppy's neck. A very big idea had found a very small friend.",
+        "While the builders debated what came next, Shiba settled beside their laptops. His world was still just a workbench, a few familiar faces, and a door left open."
+      ],
+      "image": "images/story-ethereum-v3/chapter-01.png",
+      "alt": "Fictional origin scene: a stylized young adult Vitalik Buterin gently fastens an Ethereum pendant around a black-and-tan Shiba puppy's neck in a sunlit workshop.",
+      "caption": "A small companion for a very big idea.",
+      "imageDescription": "A sunlit early workshop. Young adult Vitalik kneels beside the puppy and fastens the first silver Ethereum pendant. A wall emblem and a geometric laptop display establish the Ethereum setting."
+    },
+    {
+      "id": "community-companion",
+      "page": 2,
+      "label": "CHAPTER 02 · GROWING TOGETHER",
+      "title": "The Puppy Everyone Knew",
+      "paragraphs": [
+        "As Ethereum grew, so did its Shiba. Developers shared their desks with him. Artists sketched his grin. Traders sent his face to the group chat before checking the chart again. Wherever people gathered to build, trade, or laugh, he found a welcome.",
+        "Soon, the little pendant was a familiar sight. He knew the first coffee, the late-night laptop, and the cheer when someone's idea finally worked. Ethereum was becoming his home."
+      ],
+      "image": "images/story-ethereum-v3/chapter-02.png",
+      "alt": "A young Shiba in a lavender hoodie and Ethereum pendant receives a hug and offers a high-five among community members in a sunny Ethereum courtyard.",
+      "caption": "The chain grew. The group chat found its favorite face.",
+      "imageDescription": "An affectionate courtyard gathering with builders and artists. The growing Shiba wears a lavender hoodie, accepts a hug, and raises a paw for a high-five. A large Ethereum sculpture anchors the scene."
+    },
+    {
+      "id": "steadfast-guardian",
+      "page": 3,
+      "label": "CHAPTER 03 · THE LOYAL GUARDIAN",
+      "title": "The Guardian at Work",
+      "paragraphs": [
+        "When Ethereum faced difficult days, Shiba rolled up his sleeves. He worked beside its builders: testing, fixing, reconnecting, and starting again when a solution failed. As the market turned red outside, he kept working inside.",
+        "He was there for more than the celebrations. Every long night and careful repair showed what loyalty meant to him: helping Ethereum's people build their way forward."
+      ],
+      "image": "images/story-ethereum-v3/chapter-03.png",
+      "alt": "The Shiba in an orange utility jacket actively connects equipment at an Ethereum node workshop while two builders help test and improve the infrastructure during a rainy night.",
+      "caption": "When the work got harder, Shiba worked harder.",
+      "imageDescription": "Shiba leans into the work, using both paws to connect equipment at an Ethereum-marked network rack. Two builders assist. A visible Ethereum network diagram, working indicators, rain, and a small red market chart make both the challenge and his active contribution clear."
+    },
+    {
+      "id": "wall-street-era",
+      "page": 4,
+      "label": "CHAPTER 04 · THE NEW ERA",
+      "title": "Wall Street Meets Shiba",
+      "paragraphs": [
+        "A new era opened as Wall Street found new ways onto Ethereum. Shiba stepped into it transformed: stronger, sharper, and ready for a larger role. In a tailored suit, with his first Ethereum pendant still at his chest, he stood beside the Wall Street Bull.",
+        "Meet Shiba P. Morgan Inu. The puppy who grew up with Ethereum had become a confident bridge between its builders and the world of finance."
+      ],
+      "image": "images/story-ethereum-v3/chapter-04.png",
+      "alt": "The evolved Shiba in a sharp charcoal pinstripe suit stands beside the bronze Wall Street Charging Bull, with financial architecture and a large Ethereum sculpture behind them.",
+      "caption": "A new form. The Wall Street Bull. The same Ethereum heart.",
+      "imageDescription": "The mature Shiba stands confidently beside the prominent bronze Charging Bull, one paw resting on its shoulder. His tailored pinstripe suit and original pendant show his evolution and continuity. Bank columns, financial towers, a builder with financiers, and the large Ethereum sculpture make the Wall Street relationship immediately recognizable."
+    },
+    {
+      "id": "open-horizon",
+      "page": 5,
+      "label": "CHAPTER 05 · THE JOURNEY CONTINUES",
+      "title": "Ethereum's Next Dawn",
+      "paragraphs": [
+        "In the future we imagine, Ethereum follows its own path toward a brighter horizon. New ideas become working projects. Communities connect, and fresh energy flows through a world still being built. The possibilities reach beyond the next candle.",
+        "At the center stands Shiba, carrying his first pendant and the spirit that brought him this far. He helped through the hard days. Now he steps forward with Ethereum. Their story keeps growing."
+      ],
+      "image": "images/story-ethereum-v3/chapter-05.png",
+      "alt": "An imagined bright Ethereum future: Shiba steps confidently along a luminous path through a flourishing city beneath a radiant Ethereum diamond at sunrise.",
+      "caption": "Ethereum's next dawn. Shiba at its heart.",
+      "imageDescription": "A radiant Ethereum diamond rises over a flourishing imagined city. Bright paths, linked bridges, growing spaces, and an energetic community suggest continuing development. Shiba takes a confident step in the center foreground, wearing an ivory blazer and his first pendant. Sunrise and a clear open path make the hopeful future intuitive."
+    }
+  ],
+  "editorial": {
+    "closingLine": "New era. Same loyal Shiba.",
+    "fictionNote": "Fictional meme lore. The Shiba is an imagined companion, not Ethereum's official symbol. No affiliation or endorsement by Vitalik Buterin, the Ethereum Foundation, or JPMorgan Chase.",
+    "captionUse": "Captions and image descriptions are supporting editorial material. Use the existing two-paragraph chapter layout; do not add new caption blocks to the live site by default.",
+    "futureUse": "The final chapter is an imagined future, not a prediction about adoption or token prices.",
+    "visualPrinciple": "Each revised scene must communicate its main meaning before the viewer reads the text: active support, Ethereum meeting Wall Street, and Ethereum's bright future with Shiba as protagonist."
+  }
+}

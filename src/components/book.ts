@@ -1,18 +1,17 @@
-import { chapters } from "../content.ts";
-import { siteConfig } from "../config.ts";
+import { chapters, story } from "../content.ts";
 import { asset, brandText, escapeHtml, icon, image } from "../lib/html.ts";
 import { mustQuery } from "../lib/browser.ts";
 
 export function storyView(index: number): string {
   if (index === 0)
-    return `<div class="story-cover"><picture><source media="(max-width:599px)" srcset="${asset("images/story/cover-mobile.png")}" />${image("images/story/cover-wide.png", "Unlettered ivory storybook cover featuring the Shiba banker between old financial architecture and a modern city.", "", false, 1774, 887)}</picture><div class="book-cover-title"><span>THE STORY OF</span><strong>${brandText(siteConfig.name)}</strong></div></div>`;
+    return `<div class="story-cover"><picture><source media="(max-width:599px)" srcset="${asset(story.cover.mobileImage)}" width="1254" height="1254" />${image(story.cover.wideImage, story.cover.wideAlt, "", false, 1774, 887)}</picture><div class="book-cover-title"><span>${escapeHtml(story.cover.eyebrow)}</span><strong>${brandText(story.cover.title)}</strong></div></div>`;
   const chapter = chapters[index - 1];
   if (!chapter) throw new RangeError("Story page is outside the book");
   return `<article class="story-page"><div class="story-art">${image(chapter.image, chapter.alt)}</div><div class="story-page-copy"><span class="story-label">${escapeHtml(chapter.label)}</span><h3>${escapeHtml(chapter.title)}</h3><div class="story-paragraphs">${chapter.paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join("")}</div><span class="page-number">${String(index).padStart(2, "0")} / 05</span></div></article>`;
 }
 
 export function renderBook(): string {
-  return `<section id="lore" class="brand-story manual-story" aria-labelledby="story-title"><div class="story-intro"><span class="eyebrow block">THE WALL STREET CHRONICLES</span><h2 id="story-title">THE SHIBA STORY.</h2><p>Inspired by the conversation around JPMD and Ethereum. Told as fiction.</p></div><div class="story-desktop"><div class="story-book" data-book><button type="button" class="book-arrow book-arrow-left" data-book-prev aria-label="Previous page" disabled>${icon("chevron-left")}</button><button type="button" class="book-arrow book-arrow-right" data-book-next aria-label="Next page">${icon("chevron-right")}</button><div class="story-turn" data-book-content>${storyView(0)}</div></div><nav class="chapter-navigation" aria-label="Story chapters"><button type="button" data-book-page="0" aria-current="step" aria-label="Story cover">Cover</button>${chapters.map((c, i) => `<button type="button" data-book-page="${i + 1}" aria-label="Chapter ${i + 1}: ${escapeHtml(c.title)}">${String(i + 1).padStart(2, "0")}</button>`).join("")}</nav><span class="story-status" data-book-status aria-live="polite">Cover</span></div></section>`;
+  return `<section id="lore" class="brand-story manual-story" aria-labelledby="story-title"><div class="story-intro"><span class="eyebrow block">${escapeHtml(story.section.eyebrow)}</span><h2 id="story-title">${escapeHtml(story.section.title)}</h2><p>${escapeHtml(story.section.introduction)}</p></div><div class="story-desktop"><div class="story-book" data-book><button type="button" class="book-arrow book-arrow-left" data-book-prev aria-label="Previous page" disabled>${icon("chevron-left")}</button><button type="button" class="book-arrow book-arrow-right" data-book-next aria-label="Next page">${icon("chevron-right")}</button><div class="story-turn" data-book-content>${storyView(0)}</div></div><nav class="chapter-navigation" aria-label="Story chapters"><button type="button" data-book-page="0" aria-current="step" aria-label="Story cover">Cover</button>${chapters.map((c, i) => `<button type="button" data-book-page="${i + 1}" aria-label="Chapter ${i + 1}: ${escapeHtml(c.title)}">${String(i + 1).padStart(2, "0")}</button>`).join("")}</nav><span class="story-status" data-book-status aria-live="polite">Cover</span></div></section>`;
 }
 
 export function initBook(): () => void {

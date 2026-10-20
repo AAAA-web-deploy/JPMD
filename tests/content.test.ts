@@ -3,9 +3,10 @@ import assert from "node:assert/strict";
 import { memes, chapters, roadmap } from "../src/content.ts";
 import { heroVideo, siteConfig } from "../src/config.ts";
 import { renderPage } from "../src/components/page.ts";
-import { storyView } from "../src/components/book.ts";
+import { renderBook, storyView } from "../src/components/book.ts";
+import storyContent from "../src/data/story-content.json" with { type: "json" };
 import { catalogThemes } from "../src/lib/gallery.ts";
-import { safeExternalUrl } from "../src/lib/html.ts";
+import { escapeHtml, safeExternalUrl } from "../src/lib/html.ts";
 import { installDom } from "./dom.ts";
 
 test("complete collection and story assets preserve the required counts", () => {
@@ -19,6 +20,42 @@ test("complete collection and story assets preserve the required counts", () => 
   assert.equal(roadmap.length, 4);
   for (let page = 1; page <= 5; page++)
     assert.ok(storyView(page).includes(`chapter-0${page}.png`));
+});
+
+test("the Lore book renders the version 3.0.0 Ethereum story exactly", () => {
+  assert.equal(storyContent.version, "3.0.0");
+  assert.deepEqual(
+    chapters.map((chapter) => chapter.title),
+    [
+      "The First Spark",
+      "The Puppy Everyone Knew",
+      "The Guardian at Work",
+      "Wall Street Meets Shiba",
+      "Ethereum's Next Dawn",
+    ],
+  );
+  storyContent.chapters.forEach((source, index) => {
+    const chapter = chapters[index]!;
+    assert.deepEqual(
+      [chapter.label, chapter.title, chapter.paragraphs, chapter.image, chapter.alt],
+      [source.label, source.title, source.paragraphs, source.image, source.alt],
+    );
+    assert.equal(chapter.image, `images/story-ethereum-v3/chapter-0${index + 1}.png`);
+    const page = storyView(index + 1);
+    for (const paragraph of source.paragraphs) assert.ok(page.includes(`<p>${escapeHtml(paragraph)}</p>`));
+    assert.ok(!page.includes(source.caption));
+  });
+  const cover = storyView(0);
+  assert.ok(cover.includes('srcset="/images/story-ethereum-v3/cover-mobile.png"'));
+  assert.ok(cover.includes('src="/images/story-ethereum-v3/cover-wide.png"'));
+  assert.ok(cover.includes(escapeHtml(storyContent.cover.wideAlt)));
+  assert.ok(cover.includes("<span>THE STORY OF</span>"));
+  const book = renderBook();
+  assert.ok(book.includes(`<span class="eyebrow block">${storyContent.section.eyebrow}</span>`));
+  assert.ok(book.includes(`<h2 id="story-title">${storyContent.section.title}</h2>`));
+  assert.ok(book.includes(`<p>${storyContent.section.introduction}</p>`));
+  assert.ok(book.includes('aria-label="Chapter 5: Ethereum&#39;s Next Dawn"'));
+  assert.ok(!/images\/story\//.test(book + [0, 1, 2, 3, 4, 5].map(storyView).join("")));
 });
 
 test("full page preserves section order, image reuse, and static-only content", async () => {

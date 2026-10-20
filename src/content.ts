@@ -1,5 +1,6 @@
 import rawMemes from "./data/meme-catalog.json" with { type: "json" };
 import rawMoodGallery from "./data/mood-gallery.json" with { type: "json" };
+import storyContent from "./data/story-content.json" with { type: "json" };
 import { isCatalogTheme, isCollection } from "./lib/gallery.ts";
 import type { Meme, MoodImage } from "./lib/gallery.ts";
 
@@ -116,58 +117,14 @@ export interface Chapter {
   image: string;
   alt: string;
 }
-export const chapters: readonly Chapter[] = [
-  {
-    label: "CHAPTER 01 · THE OLD WORLD",
-    title: "A different kind of meeting.",
-    paragraphs: [
-      "Wall Street knew the towers, the suits, and the closing bell. Crypto was already on every screen. The financiers wanted to understand the people on the other side.",
-      "So they left the boardroom. Somewhere beyond the familiar doors, a new conversation was waiting.",
-    ],
-    image: "images/story/chapter-01.png",
-    alt: "Three fictional financiers look from traditional financial architecture toward a modern city.",
-  },
-  {
-    label: "CHAPTER 02 · THE FIRST PITCH",
-    title: "The cat had the room.",
-    paragraphs: [
-      "First came the cat: bright, quick, and impossible to ignore. The presentation moved fast. So did the conversation.",
-      "The traders knew that feeling. A lively room can catch your attention in a second. The financiers kept listening. They were still looking for their own reason to stay.",
-    ],
-    image: "images/story/chapter-02.png",
-    alt: "An original cat presents to the same fictional financiers in a bright meeting room.",
-  },
-  {
-    label: "CHAPTER 03 · A FAMILIAR FACE",
-    title: "Then came the frog.",
-    paragraphs: [
-      "Across the bridge, a frog brought the energy of a trading crowd. Familiar faces. Big entrances. Plenty to talk about in the group chat.",
-      "The financiers enjoyed the meeting. The question followed them out: where would their next chapter begin?",
-    ],
-    image: "images/story/chapter-03.png",
-    alt: "An original frog meets the fictional financiers beside a city bridge.",
-  },
-  {
-    label: "CHAPTER 04 · ENTER SHIBA",
-    title: "The suit met its match.",
-    paragraphs: [
-      "Then Shiba walked in. A sharp suit, a steady look, and a chair already pulled up to the table. He opened the ledger. The room leaned closer.",
-      "The financiers found their spark. The traders found their character. In our story, Ethereum had just gained a very memorable new arrival.",
-    ],
-    image: "images/story/chapter-04.png",
-    alt: "The Shiba banker opens a blank ledger with the three fictional financiers.",
-  },
-  {
-    label: "CHAPTER 05 · THE OPEN FUTURE",
-    title: "The next chapter is open.",
-    paragraphs: [
-      "Ethereum had a story long before the suits arrived: builders, communities, experiments, and plenty of late nights. Now the meeting had more seats at the table.",
-      "Beyond the glass, the city was still being built. Shiba looked ahead. The pack had a whole new chapter to imagine.",
-    ],
-    image: "images/story/chapter-05.png",
-    alt: "The Shiba, financiers, and builders look toward an imagined city under construction.",
-  },
-];
+/** Lore book (#lore): section intro, cover, and five chapters from the story package. */
+export const story = {
+  section: storyContent.section,
+  cover: storyContent.cover,
+} as const;
+export const chapters: readonly Chapter[] = storyContent.chapters.map(
+  ({ label, title, paragraphs, image, alt }) => ({ label, title, paragraphs, image, alt }),
+);
 
 export const roadmap = [
   {

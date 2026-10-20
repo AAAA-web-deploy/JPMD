@@ -2432,10 +2432,14 @@ h2 {
   }
 }
 @media (min-width: 600px) and (max-width: 1000px) {
+  .story-book {
+    container-type: inline-size;
+  }
   .story-turn {
+    display: grid;
     aspect-ratio: auto;
-    height: 420px;
-    min-height: 0;
+    height: auto;
+    min-height: max(420px, 55cqi);
   }
   .story-page {
     grid-template-columns: 55% 45%;
@@ -2548,8 +2552,8 @@ h2 {
   }
   .story-turn {
     aspect-ratio: auto;
-    height: 480px;
-    min-height: 0;
+    height: auto;
+    min-height: max(480px, 55cqi);
   }
   .story-flipping-sheet {
     inset: 3px;
@@ -2788,12 +2792,13 @@ h2 {
 }
 @media (max-width: 599px) {
   .story-turn {
-    height: min(650px, 100svh - 180px);
-    min-height: 440px;
+    display: grid;
+    height: auto;
+    min-height: max(440px, min(650px, 100svh - 180px));
   }
   .story-page {
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-rows: minmax(min(220px, 60vw), 1fr) auto;
     min-height: 0;
     background: #f8f0df;
   }
