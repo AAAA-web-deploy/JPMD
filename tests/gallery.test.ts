@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import { memes, moodImages } from "../src/content.ts";
 import {
   categories,
@@ -11,9 +12,11 @@ import {
 import type { Category } from "../src/lib/gallery.ts";
 import {
   initGallery,
+  initImageStrips,
   renderArchive,
   renderGalleryIntro,
   renderMemeDialog,
+  renderStrip,
 } from "../src/components/gallery.ts";
 import { initBook, renderBook } from "../src/components/book.ts";
 import { imageProfiles } from "../src/lib/image-profiles.ts";
@@ -256,6 +259,78 @@ test("archive opens shared viewer; edited caption drives share/copy; cancel rest
     cleanup();
     await window.happyDOM.close();
   }
+});
+
+test("strips pause offscreen and in hidden tabs, then clean up; without IntersectionObserver they keep running", async () => {
+  const window = installDom(`<div id="app">${renderStrip("left")}${renderStrip("right")}</div>`);
+  let observed: ((entries: { target: Element; isIntersecting: boolean }[]) => void) | null = null;
+  const targets: Element[] = [];
+  Object.defineProperty(globalThis, "IntersectionObserver", {
+    configurable: true,
+    writable: true,
+    value: class {
+      constructor(callback: typeof observed) {
+        observed = callback;
+      }
+      observe(target: Element) {
+        targets.push(target);
+      }
+      disconnect() {
+        observed = null;
+      }
+    },
+  });
+  let hidden = false;
+  Object.defineProperty(document, "hidden", { configurable: true, get: () => hidden });
+  try {
+    const [left, right] = [...document.querySelectorAll<HTMLElement>(".image-strip")] as [HTMLElement, HTMLElement];
+    const before = document.querySelector(".image-strip")!.outerHTML.replace(/ data-strip-[a-z-]+=""/g, "");
+    const dispose = initImageStrips();
+    assert.deepEqual(targets, [left, right]);
+    observed!([
+      { target: left, isIntersecting: true },
+      { target: right, isIntersecting: false },
+    ]);
+    assert.equal(left.hasAttribute("data-strip-offscreen"), false);
+    assert.equal(right.hasAttribute("data-strip-offscreen"), true);
+    hidden = true;
+    document.dispatchEvent(new Event("visibilitychange"));
+    assert.ok(left.hasAttribute("data-strip-tab-hidden") && right.hasAttribute("data-strip-tab-hidden"));
+    hidden = false;
+    document.dispatchEvent(new Event("visibilitychange"));
+    observed!([{ target: right, isIntersecting: true }]);
+    assert.equal(document.querySelectorAll("[data-strip-offscreen],[data-strip-tab-hidden]").length, 0);
+    assert.equal(left.outerHTML, before, "Markup, buttons, and lazy images are untouched.");
+    right.setAttribute("data-strip-offscreen", "");
+    dispose();
+    assert.equal(observed, null);
+    assert.equal(right.hasAttribute("data-strip-offscreen"), false);
+    hidden = true;
+    document.dispatchEvent(new Event("visibilitychange"));
+    assert.equal(left.hasAttribute("data-strip-tab-hidden"), false, "Listener removed.");
+
+    Object.defineProperty(globalThis, "IntersectionObserver", { configurable: true, writable: true, value: undefined });
+    hidden = false;
+    const disposeFallback = initImageStrips();
+    assert.equal(document.querySelectorAll("[data-strip-offscreen]").length, 0);
+    hidden = true;
+    document.dispatchEvent(new Event("visibilitychange"));
+    assert.ok(left.hasAttribute("data-strip-tab-hidden"), "The tab pause still works without an observer.");
+    disposeFallback();
+  } finally {
+    delete (globalThis as { IntersectionObserver?: unknown }).IntersectionObserver;
+    await window.happyDOM.close();
+  }
+});
+
+test("strip pauses only add paused states and never override hover, focus, or reduced motion", async () => {
+  const css = await readFile(new URL("../src/styles/main.css", import.meta.url), "utf8");
+  assert.match(
+    css,
+    /\.image-strip:hover \.image-strip-track,\s*\.image-strip:focus-within \.image-strip-track,\s*\.image-strip\[data-strip-offscreen\] \.image-strip-track,\s*\.image-strip\[data-strip-tab-hidden\] \.image-strip-track \{\s*animation-play-state: paused;\s*\}/,
+  );
+  assert.doesNotMatch(css, /animation-play-state:\s*running/);
+  assert.match(css, /animation: image-scroll 113s linear infinite;/);
 });
 
 test("share URL safely round-trips punctuation and line breaks", () => {

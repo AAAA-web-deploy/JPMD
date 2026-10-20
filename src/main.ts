@@ -2,7 +2,7 @@ import "./styles/main.css";
 import { siteConfig } from "./config.ts";
 import { renderPage } from "./components/page.ts";
 import { initBook } from "./components/book.ts";
-import { initGallery } from "./components/gallery.ts";
+import { initGallery, initImageStrips } from "./components/gallery.ts";
 import { initHero } from "./components/hero.ts";
 import { initBullRun } from "./components/bullRun.ts";
 import { announce, copyText, mustQuery } from "./lib/browser.ts";
@@ -156,6 +156,7 @@ for (const initialize of [
   initHero,
   initBook,
   initGallery,
+  initImageStrips,
   () => initBullRun(),
   initEffects,
   initContract,

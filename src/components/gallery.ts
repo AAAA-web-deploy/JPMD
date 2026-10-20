@@ -54,6 +54,35 @@ export function renderStrip(direction: "left" | "right"): string {
     `<div class="image-strip-group"${clone ? ' aria-hidden="true"' : ""}>${items.map((meme) => `<button type="button" class="strip-image-button" data-open-meme="${meme.id}" aria-label="Open image: ${escapeHtml(meme.caption)}"${clone ? ' tabindex="-1"' : ""}>${image(meme.path, clone ? "" : meme.alt, "", false, 1254, 1254, "strip")}</button>`).join("")}</div>`;
   return `<div class="image-strip image-strip-${direction}" aria-label="Shiba image collection moving ${direction}"><div class="image-strip-track">${group(false)}${group(true)}</div></div>`;
 }
+/** Pauses strips that are offscreen or in a hidden tab. Pausing is additive: CSS hover/focus pauses still apply. */
+export function initImageStrips(): () => void {
+  const strips = [...document.querySelectorAll<HTMLElement>(".image-strip")];
+  const syncTab = (): void => {
+    for (const strip of strips) strip.toggleAttribute("data-strip-tab-hidden", document.hidden);
+  };
+  // Without IntersectionObserver the strips keep running, as before.
+  const observer =
+    typeof IntersectionObserver === "undefined"
+      ? null
+      : new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries)
+              entry.target.toggleAttribute("data-strip-offscreen", !entry.isIntersecting);
+          },
+          { rootMargin: "100px 0px" },
+        );
+  for (const strip of strips) observer?.observe(strip);
+  syncTab();
+  document.addEventListener("visibilitychange", syncTab);
+  return () => {
+    observer?.disconnect();
+    document.removeEventListener("visibilitychange", syncTab);
+    for (const strip of strips) {
+      strip.removeAttribute("data-strip-offscreen");
+      strip.removeAttribute("data-strip-tab-hidden");
+    }
+  };
+}
 export function renderArchive(): string {
   return `<section class="meme-archive" aria-labelledby="archive-title"><h2 id="archive-title">The whole <span>pack.</span></h2><p class="meme-intro">${packMemes.length} images. Scroll the pack to find the face for your next message.</p><div class="meme-archive-scroll"><div class="meme-archive-grid">${packMemes.map((meme) => `<button type="button" data-open-meme="${meme.id}" aria-label="Open image: ${escapeHtml(meme.caption)}">${image(meme.path, meme.alt, "", false, 1254, 1254, "archive")}</button>`).join("")}</div></div></section>`;
 }

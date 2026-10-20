@@ -986,7 +986,9 @@ h2 {
   animation-direction: reverse;
 }
 .image-strip:hover .image-strip-track,
-.image-strip:focus-within .image-strip-track {
+.image-strip:focus-within .image-strip-track,
+.image-strip[data-strip-offscreen] .image-strip-track,
+.image-strip[data-strip-tab-hidden] .image-strip-track {
   animation-play-state: paused;
 }
 @keyframes image-scroll {
