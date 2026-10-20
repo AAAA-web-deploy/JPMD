@@ -3,7 +3,7 @@ import { asset, brandText, escapeHtml as e, icon, image, officialLink } from "..
 
 const pauseIcon = `<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 2.5h3v11H4zM9 2.5h3v11H9z" fill="currentColor"/></svg>`;
 const playIcon = `<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 2.2 13.5 8l-9 5.8z" fill="currentColor"/></svg>`;
-const movieLabel = "Shiba P. Morgan Inu in a pinstripe suit, leaning on a bronze bull on a sunlit city street";
+const movieLabel = "Shiba P. Morgan Inu in a pinstripe suit, leaning on a bronze bull";
 
 function heroMedia(): string {
   if (!heroVideo)
@@ -37,76 +37,160 @@ export function initHero(): () => void {
   };
 }
 
-/** Muted looping playback that honors reduced motion, a manual pause, visibility, and failures. */
+/**
+ * One controller for hero playback. The hero is "active" while it intersects the viewport,
+ * the page is shown, and the tab is visible. Entering the active state restarts the clip
+ * from 0; leaving pauses it. Native `loop` repeats the clip while active. A generation
+ * token cancels stale play()/seek work, so late promises never resume a departed hero.
+ */
 function initHeroVideo(): () => void {
   const video = document.querySelector<HTMLVideoElement>("[data-hero-video]");
   const frame = video?.closest<HTMLElement>("[data-hero-frame]");
   const toggle = frame?.querySelector<HTMLButtonElement>("[data-hero-toggle]");
   if (!video || !frame || !toggle) return () => {};
+  const hero = frame.closest<HTMLElement>("#home") ?? frame;
   const source = video.querySelector("source");
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
   const controller = new AbortController();
   const signal = controller.signal;
   let choice: "play" | "pause" | null = null;
-  let onScreen = true;
+  let onScreen = false;
+  let shown = true;
+  let active = false;
   let failed = false;
   let blocked = false;
+  let generation = 0;
+  let pendingSeek: (() => void) | null = null;
 
-  const intended = (): boolean => (choice ? choice === "play" : !reduced.matches);
+  const wantsMotion = (): boolean => (choice ? choice === "play" : !reduced.matches);
   function render(): void {
-    const on = intended() && !blocked && !failed;
+    const on = wantsMotion() && !blocked && !failed;
     toggle!.hidden = failed;
     toggle!.innerHTML = on ? pauseIcon : playIcon;
     toggle!.setAttribute("aria-label", on ? "Pause the Shiba movie" : "Play the Shiba movie");
   }
-  function sync(): void {
-    if (failed) return;
-    const run = intended() && !blocked && onScreen && !document.hidden;
-    if (run && video!.paused) {
-      video!.play().catch((error: unknown) => {
+  function halt(): void {
+    generation++;
+    pendingSeek = null;
+    if (!video!.paused) video!.pause();
+  }
+  function attempt(token: number): void {
+    video!.playbackRate = 1;
+    video!
+      .play()
+      .then(() => {
+        if (token !== generation) video!.pause();
+      })
+      .catch((error: unknown) => {
+        if (token !== generation) return;
         if (error instanceof DOMException && error.name === "AbortError") return;
         blocked = true;
         frame!.classList.remove("is-playing");
         render();
       });
-    } else if (!run && !video!.paused) video!.pause();
-    if (!intended() && choice === null) frame!.classList.remove("is-playing");
+  }
+  function restart(): void {
+    const token = ++generation;
+    blocked = false;
+    pendingSeek = () => {
+      if (token !== generation) return;
+      video!.currentTime = 0;
+      attempt(token);
+    };
+    if (video!.readyState >= 1) runPendingSeek();
+  }
+  function runPendingSeek(): void {
+    const run = pendingSeek;
+    pendingSeek = null;
+    run?.();
+  }
+  function evaluate(): void {
+    const now = onScreen && shown && !document.hidden && !failed;
+    if (now !== active) {
+      active = now;
+      if (!now) halt();
+      else if (wantsMotion()) restart();
+    } else if (!now && !video!.paused) halt();
     render();
   }
   function fail(): void {
     failed = true;
+    halt();
     frame!.classList.remove("is-playing");
-    video!.pause();
     render();
   }
 
-  video.addEventListener("playing", () => {
-    if (intended()) frame.classList.add("is-playing");
-    else video.pause();
-  }, { signal });
+  video.addEventListener("loadedmetadata", runPendingSeek, { signal });
+  video.addEventListener(
+    "playing",
+    () => {
+      if (!active || !wantsMotion()) video.pause();
+      else frame.classList.add("is-playing");
+    },
+    { signal },
+  );
   video.addEventListener("error", fail, { signal });
   source?.addEventListener("error", fail, { signal });
-  toggle.addEventListener("click", () => {
-    const on = intended() && !blocked;
-    choice = on ? "pause" : "play";
-    blocked = false;
-    sync();
-  }, { signal });
-  document.addEventListener("visibilitychange", sync, { signal });
-  reduced.addEventListener("change", sync, { signal });
+  toggle.addEventListener(
+    "click",
+    () => {
+      if (wantsMotion() && !blocked) {
+        choice = "pause";
+        halt();
+      } else {
+        choice = "play";
+        if (blocked) restart();
+        else if (active) attempt(++generation);
+      }
+      render();
+    },
+    { signal },
+  );
+  reduced.addEventListener(
+    "change",
+    () => {
+      if (choice !== null) return;
+      if (reduced.matches) {
+        halt();
+        frame.classList.remove("is-playing");
+      } else if (active) restart();
+      render();
+    },
+    { signal },
+  );
+  document.addEventListener("visibilitychange", evaluate, { signal });
+  window.addEventListener(
+    "pagehide",
+    () => {
+      shown = false;
+      evaluate();
+    },
+    { signal },
+  );
+  window.addEventListener(
+    "pageshow",
+    () => {
+      shown = true;
+      evaluate();
+    },
+    { signal },
+  );
   const observer = new IntersectionObserver((entries) => {
-    onScreen = entries.some((entry) => entry.isIntersecting);
-    sync();
+    onScreen = entries[entries.length - 1]!.isIntersecting;
+    evaluate();
   });
-  observer.observe(frame);
+  observer.observe(hero);
 
   if (video.error) fail();
-  else {
-    if (!video.paused && intended()) frame.classList.add("is-playing");
-    sync();
+  else if (!wantsMotion()) {
+    video.pause();
+    frame.classList.remove("is-playing");
   }
+  render();
   return () => {
     controller.abort();
     observer.disconnect();
+    generation++;
+    pendingSeek = null;
   };
 }

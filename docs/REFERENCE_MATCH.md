@@ -58,7 +58,7 @@ Remaining known differences:
 
 The hero was rebuilt after the live Groklet hero, which was inspected at 1440, 1024, and 390px. Its stylesheet gives a 1fr / 0.9fr grid from 900px, a character-first stack below 900px, a radial halo, two slowly rotating orbit ellipses, a drifting glow, and a speech bubble with a tail. Adaptations:
 
-- The Groklet character is a tall transparent cutout (560:1084). The supplied movie is an opaque 16:9 street scene, so it sits in a framed 16:9 stage with `object-fit: contain`. The stage uses balanced 1fr / 1fr columns rather than the reference's narrow portrait figure, and the movie is never masked, cropped, scaled, or mirrored.
+- The Groklet character is a tall transparent cutout (560:1084). The supplied movie is a 16:9 transparent WebM, so like the reference it sits directly on the hero background with no frame, box, or poster behind it, inside a 16:9 stage with `object-fit: contain`. The stage uses balanced 1fr / 1fr columns rather than the reference's narrow portrait figure, and the movie is never masked, cropped, scaled, or mirrored.
 - The greeting sits above the frame because the Shiba's ears reach the top edge of the footage.
 - The colours are charcoal and copper instead of the reference's navy, violet, and teal. The display font and existing copy are kept, and the name is set in two deliberate lines.
 - The reference's scroll cue, X symbols, "Proof" section, and token details are not copied.

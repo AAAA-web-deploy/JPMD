@@ -49,12 +49,12 @@ export interface HeroVideo {
  * Set to null to show the still Shiba portrait instead.
  */
 export const heroVideo: HeroVideo | null = {
-  src: "videos/banner_movie_v2.mp4",
-  type: 'video/mp4; codecs="avc1.640020, mp4a.40.2"',
-  poster: "videos/banner_movie_v2-poster.jpg",
+  src: "videos/banner_movie_v3.webm",
+  type: 'video/webm; codecs="vp9, opus"',
+  poster: "videos/banner_movie_v3-poster.png",
   width: 1280,
   height: 720,
-  sha256: "84210b7238675eeaf35d05c8702a583a689ad13aec24a359d2e63165dd833d88",
+  sha256: "baa9ea39466e496ace851c12200280ad650193e1b4ad4f11b221583d940504d0",
   posterSha256:
-    "e0a57e187800b95aa4b796a6e1f3bc35492334aecbef1de137b599d534279463",
+    "f36c3ba83688f8b471c4e4df4186877ed1e4788e93826df1b1918a33ab1f33c2",
 };

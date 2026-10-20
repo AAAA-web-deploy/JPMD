@@ -443,12 +443,25 @@ h2 {
   opacity: 0;
   transition: opacity 0.5s;
 }
+.hero-frame[data-hero-frame] {
+  overflow: visible;
+  background: none;
+  box-shadow: none;
+  filter: drop-shadow(0 30px 40px #00000073);
+}
 .hero-frame.is-playing .hero-video {
   opacity: 1;
+}
+.hero-frame.is-playing .hero-poster {
+  visibility: hidden;
+  transition: visibility 0s 0.5s;
 }
 @media (prefers-reduced-motion: no-preference) {
   .no-js .hero-video {
     opacity: 1;
+  }
+  .no-js .hero-poster {
+    visibility: hidden;
   }
 }
 .hero-motion-toggle {

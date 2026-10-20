@@ -26,18 +26,17 @@ The final full `npm run check` completed with exit code 0. Dependencies were ins
 
 ## Hero movie update (20 October 2026)
 
-**Source file.** `banner_movie_v2.mp4` was inspected from its MP4 boxes and in the browser:
+**Source file.** The hero now uses the user's transparent `banner_movie_v3.webm`, which replaces `banner_movie_v2.mp4`:
 
-- H.264 High profile (`avc1.640020`) with AAC stereo, 1280 × 720, 24 fps, 5.0 s, 4,355,719 bytes.
-- The index is at the front of the file (fast start).
-- It is 24-bit with no alpha channel. Its corner pixels are opaque scenery.
+- VP9 with alpha plus Opus (`video/webm; codecs="vp9, opus"`), 1280 × 720, 5.0 s, 2,664,536 bytes. Chrome reports `canPlayType` "probably".
+- Decoded frames have genuine alpha: the background pixels are fully transparent.
 
-It is copied byte-for-byte to `public/videos/` (SHA-256 `84210b72…3d88`). No conversion was needed. The poster is the movie's own first frame, captured in the browser as a 1280 × 720 JPEG.
+It is copied byte-for-byte to `public/videos/` (SHA-256 `baa9ea39…04d0`). No conversion was done. The poster is the movie's own first frame, captured in the browser as a transparent 1280 × 720 PNG. The v2 MP4 and JPEG poster were removed from `public/`.
 
 **Checks.**
 
-- `npm run check`: 20 of 20 tests passed. The four new tests cover the hero playback lifecycle and byte ranges.
-- The asset check hash-verified the movie and poster. A temporary stray `.mp4` was rejected.
+- `npm run check`: 22 of 22 tests passed. The hero tests cover a first-open start from 0, repeated visibility callbacks without a reset, pausing on leave and a single restart from 0 on return, tab hide/show, `pagehide`/`pageshow`, a late `play()` promise after leaving, seeking only after metadata, a manual pause, reduced motion, blocked autoplay, a source error, and listener teardown. The server test checks `.webm` is served as `video/webm`.
+- The asset check hash-verified the movie and poster.
 - The dist check verified 98 references and exactly one hero video with `autoplay`, `muted`, `loop`, and `playsinline`.
 
 **Layout.** Measured in the browser at 1440 × 900, 900, 899, 390, and 320px:
@@ -51,15 +50,20 @@ It is copied byte-for-byte to `public/videos/` (SHA-256 `84210b72…3d88`). No c
 
 **Playback.**
 
-- Autoplay is muted and looping.
-- Pause holds through scrolling off-screen and back.
-- Resume works, and the movie pauses off-screen and resumes on return.
-- With reduced motion, the poster stays at 0.00s, every hero animation is `none`, and Play is available.
-- A broken source restores the poster and hides the control, with no errors or unhandled rejections.
+Checked in Chrome on the dev server and on `npm start`, with an instrumented page that counted seeks to 0, `play()` calls, active listeners, and errors:
+
+- First open: one reset to 0 and one `play()`; muted, looping, rate 1. Over about 20 s the clip wrapped 5 times natively with no further resets or `play()` calls.
+- Scrolling fully past the hero pauses it, and it stays paused. Scrolling back restarts from 0 with exactly one reset. Small scrolls while the hero stays visible cause no reset.
+- Navigating to another URL and pressing Back reloaded the page (this browser did not use the back/forward cache), and the clip started once from 0. Dispatched `pagehide`/`pageshow` events paused and then restarted it once from 0; a duplicate `pageshow` did not reset again.
+- A manual Pause holds through leaving and returning, and Play resumes.
+- The transparent movie sits directly on the hero background: the frame's background is transparent and the poster is hidden while playing.
+- Listener count stayed constant (22), with no errors or unhandled rejections.
+- Not exercisable in this browser: real tab hiding (it pins `document.hidden`), real autoplay blocking, and Safari/iOS, which does not render WebM alpha and falls back to the poster. These paths are covered by unit tests only.
 
 **Serving.**
 
-- Vite dev server: range requests return 206 with a `Content-Range`. HEAD returns 200 with `video/mp4`.
+- v3 WebM on `npm start`: HEAD returns 200 `video/webm` with `Accept-Ranges: bytes`, a 100-byte range returns 206 with the correct `Content-Range`, and an unsatisfiable range returns 416. Vite serves it as `video/webm`.
+- (v2 MP4, earlier) Vite dev server: range requests return 206 with a `Content-Range`. HEAD returns 200 with `video/mp4`.
 - Production server (`npm start`):
   - GET and HEAD return 200 `video/mp4` with `Accept-Ranges`. Byte ranges return 206: a suffix range returned the original's last 500 bytes, and an open-ended range was correct. An unsatisfiable range returns 416. Path traversal still returns 404.
   - The CSP adds `media-src 'self'`.

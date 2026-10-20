@@ -31,6 +31,7 @@ test("production resolver serves assets and protects the source tree without ope
   await writeFile(path.join(folder, "private.txt"), "private");
   await mkdir(path.join(root, "videos"));
   await writeFile(path.join(root, "videos/hero.mp4"), "mp4");
+  await writeFile(path.join(root, "videos/hero.webm"), "webm");
   try {
     const index = await resolvePublicFile(root, "/");
     assert.equal(index.status, 200);
@@ -43,6 +44,10 @@ test("production resolver serves assets and protects the source tree without ope
     const movie = await resolvePublicFile(root, "/videos/hero.mp4", "HEAD");
     assert.equal(movie.status, 200);
     assert.equal(movie.type, "video/mp4");
+    assert.equal(
+      (await resolvePublicFile(root, "/videos/hero.webm", "HEAD")).type,
+      "video/webm",
+    );
     assert.match(securityHeaders["Content-Security-Policy"], /media-src 'self'/);
     assert.equal((await resolvePublicFile(root, "/missing.png")).status, 404);
     assert.equal(
