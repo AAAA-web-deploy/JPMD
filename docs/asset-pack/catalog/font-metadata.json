@@ -1,0 +1,260 @@
+[
+  {
+    "path": "fonts/19cfc7226ec3afaa-s.woff2",
+    "copyright": [
+      "Copyright 2016 The Inter Project Authors (https://github.com/rsms/inter)"
+    ],
+    "family": [
+      "Inter"
+    ],
+    "subfamily": [
+      "Regular"
+    ],
+    "full_name": [
+      "Inter Regular"
+    ],
+    "version": [
+      "Version 4.001;git-66647c0bb"
+    ],
+    "license_url": [
+      "https://openfontlicense.org"
+    ]
+  },
+  {
+    "path": "fonts/21350d82a1f187e9-s.woff2",
+    "copyright": [
+      "Copyright 2016 The Inter Project Authors (https://github.com/rsms/inter)"
+    ],
+    "family": [
+      "Inter"
+    ],
+    "subfamily": [
+      "Regular"
+    ],
+    "full_name": [
+      "Inter Regular"
+    ],
+    "version": [
+      "Version 4.001;git-66647c0bb"
+    ],
+    "license_url": [
+      "https://openfontlicense.org"
+    ]
+  },
+  {
+    "path": "fonts/62c97acc3aa63787-s.p.woff2",
+    "copyright": [
+      "Copyright 2020 The Anton Project Authors (https://github.com/googlefonts/AntonFont.git)"
+    ],
+    "family": [
+      "Anton"
+    ],
+    "subfamily": [
+      "Regular"
+    ],
+    "full_name": [
+      "Anton Regular"
+    ],
+    "version": [
+      "Version 2.116; ttfautohint (v1.8.3)"
+    ],
+    "license_url": [
+      "https://scripts.sil.org/OFL"
+    ]
+  },
+  {
+    "path": "fonts/6ced06489fd81a3f-s.woff2",
+    "copyright": [
+      "Copyright 2020 The Anton Project Authors (https://github.com/googlefonts/AntonFont.git)"
+    ],
+    "family": [
+      "Anton"
+    ],
+    "subfamily": [
+      "Regular"
+    ],
+    "full_name": [
+      "Anton Regular"
+    ],
+    "version": [
+      "Version 2.116; ttfautohint (v1.8.3)"
+    ],
+    "license_url": [
+      "https://scripts.sil.org/OFL"
+    ]
+  },
+  {
+    "path": "fonts/8e9860b6e62d6359-s.woff2",
+    "copyright": [
+      "Copyright 2016 The Inter Project Authors (https://github.com/rsms/inter)"
+    ],
+    "family": [
+      "Inter"
+    ],
+    "subfamily": [
+      "Regular"
+    ],
+    "full_name": [
+      "Inter Regular"
+    ],
+    "version": [
+      "Version 4.001;git-66647c0bb"
+    ],
+    "license_url": [
+      "https://openfontlicense.org"
+    ]
+  },
+  {
+    "path": "fonts/950ac3e5115db087-s.p.otf",
+    "copyright": [
+      "(c) Andrey Sharonov 2022. All rights reserved."
+    ],
+    "family": [
+      "Reika"
+    ],
+    "subfamily": [
+      "Regular"
+    ],
+    "full_name": [
+      "Reika Regular"
+    ],
+    "version": [
+      "Version 1.00"
+    ],
+    "manufacturer": [
+      "Andrey Sharonov"
+    ],
+    "designer": [
+      "Andrey Sharonov"
+    ]
+  },
+  {
+    "path": "fonts/Reika-Regular.otf",
+    "copyright": [
+      "(c) Andrey Sharonov 2022. All rights reserved."
+    ],
+    "family": [
+      "Reika"
+    ],
+    "subfamily": [
+      "Regular"
+    ],
+    "full_name": [
+      "Reika Regular"
+    ],
+    "version": [
+      "Version 1.00"
+    ],
+    "manufacturer": [
+      "Andrey Sharonov"
+    ],
+    "designer": [
+      "Andrey Sharonov"
+    ]
+  },
+  {
+    "path": "fonts/aa5f74293546f6d0-s.woff2",
+    "copyright": [
+      "Copyright 2020 The Anton Project Authors (https://github.com/googlefonts/AntonFont.git)"
+    ],
+    "family": [
+      "Anton"
+    ],
+    "subfamily": [
+      "Regular"
+    ],
+    "full_name": [
+      "Anton Regular"
+    ],
+    "version": [
+      "Version 2.116; ttfautohint (v1.8.3)"
+    ],
+    "license_url": [
+      "https://scripts.sil.org/OFL"
+    ]
+  },
+  {
+    "path": "fonts/ba9851c3c22cd980-s.woff2",
+    "copyright": [
+      "Copyright 2016 The Inter Project Authors (https://github.com/rsms/inter)"
+    ],
+    "family": [
+      "Inter"
+    ],
+    "subfamily": [
+      "Regular"
+    ],
+    "full_name": [
+      "Inter Regular"
+    ],
+    "version": [
+      "Version 4.001;git-66647c0bb"
+    ],
+    "license_url": [
+      "https://openfontlicense.org"
+    ]
+  },
+  {
+    "path": "fonts/c5fe6dc8356a8c31-s.woff2",
+    "copyright": [
+      "Copyright 2016 The Inter Project Authors (https://github.com/rsms/inter)"
+    ],
+    "family": [
+      "Inter"
+    ],
+    "subfamily": [
+      "Regular"
+    ],
+    "full_name": [
+      "Inter Regular"
+    ],
+    "version": [
+      "Version 4.001;git-66647c0bb"
+    ],
+    "license_url": [
+      "https://openfontlicense.org"
+    ]
+  },
+  {
+    "path": "fonts/df0a9ae256c0569c-s.woff2",
+    "copyright": [
+      "Copyright 2016 The Inter Project Authors (https://github.com/rsms/inter)"
+    ],
+    "family": [
+      "Inter"
+    ],
+    "subfamily": [
+      "Regular"
+    ],
+    "full_name": [
+      "Inter Regular"
+    ],
+    "version": [
+      "Version 4.001;git-66647c0bb"
+    ],
+    "license_url": [
+      "https://openfontlicense.org"
+    ]
+  },
+  {
+    "path": "fonts/e4af272ccee01ff0-s.p.woff2",
+    "copyright": [
+      "Copyright 2016 The Inter Project Authors (https://github.com/rsms/inter)"
+    ],
+    "family": [
+      "Inter"
+    ],
+    "subfamily": [
+      "Regular"
+    ],
+    "full_name": [
+      "Inter Regular"
+    ],
+    "version": [
+      "Version 4.001;git-66647c0bb"
+    ],
+    "license_url": [
+      "https://openfontlicense.org"
+    ]
+  }
+]

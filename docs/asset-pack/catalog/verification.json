@@ -1,0 +1,37 @@
+{
+  "scope": "Asset files and catalog coverage only; no built website or device parity test.",
+  "counts": {
+    "generated_pngs": 89,
+    "editorial_photos": 1,
+    "raster_images": 90,
+    "gallery_images": 67,
+    "static_svg_icons": 18,
+    "font_files": 12,
+    "media_files": 120,
+    "transparent_assets_checked": 11
+  },
+  "checks": {
+    "all_raster_files_decoded_and_verified": true,
+    "all_raster_files_single_frame": true,
+    "all_generated_pngs_distinct": true,
+    "all_gallery_files_distinct": true,
+    "every_placement_reference_resolves": true,
+    "all_requested_cutouts_have_transparent_pixels": true,
+    "static_svgs_parse_without_animation_or_scripts": true,
+    "font_metadata_read_for_all_font_files": true,
+    "video_and_animated_image_files_absent": true,
+    "all_ai_images_visually_reviewed": true,
+    "ocr_run_on_all_89_ai_images": true,
+    "ocr_banned_term_candidates": 0
+  },
+  "ocr_note": "OCR is a secondary check. Non-text textures and shapes produced candidate readings; these were assessed visually. An unwanted headset marking was removed in the final image. The genuine photograph was not altered to remove details of its original scene.",
+  "gallery_category_counts": {
+    "Bearish": 5,
+    "Bullish": 16,
+    "Community": 10,
+    "GM / GN": 2,
+    "Lifestyle": 15,
+    "Reactions": 19
+  },
+  "approval_note": "Technical and visual checks do not establish user approval of new artwork, the final site palette, copy, token details, or an accessory concept."
+}

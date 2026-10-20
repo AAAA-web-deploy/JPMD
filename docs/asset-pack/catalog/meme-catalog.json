@@ -1,0 +1,538 @@
+[
+  {
+    "id": "meme-01",
+    "reference_path": "/images/memes/community-yacht.jpg",
+    "path": "images/memes/01-after-hours-yacht.png",
+    "category": "Lifestyle",
+    "alt": "Relaxed on the deck of a modern yacht, dark suit immaculate, coffee cup in paw, distant city skyline, a closed unbranded laptop; quietly triumphant expression.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-02",
+    "reference_path": "/images/memes/community-grandpa.jpg",
+    "path": "images/memes/02-elder-wisdom.png",
+    "category": "Community",
+    "alt": "Listening thoughtfully to an anonymous elderly human gentleman in a warm modern library; both seated, the Shiba calmly nodding beside a completely blank closed book.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-03",
+    "reference_path": "/images/memes/community-toast.jpg",
+    "path": "images/memes/03-quiet-toast.png",
+    "category": "Reactions",
+    "alt": "Raising a single elegant clear glass in a modest celebratory toast at a warm evening gathering; close-up knowing smile, tasteful bokeh, no drinking labels.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-04",
+    "reference_path": "/images/memes/community-its-robin.jpg",
+    "path": "images/memes/04-unexpected-guest.png",
+    "category": "Reactions",
+    "alt": "Seated confidently in a sophisticated broadcast-style interview chair opposite one anonymous human interviewer; tasteful studio, no screens, signs or branding; an amusing unbothered expression.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-05",
+    "reference_path": "/images/memes/community-summit.jpg",
+    "path": "images/memes/05-finance-summit.png",
+    "category": "Community",
+    "alt": "Confidently at a plain unmarked lectern in a modern conference room with anonymous suited attendees; no flags or written signs; subtly surprised faces in the background.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-06",
+    "reference_path": "/images/memes/community-tokenize.jpg",
+    "path": "images/memes/06-paper-to-infrastructure.png",
+    "category": "Bullish",
+    "alt": "Comparing an old stack of completely blank paper folders on one side of a desk with a modern glass server cabinet on the other; thoughtful confident expression; a single coherent scene.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-07",
+    "reference_path": "/images/memes/community-bear-door.jpg",
+    "path": "images/memes/07-bear-at-the-door.png",
+    "category": "Bullish",
+    "alt": "Calmly holding a doorway open with one paw while politely stopping a friendly stylized brown bear in a plain suit with the other; velvet-rope lobby humor, no signs or text.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-08",
+    "reference_path": "/images/memes/community-server-room.jpg",
+    "path": "images/memes/08-systems-online.png",
+    "category": "Community",
+    "alt": "In a clean server room collaborating with two anonymous hoodie-wearing human builders; softly glowing unlabelled indicator lights, paws on a blank tablet, collegial focus.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-09",
+    "reference_path": "/images/memes/community-skate.jpg",
+    "path": "images/memes/09-all-terrain.png",
+    "category": "Lifestyle",
+    "alt": "Riding a plain skateboard through a sunlit financial district plaza, suit jacket flowing slightly, delighted self-assured face, low-angle dynamic pose frozen in one image.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-10",
+    "reference_path": "/images/memes/community-wall-street.jpg",
+    "path": "images/memes/10-taking-the-call.png",
+    "category": "Bullish",
+    "alt": "Answering an unbranded telephone at a clean desk beside tall city windows; a subtle knowing smile, paw holding handset, no signage or text.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-11",
+    "reference_path": "/images/memes/extra-moon-landing.png",
+    "path": "images/memes/11-moon-shift.png",
+    "category": "Bullish",
+    "alt": "On a moonlike landscape, wearing a clear protective helmet over the same Shiba face and a practical plain space oversuit with a dark necktie visible; planting a completely blank ivory flag, Earth in distance.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-12",
+    "reference_path": "/images/memes/extra-storm.png",
+    "path": "images/memes/12-unshaken.png",
+    "category": "Bullish",
+    "alt": "Walking calmly through a windswept city plaza while papers swirl around; suit composed and face unbothered; the papers are entirely blank.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-13",
+    "reference_path": "/images/memes/extra-robin-portal.png",
+    "path": "images/memes/13-open-door.png",
+    "category": "Community",
+    "alt": "Approaching an elegant glowing rectangular doorway in a modern city at dusk; warm ivory light through the doorway, inviting future, one Shiba seen three-quarter view with face visible.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-14",
+    "reference_path": "/images/memes/extra-robin-matrix.png",
+    "path": "images/memes/14-seeing-patterns.png",
+    "category": "Reactions",
+    "alt": "Close-up thoughtful Shiba in a softly lit room studying a wall of abstract glowing geometric dots and lines; absolutely no code characters, letters, numbers or logos.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-15",
+    "reference_path": "/images/memes/extra-kingdom-arrival.png",
+    "path": "images/memes/15-arrival.png",
+    "category": "Community",
+    "alt": "Entering a sunlit glass-and-stone financial building through tall open doors, a confident slight smile, clean lobby reflections and soft warm light.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-16",
+    "reference_path": "/images/memes/extra-green-volley.png",
+    "path": "images/memes/16-building-together.png",
+    "category": "Community",
+    "alt": "Standing with anonymous builders and financiers on a newly completed glass pedestrian bridge, hands and paws resting on the rail, collaborative energy, modern city background.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-17",
+    "reference_path": "/images/memes/extra-divine-robin.png",
+    "path": "images/memes/17-patient-conviction.png",
+    "category": "Reactions",
+    "alt": "Eyes gently closed, paws loosely clasped on a desk, warm window light, serene patient conviction, small relieved smile; no religious figures or symbols.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-18",
+    "reference_path": "/images/memes/collection-whale.png",
+    "path": "images/memes/18-whale-watch.png",
+    "category": "Bullish",
+    "alt": "Standing in front of a vast aquarium window as a graceful large whale passes, Shiba's eyes wide with impressed curiosity, reflected blue water light on charcoal suit.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-19",
+    "reference_path": "/images/memes/collection-candle-lift.png",
+    "path": "images/memes/19-strength-training.png",
+    "category": "Bullish",
+    "alt": "Lifting a plain black dumbbell in a refined gym, suit jacket removed but white shirt, dark tie and waistcoat retained; focused determined expression; no numbers or logos on weights.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-20",
+    "reference_path": "/images/memes/collection-lunch.png",
+    "path": "images/memes/20-balanced-lunch.png",
+    "category": "Lifestyle",
+    "alt": "At a clean lunch table carefully balancing a small plate of vegetables and a plain cup, suit neat, comically serious expression, soft daylight.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-21",
+    "reference_path": "/images/memes/collection-quest.png",
+    "path": "images/memes/21-choose-the-route.png",
+    "category": "Community",
+    "alt": "Pausing at the junction of three tasteful unmarked office corridors, looking confidently toward the brightest passage; one unified architectural scene with no letters or symbols.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-22",
+    "reference_path": "/images/memes/collection-sunrise.png",
+    "path": "images/memes/22-morning-routine.png",
+    "category": "GM / GN",
+    "alt": "Opening curtains to a glowing dawn skyline while holding a plain ivory coffee mug; fresh rested Shiba expression, crisp shirt and dark tie.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-23",
+    "reference_path": "/images/memes/collection-broker.png",
+    "path": "images/memes/23-desk-call.png",
+    "category": "Bullish",
+    "alt": "Leaning over a clean workstation, phone to ear and free paw lightly on desk, alert optimistic face; background screens are blank soft gradients with no UI.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-24",
+    "reference_path": "/images/memes/collection-space.png",
+    "path": "images/memes/24-higher-view.png",
+    "category": "Bullish",
+    "alt": "At the observation deck of a tall building above the clouds, admiring the clear dawn horizon; wind gently lifting tie, proud optimistic expression.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-25",
+    "reference_path": "/images/memes/collection-smoke.png",
+    "path": "images/memes/25-taking-a-breath.png",
+    "category": "Reactions",
+    "alt": "Sitting quietly on a high-rise balcony with a plain ceramic espresso cup, thoughtful side profile, soft warm city lights and clean contemporary furniture.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-26",
+    "reference_path": "/images/memes/collection-bedtime.png",
+    "path": "images/memes/26-good-night.png",
+    "category": "GM / GN",
+    "alt": "Preparing to sleep in a serene ivory bedroom, dark tie neatly loosened and suit jacket folded over a chair; gentle sleepy smile under warm bedside light.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-27",
+    "reference_path": "/images/memes/collection-storm.png",
+    "path": "images/memes/27-weathering-it.png",
+    "category": "Bearish",
+    "alt": "Holding a plain dark umbrella in heavy rain outside a financial building, resolute tired expression, charcoal suit, warm doorway ahead.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-28",
+    "reference_path": "/images/memes/collection-doors.png",
+    "path": "images/memes/28-next-door.png",
+    "category": "Community",
+    "alt": "In a stylish corridor with three different unmarked doors, opening one with a paw and glancing back with a knowing grin; bright clean framing, no signs.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-29",
+    "reference_path": "/images/memes/collection-poker.png",
+    "path": "images/memes/29-your-move.png",
+    "category": "Reactions",
+    "alt": "At a modern chess table, carefully moving a plain wooden chess piece with one paw, intense amused focus, quiet ivory room; no betting chips, cards, coins or written markings.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-30",
+    "reference_path": "/images/memes/collection-smoking.png",
+    "path": "images/memes/30-pause-for-perspective.png",
+    "category": "Reactions",
+    "alt": "Leaning against a rooftop railing, looking thoughtfully at the distant city while a plain closed portfolio rests nearby; calm afternoon air.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-31",
+    "reference_path": "/images/memes/collection-mail.png",
+    "path": "images/memes/31-message-arrived.png",
+    "category": "Community",
+    "alt": "Opening a completely blank cream envelope at the office desk, pleasantly surprised brows, a small stack of other blank envelopes nearby.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-32",
+    "reference_path": "/images/memes/collection-library.png",
+    "path": "images/memes/32-research-hours.png",
+    "category": "Lifestyle",
+    "alt": "In a bright modern library reading an open book whose pages are completely blank and unmarked, focused curious expression, soft shelves without readable spines.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-33",
+    "reference_path": "/images/memes/collection-coin-brain.png",
+    "path": "images/memes/33-thinking-it-through.png",
+    "category": "Bullish",
+    "alt": "Tight portrait of the Shiba with one paw under chin, eyes looking upward in concentration, clean softly lit ivory background, humorous thoughtful expression.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-34",
+    "reference_path": "/images/memes/collection-strong.png",
+    "path": "images/memes/34-long-haul.png",
+    "category": "Bullish",
+    "alt": "Carrying a large plain dark suitcase up a broad city staircase, determined friendly grin, upright posture; no badges, emblems or lettering.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-35",
+    "reference_path": "/images/memes/collection-night-drive.png",
+    "path": "images/memes/35-night-drive.png",
+    "category": "Lifestyle",
+    "alt": "Driving a tasteful unbranded classic roadster through a softly lit city at night, suit and tie crisp, confident relaxed face; dashboard unmarked and unreadable.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-36",
+    "reference_path": "/images/memes/collection-pool.png",
+    "path": "images/memes/36-rest-day.png",
+    "category": "Lifestyle",
+    "alt": "Reclining in a contemporary ivory lounge chair with eyes half-closed, shoes off, waistcoat and loosened tie, warm sunlight, calm good-humored expression.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-37",
+    "reference_path": "/images/memes/collection-power.png",
+    "path": "images/memes/37-fully-rested.png",
+    "category": "Bullish",
+    "alt": "Stretching both arms beside an office window after a restorative break, alert happy Shiba face, clean morning sunlight; no electrical symbols or screen UI.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-38",
+    "reference_path": "/images/memes/collection-jet.png",
+    "path": "images/memes/38-window-seat.png",
+    "category": "Lifestyle",
+    "alt": "Seated beside the window of an elegant unbranded airplane cabin, holding a plain mug, quietly enjoying the cloud view, no logos or luggage tags.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-39",
+    "reference_path": "/images/memes/collection-pump-call.png",
+    "path": "images/memes/39-whisper-call.png",
+    "category": "Bullish",
+    "alt": "Close-up leaning toward a plain phone handset with one eyebrow raised and a mischievously knowing expression; elegant dark office, no words or signs.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-40",
+    "reference_path": "/images/memes/collection-visor.png",
+    "path": "images/memes/40-future-glance.png",
+    "category": "Reactions",
+    "alt": "Wearing simple unbranded reflective wraparound sunglasses, face three-quarter view, skyline reflected in lenses; no HUD, text or glyphs.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-41",
+    "reference_path": "/images/memes/collection-red-card.png",
+    "path": "images/memes/41-red-card.png",
+    "category": "Bearish",
+    "alt": "Standing on a sports pitch holding one completely blank red rectangle aloft, comically firm referee-like expression, suit jacket over white shirt; no logos, text or team insignia.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-42",
+    "reference_path": "/images/memes/collection-smirk.png",
+    "path": "images/memes/42-small-smirk.png",
+    "category": "Reactions",
+    "alt": "Very close portrait with a tiny satisfied smirk and half-lidded amber eyes, clean light stone background, expressive face and visible suit collar.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-43",
+    "reference_path": "/images/memes/collection-school-v2.png",
+    "path": "images/memes/43-new-in-the-room.png",
+    "category": "Community",
+    "alt": "Entering a modern seminar room where anonymous attendees turn to look with curiosity; the Shiba strides in confidently with a plain closed portfolio; boards and screens entirely blank.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-44",
+    "reference_path": "/images/memes/collection-stomp.png",
+    "path": "images/memes/44-making-an-entrance.png",
+    "category": "Reactions",
+    "alt": "Low-angle view of one confident stride across a financial district pavement, one paw adjusting the jacket, slightly exaggerated determined posture and playful swagger.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-45",
+    "reference_path": "/images/memes/collection-think.png",
+    "path": "images/memes/45-think-again.png",
+    "category": "Reactions",
+    "alt": "Pointing one paw gently toward his temple, raised eyebrow, a patient 'think about it' expression, close-up against a clean ivory office backdrop.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-46",
+    "reference_path": "/images/memes/collection-fine.png",
+    "path": "images/memes/46-staying-composed.png",
+    "category": "Bearish",
+    "alt": "Sitting serenely at a tidy desk while blank papers whirl around the room and a plain desk lamp tilts; slightly absurd chaotic atmosphere with the Shiba completely calm, no fire or text.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-47",
+    "reference_path": "/images/memes/collection-phone.png",
+    "path": "images/memes/47-checking-again.png",
+    "category": "Lifestyle",
+    "alt": "Peering intently at an unbranded smartphone, eyes close to the screen, anxious-curious expression; screen hidden from camera, no visible UI.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-48",
+    "reference_path": "/images/memes/collection-tokenize.png",
+    "path": "images/memes/48-connecting-the-pieces.png",
+    "category": "Bullish",
+    "alt": "Carefully joining two simple unmarked glass architectural bridge models on a desk, focused proud expression; no chains, crypto icons or token shapes.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-49",
+    "reference_path": "/images/memes/collection-wall-street.png",
+    "path": "images/memes/49-bullish-by-nature.png",
+    "category": "Bullish",
+    "alt": "Standing beside a stylized bronze bull sculpture in a bright city plaza, matching its proud upright pose with an amused grin; sculpture plain without plaque or lettering.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-50",
+    "reference_path": "/images/memes/collection-salt.png",
+    "path": "images/memes/50-just-a-pinch.png",
+    "category": "Reactions",
+    "alt": "In a modern kitchen with a plain ivory apron over the same shirt and dark tie, adding a small pinch of herbs to a dish with exaggerated concentration; no packaging or labels.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-51",
+    "reference_path": "/images/memes/collection-bonsai.png",
+    "path": "images/memes/51-growing-patiently.png",
+    "category": "Lifestyle",
+    "alt": "Carefully tending a small bonsai on a light stone desk, delighted by a lush new branch, neat banker suit, warm morning light.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-52",
+    "reference_path": "/images/memes/lifestyle-arcade.png",
+    "path": "images/memes/52-one-more-level.png",
+    "category": "Lifestyle",
+    "alt": "Playing an unbranded arcade cabinet with a plain joystick, sleeves rolled above suit waistcoat, focused playful grin; screen is a simple abstract landscape without words, scores or characters.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-53",
+    "reference_path": "/images/memes/lifestyle-cooking.png",
+    "path": "images/memes/53-let-him-cook.png",
+    "category": "Lifestyle",
+    "alt": "Confidently preparing red and green bell peppers in a refined kitchen, plain apron over dark suit, a little steam rising, proud playful expression; no lettering.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-54",
+    "reference_path": "/images/memes/lifestyle-dentist.png",
+    "path": "images/memes/54-careful-inspection.png",
+    "category": "Lifestyle",
+    "alt": "As a gentle dentist wearing a plain white coat over the suit, studying a completely unmarked dental film showing only tooth silhouettes, thoughtful face; no text, numbers or diamond symbols.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-55",
+    "reference_path": "/images/memes/lifestyle-cake.png",
+    "path": "images/memes/55-sharing-a-slice.png",
+    "category": "Lifestyle",
+    "alt": "Sharing a slice of plain chocolate cake with one anonymous builder at a sunny office table, friendly grin, no candles, plaques or written decorations.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-56",
+    "reference_path": "/images/memes/lifestyle-desert.png",
+    "path": "images/memes/56-desert-horizon.png",
+    "category": "Lifestyle",
+    "alt": "Standing on a quiet desert ridge at sunrise in the same suit with a plain light scarf, looking calmly at the distant horizon; no fantasy franchise elements or weapons.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-57",
+    "reference_path": "/images/memes/lifestyle-laundry.png",
+    "path": "images/memes/57-sorting-the-days.png",
+    "category": "Lifestyle",
+    "alt": "At a clean laundromat, carefully sorting plain red and green neckties into two unmarked baskets, humorous serious expression, no labels or machine text.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-58",
+    "reference_path": "/images/memes/reaction-headset.png",
+    "path": "images/memes/58-support-line.png",
+    "category": "Reactions",
+    "alt": "Wearing simple glasses and an unbranded headset at an elegant desk, one paw touching chin, helpful thoughtful expression; no screens with writing.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-59",
+    "reference_path": "/images/memes/reaction-zoom.png",
+    "path": "images/memes/59-you-said-what.png",
+    "category": "Reactions",
+    "alt": "Expressive startled angry close-up, eyebrows low and mouth slightly open, strong but tasteful radial depth blur behind the character, no text or graphic symbols.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-60",
+    "reference_path": "/images/memes/reaction-smug.png",
+    "path": "images/memes/60-let-it-happen.png",
+    "category": "Reactions",
+    "alt": "Close-up of a restrained smug smile, one paw resting lightly on the chin, warm ivory background, amber eyes sparkling with amused confidence.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-61",
+    "reference_path": "/images/memes/reaction-pleading.png",
+    "path": "images/memes/61-asking-nicely.png",
+    "category": "Reactions",
+    "alt": "Looking upward with large pleading amber eyes and paws loosely together at chest height, suit and tie neat, sweet humorous expression, clean studio background.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-62",
+    "reference_path": "/images/memes/reaction-knowing.png",
+    "path": "images/memes/62-noticed-that.png",
+    "category": "Reactions",
+    "alt": "Tilting head slightly with one knowing raised eyebrow and a faint smile, close-up three-quarter portrait, clean pale stone office background.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-63",
+    "reference_path": "/images/memes/reaction-panic.png",
+    "path": "images/memes/63-one-minute-away.png",
+    "category": "Reactions",
+    "alt": "Both paws on the sides of the head, eyes wide in incredulous surprise, tie slightly askew, bright uncluttered office; single sharp static frame.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-64",
+    "reference_path": "/images/memes/reaction-sideeye.png",
+    "path": "images/memes/64-source-check.png",
+    "category": "Reactions",
+    "alt": "Suspicious sideways glance over one shoulder, lips pressed in a tiny skeptical smile, charcoal suit, soft ivory backdrop, no words or symbols.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-65",
+    "reference_path": "/images/memes/bullish-still-holding.png",
+    "path": "images/memes/65-still-holding.png",
+    "category": "Bullish",
+    "alt": "Holding a heavy plain dark dumbbell at shoulder height with a determined grin, sleeves rolled, dark waistcoat and tie, modern gym, no emblems or numbers.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-66",
+    "reference_path": "/images/memes/bearish-crying.png",
+    "path": "images/memes/66-rough-day.png",
+    "category": "Bearish",
+    "alt": "Seated by a rain-streaked office window with one paw holding a plain white tissue, teary amber eyes and a small comic frown, understated pale warm-red accents.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  },
+  {
+    "id": "meme-67",
+    "reference_path": "/images/memes/bearish-sleeping.png",
+    "path": "images/memes/67-wake-me-later.png",
+    "category": "Bearish",
+    "alt": "Sleeping peacefully under a plain ivory blanket in an office lounge, dark tie loosened, suit jacket folded nearby, no symbols on fabric; cozy soft light.",
+    "status": "created for user review; visual QA completed; not pre-approved"
+  }
+]

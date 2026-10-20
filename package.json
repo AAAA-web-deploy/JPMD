@@ -1,0 +1,30 @@
+{
+  "name": "shiba-p-morgan-inu",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Shiba P. Morgan Inu \u2014 a TypeScript and Tailwind adaptation of the supplied reference, with static imagery.",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/gallery.test.ts tests/editor.test.ts tests/content.test.ts tests/server.test.mjs",
+    "check:assets": "node scripts/check-assets.mjs",
+    "build": "npm run typecheck && npm run check:assets && vite build && node scripts/prerender.ts && npm run check:dist",
+    "check:dist": "node scripts/check-dist.mjs",
+    "start": "node server.ts",
+    "preview": "vite preview --host 127.0.0.1",
+    "check": "npm run test && npm run build"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.3.3",
+    "@types/node": "26.6.5",
+    "happy-dom": "21.0.3",
+    "prettier": "3.9.10",
+    "tailwindcss": "4.3.3",
+    "typescript": "7.0.2",
+    "vite": "8.3.4"
+  }
+}
