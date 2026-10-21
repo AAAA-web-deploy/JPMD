@@ -14,7 +14,7 @@
     "pretypecheck": "npm run images",
     "typecheck": "tsc --noEmit",
     "pretest": "npm run images",
-    "test": "node --test tests/gallery.test.ts tests/effects.test.ts tests/voices.test.ts tests/content.test.ts tests/hero.test.ts tests/bull-run.test.ts tests/bull-run-ui.test.ts tests/server.test.mjs",
+    "test": "node --test tests/gallery.test.ts tests/effects.test.ts tests/voices.test.ts tests/theme-loader.test.ts tests/content.test.ts tests/hero.test.ts tests/bull-run.test.ts tests/bull-run-ui.test.ts tests/server.test.mjs",
     "check:assets": "node scripts/check-assets.mjs",
     "prebuild": "npm run images",
     "build": "npm run typecheck && npm run check:assets && vite build && node scripts/prerender.ts && npm run check:dist",

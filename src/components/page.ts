@@ -8,6 +8,7 @@ import {
   image,
   officialLink,
 } from "../lib/html.ts";
+import { themeToggle } from "../lib/theme.ts";
 import { renderBook } from "./book.ts";
 import { renderVoices } from "./voices.ts";
 import { renderHero } from "./hero.ts";
@@ -38,7 +39,7 @@ const links = (items: readonly (readonly [string, string])[]): string =>
   items.map(([href, label]) => `<a href="${href}">${e(label)}</a>`).join("");
 
 function header(): string {
-  return `<header class="header"><a href="#home" class="home-badge" aria-label="${e(siteConfig.name)} home">${image("images/brand/header-mascot.png", "Shiba banker home badge", "", true, 1536, 1024, "header")}</a><button type="button" class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="navigation" data-menu-toggle>${icon("menu")}</button><nav id="navigation" class="navigation" aria-label="Main navigation">${links(nav)}${socialKeys.map((key) => officialLink(siteConfig.socials[key], `${icon(`social-${key}`)}<span>${key === "x" ? "Follow" : socialNames[key]}</span>`, "social", socialNames[key])).join("")}</nav></header>`;
+  return `<header class="header"><a href="#home" class="home-badge" aria-label="${e(siteConfig.name)} home">${image("images/brand/header-mascot.png", "Shiba banker home badge", "", true, 1536, 1024, "header")}</a><button type="button" class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="navigation" data-menu-toggle>${icon("menu")}</button><nav id="navigation" class="navigation" aria-label="Main navigation">${links(nav)}${socialKeys.map((key) => officialLink(siteConfig.socials[key], `${icon(`social-${key}`)}<span>${key === "x" ? "Follow" : socialNames[key]}</span>`, "social", socialNames[key])).join("")}</nav>${themeToggle()}</header>`;
 }
 function ticker(): string {
   const group = (clone: boolean): string =>

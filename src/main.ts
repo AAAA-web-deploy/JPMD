@@ -7,6 +7,8 @@ import { initHero } from "./components/hero.ts";
 import { initBullRun } from "./components/bullRun.ts";
 import { announce, copyText, mustQuery } from "./lib/browser.ts";
 import { initVoices } from "./components/voices.ts";
+import { initLoader, releaseLoader } from "./components/loader.ts";
+import { initThemeToggle } from "./lib/theme.ts";
 import { icon, safeExternalUrl } from "./lib/html.ts";
 
 function initNavigation(): () => void {
@@ -120,6 +122,7 @@ const root = mustQuery<HTMLElement>("#app");
 if (!root.querySelector("[data-shiba-site]")) root.innerHTML = renderPage();
 const cleanup: (() => void)[] = [];
 for (const initialize of [
+  initThemeToggle,
   initNavigation,
   initHero,
   initBook,
@@ -138,6 +141,12 @@ for (const initialize of [
 }
 document.documentElement.classList.remove("no-js");
 updateMetadata();
+try {
+  cleanup.push(initLoader());
+} catch (error) {
+  console.error("The loading screen could not finish; releasing the page.", error);
+  releaseLoader();
+}
 if (import.meta.hot)
   import.meta.hot.dispose(() => {
     cleanup.forEach((dispose) => dispose());

@@ -4,6 +4,75 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#faf7f2" />
+    <script>
+      /* Before first paint: theme (saved → OS → day), loader flag, and a fail-open watchdog. */
+      (function () {
+        var root = document.documentElement;
+        var saved = null;
+        try {
+          saved = window.localStorage.getItem("shiba-theme");
+        } catch (error) {}
+        var dark = false;
+        try {
+          dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        } catch (error) {}
+        var theme = saved === "day" || saved === "night" ? saved : dark ? "night" : "day";
+        root.setAttribute("data-theme", theme);
+        root.style.colorScheme = theme === "night" ? "dark" : "light";
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", theme === "night" ? "#1b1714" : "#faf7f2");
+        root.setAttribute("data-loading", "");
+        function release(fade) {
+          if (!root.hasAttribute("data-loading")) return;
+          clearTimeout(watchdog);
+          var x = window.scrollX;
+          var y = window.scrollY;
+          var overlay = document.querySelector("[data-site-loader]");
+          if (overlay && fade) overlay.classList.add("is-leaving");
+          root.removeAttribute("data-loading");
+          var covered = document.querySelectorAll("[data-loader-inert]");
+          for (var i = 0; i < covered.length; i++) {
+            covered[i].removeAttribute("inert");
+            covered[i].removeAttribute("data-loader-inert");
+          }
+          if (window.scrollX !== x || window.scrollY !== y) window.scrollTo(x, y);
+          function hide() {
+            if (!overlay) return;
+            overlay.classList.remove("is-leaving");
+            overlay.setAttribute("hidden", "");
+          }
+          if (fade) setTimeout(hide, 300);
+          else hide();
+        }
+        var watchdog = setTimeout(function () {
+          release(false);
+        }, 8000);
+        window.__shibaLoader = { release: release };
+      })();
+    </script>
+    <style>
+      .site-loader {
+        display: none;
+      }
+      html[data-loading] {
+        overflow: hidden;
+        scrollbar-gutter: stable;
+      }
+      html[data-loading] .site-loader,
+      .site-loader.is-leaving {
+        position: fixed;
+        z-index: 1000;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: #faf7f2;
+        color: #292622;
+      }
+      html[data-theme="night"] .site-loader {
+        background: #1b1714;
+        color: #f3eadc;
+      }
+    </style>
     <title>Shiba P. Morgan Inu — A Wall Street / Ethereum Story</title>
     <meta
       name="description"
@@ -50,8 +119,22 @@
     <script type="module" src="/src/main.ts"></script>
   </head>
   <body>
+    <div class="site-loader" data-site-loader></div>
     <a class="skip-link" href="#lore">Skip to content</a>
     <div id="app"></div>
+    <script>
+      /* Covered content stays rendered for measurements, but is inert until the loader releases it. */
+      (function () {
+        if (!document.documentElement.hasAttribute("data-loading")) return;
+        var children = document.body.children;
+        for (var i = 0; i < children.length; i++) {
+          var element = children[i];
+          if (element.hasAttribute("data-site-loader") || element.tagName === "SCRIPT" || element.tagName === "NOSCRIPT") continue;
+          element.setAttribute("inert", "");
+          element.setAttribute("data-loader-inert", "");
+        }
+      })();
+    </script>
     <noscript
       ><p class="no-script">
         The story and collection are visible below. Enable JavaScript for page

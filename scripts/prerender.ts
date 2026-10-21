@@ -1,4 +1,5 @@
 import { readFile, writeFile } from "node:fs/promises";
+import { renderLoader } from "../src/components/loader.ts";
 import { renderPage } from "../src/components/page.ts";
 import { siteConfig } from "../src/config.ts";
 import { escapeHtml, safeExternalUrl } from "../src/lib/html.ts";
@@ -10,6 +11,13 @@ if (!html.includes('<div id="app"></div>'))
 html = html.replace(
   '<div id="app"></div>',
   () => `<div id="app">${renderPage()}</div>`,
+);
+const loaderSlot = '<div class="site-loader" data-site-loader></div>';
+if (!html.includes(loaderSlot))
+  throw new Error("The loader insertion point is missing.");
+html = html.replace(
+  loaderSlot,
+  () => `<div class="site-loader" data-site-loader>${renderLoader()}</div>`,
 );
 html = html.replace(
   /<title>[^<]*<\/title>/,
