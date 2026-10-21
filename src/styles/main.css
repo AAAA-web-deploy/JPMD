@@ -2058,117 +2058,201 @@ h2 {
   font: 400 12px/1.6 var(--mono);
 }
 
-/* Full-bleed, scroll-driven Ethereum / Vitalik reveal. */
-.chain-reveal {
-  --chain-blend: 0;
-  --chain-reveal: 0;
-  --chain-photo: 0;
+/* Wall Street Meets Ethereum: stacked speaker cards, pinned into reading stages by initVoices(). */
+.voices {
+  --voices-top: 80px;
   position: relative;
-  height: 280vh;
   margin: 80px calc(min(1520px, 100vw - 80px) / 2 - 50vw);
+  background:
+    radial-gradient(circle at 16% 28%, rgb(201 135 72 / 0.14), transparent 40%),
+    radial-gradient(circle at 86% 82%, rgb(201 135 72 / 0.1), transparent 36%),
+    #f7f1e7;
+  color: var(--ink);
+  border-block: 1px solid rgb(138 84 43 / 0.18);
 }
-.chain-reveal-stage {
-  position: sticky;
-  top: 0;
-  display: grid;
-  place-items: center;
-  height: 100svh;
-  min-height: 600px;
-  overflow: hidden;
-  background: #292622;
+.voices-inner {
+  width: min(1180px, 100% - 64px);
+  margin: 0 auto;
+  padding: 72px 0;
 }
-.chain-light {
-  position: absolute;
-  inset: 0;
-  background: #ecd7b8;
-  opacity: var(--chain-blend);
-}
-.chain-reveal-copy {
-  position: relative;
-  width: 100%;
-  padding: 32px 24px;
+.voices-heading {
+  margin-bottom: 48px;
   text-align: center;
 }
-.chain-reveal h2 {
+.voices-heading h2 {
   margin: 0;
-  font: 400 clamp(56px, 8.5vw, 136px)/0.97 var(--heading);
+  font: 400 clamp(30px, 3vw, 46px)/1.1 var(--heading);
 }
-.chain-opening {
+.voices-heading p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font: 500 clamp(15px, 1.25vw, 18px)/1.5 var(--body);
+}
+.voices-heading::after {
   display: block;
-  color: color-mix(
-    in srgb,
-    #faf7f2 calc((1 - var(--chain-blend)) * 100%),
-    #292622
-  );
-  transform: translateY(calc(var(--chain-photo) * -12px));
+  width: 56px;
+  height: 3px;
+  margin: 18px auto 0;
+  border-radius: 2px;
+  background: var(--accent-light);
+  content: "";
 }
-.chain-name {
+.voices-panels {
+  display: grid;
+  gap: 56px;
+}
+.voices:not(.is-pinned) .voice + .voice {
+  padding-top: 56px;
+  border-top: 1px solid rgb(138 84 43 / 0.18);
+}
+.voice {
+  display: grid;
+  grid-template-columns: clamp(240px, 22vw, 300px) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: center;
+}
+.voice-portrait {
+  overflow: hidden;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #efe3d1;
+  box-shadow:
+    0 0 0 1px rgb(138 84 43 / 0.2),
+    0 0 0 8px rgb(201 135 72 / 0.12),
+    0 28px 56px -32px rgb(41 38 34 / 0.5);
+}
+.voice-portrait img {
   display: block;
-  margin-top: 14px;
-  color: #292622;
-  font: 400 clamp(44px, 7.5vw, 120px)/1.1 var(--brand);
-  opacity: var(--chain-reveal);
-  transform: translateY(calc((1 - var(--chain-reveal)) * 60px))
-    scale(calc(0.88 + var(--chain-reveal) * 0.12));
-}
-.chain-selfie {
-  width: min(360px, 72vw);
-  margin: 20px auto 0;
-  opacity: var(--chain-photo);
-  transform: translateY(calc((1 - var(--chain-photo)) * 90px))
-    rotate(calc(-5deg + var(--chain-photo) * 2deg));
-}
-.chain-selfie img {
-  width: 100%;
-  height: auto;
-  max-height: 27svh;
-  object-fit: cover;
-  border: 7px solid #faf7f2;
-  box-shadow: 7px 9px #292622;
-}
-.chain-selfie figcaption {
-  margin-top: 16px;
-  color: #292622;
-  font: 700 11px/1.65 var(--mono);
-}
-.chain-selfie figcaption a {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.chain-selfie figcaption small {
-  display: block;
-  font-size: 9px;
-  margin-top: 5px;
-}
-.chain-leaves {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: calc(var(--chain-reveal) * 0.65);
-  transform: translateX(calc((1 - var(--chain-reveal)) * -85vw));
-}
-.chain-leaves i {
-  position: absolute;
-  left: var(--leaf-x);
-  top: var(--leaf-y);
-  width: var(--leaf-size);
-  height: calc(var(--leaf-size) * 1.6);
-  animation: leaf-drift var(--leaf-time) var(--leaf-delay) ease-in-out infinite
-    alternate;
-}
-.chain-leaves svg {
   width: 100%;
   height: 100%;
-  transform: rotate(var(--leaf-turn));
-  overflow: visible;
+  object-fit: contain;
 }
-@keyframes leaf-drift {
-  from {
-    transform: translate(-55px, 25px) rotate(-20deg);
-  }
-  to {
-    transform: translate(100px, -70px) rotate(60deg);
-  }
+.voice-copy {
+  margin: 0;
+}
+.voice-quote {
+  margin: 0;
+}
+.voice-quote p {
+  margin: 0;
+  color: var(--ink);
+  font: 600 clamp(28px, 2.7vw, 40px)/1.24 var(--body);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.voice-copy figcaption {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid rgb(138 84 43 / 0.22);
+}
+.voice-name {
+  font: 700 17px/1.3 var(--body);
+}
+.voice-role {
+  color: var(--muted);
+  font: 500 15px/1.4 var(--body);
+}
+.voice-source {
+  margin-top: 8px;
+  color: var(--accent);
+  font: 600 12px/1.4 var(--mono);
+  letter-spacing: 0.08em;
+  text-decoration: underline;
+  text-transform: uppercase;
+  text-underline-offset: 3px;
+}
+.voice-source:hover {
+  color: var(--ink);
+}
+.voice-source:focus-visible,
+.voices-selector:focus-visible {
+  outline: 3px solid var(--accent-light);
+  outline-offset: 3px;
+}
+.voices-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 44px;
+}
+.voices-progress {
+  margin: 0;
+  color: var(--muted);
+  font: 600 13px/1 var(--mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.12em;
+}
+.voices-progress span {
+  color: var(--accent);
+}
+.voices-selectors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.voices-selector {
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgb(255 253 249 / 0.85);
+  color: var(--ink);
+  font: 600 14px/1.2 var(--body);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+.voices-selector:hover {
+  border-color: var(--accent-light);
+}
+.voices-selector[aria-pressed="true"] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fffdf9;
+}
+.voices.is-pinned {
+  height: 350vh;
+  height: 350svh;
+}
+.voices.is-pinned .voices-stage {
+  position: sticky;
+  top: var(--voices-top);
+  display: flex;
+  align-items: center;
+  height: calc(100vh - var(--voices-top));
+  height: calc(100svh - var(--voices-top) - env(safe-area-inset-bottom, 0px));
+}
+.voices.is-pinned .voices-inner {
+  padding: 24px 0;
+}
+.voices.is-pinned .voices-heading {
+  margin-bottom: clamp(20px, 4svh, 44px);
+}
+.voices.is-pinned .voices-panels {
+  gap: 0;
+}
+.voices.is-pinned .voice {
+  grid-area: 1 / 1;
+  grid-template-columns: clamp(300px, 25vw, 360px) minmax(0, 1fr);
+  visibility: hidden;
+}
+.voices.is-pinned .voice.is-active {
+  visibility: visible;
+}
+.voices.is-pinned .voice-quote p {
+  font-size: clamp(30px, 2.8vw, 42px);
+}
+.voices.is-pinned .voices-controls {
+  margin-top: clamp(24px, 4svh, 44px);
 }
 
 /* Closing image, live copy, and footer. */
@@ -2367,22 +2451,8 @@ h2 {
   color: var(--paper);
   text-align: center;
 }
-.no-js .chain-reveal {
-  height: auto;
-  --chain-blend: 1;
-  --chain-reveal: 1;
-  --chain-photo: 1;
-}
-.no-js .chain-reveal-stage {
-  position: relative;
-  min-height: 650px;
-  height: auto;
-}
-.no-js .chain-name,
-.no-js .chain-selfie,
-.no-js .chain-opening,
-.no-js .chain-leaves {
-  transform: none;
+.no-js .voices-controls {
+  display: none;
 }
 .no-js .book-arrow,
 .no-js .chapter-navigation {
@@ -2732,24 +2802,104 @@ h2 {
   .roadmap-card h3 {
     font-size: 26px;
   }
-  .chain-reveal {
-    height: 250vh;
+  .voices {
     margin: 60px -24px;
   }
-  .chain-reveal-stage {
-    min-height: 560px;
+  .voices-inner {
+    width: min(560px, 100% - 40px);
+    padding: 52px 0;
   }
-  .chain-reveal-copy {
-    padding: 26px 22px;
+  .voices-heading {
+    margin-bottom: 36px;
   }
-  .chain-reveal h2 {
-    font-size: clamp(54px, 12vw, 85px);
+  .voices-heading h2 {
+    font-size: clamp(26px, 7.4vw, 32px);
   }
-  .chain-name {
-    font-size: clamp(42px, 10vw, 72px);
+  .voices-heading p {
+    margin-top: 6px;
+    font-size: 15px;
   }
-  .chain-selfie figcaption {
-    font-size: 10px;
+  .voices-heading::after {
+    margin-top: 14px;
+  }
+  .voice,
+  .voices.is-pinned .voice {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+    justify-items: center;
+    text-align: center;
+  }
+  .voice-portrait {
+    width: clamp(180px, 56vw, 220px);
+  }
+  .voice-quote p,
+  .voices.is-pinned .voice-quote p {
+    font-size: clamp(24px, 6.6vw, 28px);
+  }
+  .voice-copy figcaption {
+    align-items: center;
+    margin-top: 18px;
+    padding-top: 14px;
+  }
+  .voice-name {
+    font-size: 16px;
+  }
+  .voice-role {
+    font-size: 14px;
+  }
+  .voices-controls,
+  .voices.is-pinned .voices-controls {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 28px;
+  }
+  .voices-selector {
+    padding: 9px 14px;
+    font-size: 13px;
+  }
+  .voices.is-pinned .voices-inner {
+    padding: 14px 0;
+  }
+  .voices.is-pinned .voices-heading {
+    margin-bottom: clamp(14px, 2.6svh, 28px);
+  }
+  .voices.is-pinned .voices-controls {
+    margin-top: clamp(16px, 2.6svh, 28px);
+  }
+  @media (max-height: 720px) {
+    .voices.is-pinned .voices-heading h2 {
+      font-size: 24px;
+    }
+    .voices.is-pinned .voices-heading p {
+      font-size: 14px;
+    }
+    .voices.is-pinned .voices-heading::after {
+      display: none;
+    }
+    .voices.is-pinned .voice {
+      gap: 14px;
+    }
+    .voices.is-pinned .voice-portrait {
+      width: 180px;
+    }
+    .voices.is-pinned .voice-quote p {
+      font-size: 24px;
+    }
+    .voices.is-pinned .voice-copy figcaption {
+      gap: 2px;
+      margin-top: 12px;
+      padding-top: 10px;
+    }
+    .voices.is-pinned .voice-source {
+      margin-top: 4px;
+    }
+    .voices.is-pinned .voices-controls {
+      gap: 8px;
+    }
+    .voices.is-pinned .voices-selector {
+      min-height: 40px;
+      padding: 8px 12px;
+    }
   }
   .closing-scene {
     display: flex;
@@ -2921,8 +3071,7 @@ h2 {
   .hero-stage,
   .ticker-track,
   .image-strip-track,
-  .field-guide-character,
-  .chain-leaves i {
+  .field-guide-character {
     animation: none;
   }
   .buy-button,
@@ -2934,6 +3083,7 @@ h2 {
   .home-badge,
   .community-link-card,
   .closing-actions a,
+  .voices-selector,
   .header {
     transition: none;
   }
@@ -2968,22 +3118,5 @@ h2 {
   }
   .image-strip {
     overflow-x: auto;
-  }
-  .chain-reveal {
-    height: auto;
-    --chain-blend: 1 !important;
-    --chain-reveal: 1 !important;
-    --chain-photo: 1 !important;
-  }
-  .chain-reveal-stage {
-    position: relative;
-    height: auto;
-    min-height: 650px;
-  }
-  .chain-opening,
-  .chain-name,
-  .chain-selfie,
-  .chain-leaves {
-    transform: none;
   }
 }

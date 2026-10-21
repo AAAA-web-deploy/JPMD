@@ -1,6 +1,7 @@
 import rawMemes from "./data/meme-catalog.json" with { type: "json" };
 import rawMoodGallery from "./data/mood-gallery.json" with { type: "json" };
 import storyContent from "./data/story-content.json" with { type: "json" };
+import voicesContent from "./data/wall-street-meets-ethereum.json" with { type: "json" };
 import { isCatalogTheme, isCollection } from "./lib/gallery.ts";
 import type { Meme, MoodImage } from "./lib/gallery.ts";
 
@@ -134,6 +135,35 @@ export const story = {
 export const chapters: readonly Chapter[] = storyContent.chapters.map(
   ({ label, title, paragraphs, image, alt }) => ({ label, title, paragraphs, image, alt }),
 );
+
+export interface Voice {
+  id: string;
+  name: string;
+  role: string;
+  quote: string;
+  sourceUrl: string;
+  sourceLabel: string;
+  image: string;
+  width: number;
+  height: number;
+  alt: string;
+}
+/** Wall Street Meets Ethereum (#ethereum): approved copy and motion values from the update package. */
+export const voicesSection = {
+  title: voicesContent.title,
+  subtitle: voicesContent.subtitle,
+  transitionMs: voicesContent.animation.transitionMs,
+  entryMs: voicesContent.animation.entryMs,
+  portraitTranslationPx: voicesContent.animation.portraitTranslationPx,
+  portraitStartScale: voicesContent.animation.portraitStartScale,
+  quoteTranslationPx: voicesContent.animation.quoteTranslationPx,
+} as const;
+export const voices: readonly Voice[] = voicesContent.animation.order.map((id) => {
+  const speaker = voicesContent.speakers.find((entry) => entry.id === id);
+  if (!speaker) throw new Error(`Missing speaker: ${id}`);
+  const { name, role, quote, sourceUrl, sourceLabel, imagePath, width, height, alt } = speaker;
+  return { id, name, role, quote, sourceUrl, sourceLabel, image: imagePath, width, height, alt };
+});
 
 export const roadmap = [
   {

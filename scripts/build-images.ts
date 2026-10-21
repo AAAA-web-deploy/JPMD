@@ -8,6 +8,7 @@ import {
   favicons,
   imageProfiles,
   imageSources,
+  webpSource,
 } from "../src/lib/image-profiles.ts";
 
 type Candidate = { width: number; file: string };
@@ -37,7 +38,11 @@ async function sourceImages(dir: string): Promise<string[]> {
     const full = path.join(dir, entry.name);
     if (full === outputDir) continue;
     if (entry.isDirectory()) files.push(...(await sourceImages(full)));
-    else if (/\.(png|jpe?g)$/i.test(entry.name)) files.push(full);
+    else if (
+      /\.(png|jpe?g)$/i.test(entry.name) ||
+      webpSource.test(toPosix(path.relative(publicDir, full)))
+    )
+      files.push(full);
   }
   return files;
 }

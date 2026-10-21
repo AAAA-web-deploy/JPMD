@@ -1,7 +1,6 @@
 import { siteConfig } from "../config.ts";
 import type { SocialKey } from "../config.ts";
 import { roadmap, tickerPhrases } from "../content.ts";
-import { leafMarkup } from "../data/leaf.ts";
 import {
   brandText,
   escapeHtml as e,
@@ -10,6 +9,7 @@ import {
   officialLink,
 } from "../lib/html.ts";
 import { renderBook } from "./book.ts";
+import { renderVoices } from "./voices.ts";
 import { renderHero } from "./hero.ts";
 import {
   renderArchive,
@@ -88,9 +88,6 @@ function buying(): string {
 function roadmapSection(): string {
   return `<section id="roadmap" class="brand-roadmap" aria-labelledby="roadmap-title"><div class="roadmap-heading"><p class="roadmap-eyebrow">THE NEXT CHAPTERS</p><h2 id="roadmap-title">THE STORY CONTINUES.</h2><p class="roadmap-intro">From the first entrance to the next shared moment. There is room in the story for the whole pack.</p></div><div class="roadmap-trail"><svg class="roadmap-path" aria-hidden="true" viewBox="0 0 1000 620" preserveAspectRatio="none"><path d="M35 80C360 0 570 40 905 85C1060 180 1015 375 830 405C500 485 330 395 90 455" /></svg><ol class="roadmap-grid">${roadmap.map((stage, index) => `<li class="roadmap-card roadmap-card-${index + 1}"><span class="roadmap-marker" aria-label="Chapter ${index + 1}">${String(index + 1).padStart(2, "0")}</span>${image(stage.image, `Shiba story chapter: ${stage.title}`, "roadmap-art", false, 1254, 1254, "roadmap")}<div class="roadmap-card-copy"><p class="roadmap-chapter">CHAPTER ${String(index + 1).padStart(2, "0")}</p><h3>${e(stage.title)}</h3><p class="roadmap-card-intro">${e(stage.intro)}</p><ul>${stage.points.map((point) => `<li>${e(point)}</li>`).join("")}</ul></div></li>`).join("")}</ol></div><p class="roadmap-note">A creative journey for the character and community. The future stays open.</p></section>`;
 }
-function reveal(): string {
-  return `<section id="ethereum" class="chain-reveal" aria-labelledby="chain-reveal-title"><div class="chain-reveal-stage"><div class="chain-light" aria-hidden="true"></div><div class="chain-leaves" aria-hidden="true">${Array.from({ length: 22 }, (_, i) => `<i style="--leaf-x:${(i * 37) % 100}%;--leaf-y:${(i * 23) % 100}%;--leaf-size:${24 + (i % 5) * 9}px;--leaf-turn:${47 * i}deg;--leaf-delay:${-0.7 * i}s;--leaf-time:${7 + (i % 6)}s">${leafMarkup}</i>`).join("")}</div><div class="chain-reveal-copy"><h2 id="chain-reveal-title"><span class="chain-opening">A new Shiba.<br />An open world.</span><span class="chain-name">Ethereum.</span></h2><figure class="chain-selfie">${image("images/editorial/vitalik-buterin-romanpoet-2016.jpg", "Genuine photograph of Ethereum co-founder Vitalik Buterin, taken by Romanpoet on 4 June 2016.", "", false, 2305, 1977, "chainSelfie")}<figcaption>Vitalik Buterin · Ethereum co-founder<br /><a href="https://commons.wikimedia.org/wiki/File:VitalikButerinProfile.jpg" target="_blank" rel="noopener noreferrer">Photo: Romanpoet, 2016</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a><small>Historical photograph. No project endorsement implied.</small></figcaption></figure></div></div></section>`;
-}
 function closing(): string {
   return `<section id="community" class="closing-scene" aria-labelledby="closing-title">${image("images/community/closing-panorama-v2.png", "The fictional Shiba banker, financiers, and builders gather above a city at sunset.", "", false, 2048, 683, "closing")}<div class="closing-copy"><p>A DIFFERENT SHIBA. A NEW CONVERSATION.</p><h2 id="closing-title">THERE’S A SEAT FOR THE PACK.</h2><div class="closing-actions">${officialLink(siteConfig.socials.telegram, `${icon("social-telegram")}JOIN THE CONVERSATION`, "", "Telegram community")}${officialLink(siteConfig.socials.x, `${icon("social-x")}FOLLOW THE STORY`, "", "X community")}</div></div></section>`;
 }
@@ -108,5 +105,5 @@ function footer(): string {
 }
 
 export function renderPage(): string {
-  return `<div data-shiba-site>${header()}<main>${renderHero()}${ticker()}${renderBook()}<section id="memes" class="meme-gallery" aria-labelledby="meme-title"><div class="meme-gallery-inner">${renderGalleryIntro()}${renderBullRun()}<section class="brand-motion" aria-labelledby="motion-title"><div class="meme-section-heading"><div><p class="meme-greeting">One character. Every side of the conversation.</p><h2 id="motion-title">A Shiba for every <span>moment.</span></h2></div></div>${renderStrip("left")}${renderStrip("right")}</section>${communityCards()}<section class="meme-interlude" aria-label="Shiba on the group chat call">${image("images/community/phone-call-interlude.png", "A close-up of the Shiba banker taking a phone call.", "", false, 1254, 1254, "interlude")}<p>THE GROUP CHAT IS CALLING.</p></section>${ledger()}${buying()}${roadmapSection()}${reveal()}${renderArchive()}</div></section>${closing()}</main>${footer()}${renderMemeDialog()}<div id="toast" class="toast fixed bottom-6 left-1/2 z-100 -translate-x-1/2 rounded-lg px-5 py-3 text-sm shadow-lg" role="status" aria-live="polite" hidden></div></div>`;
+  return `<div data-shiba-site>${header()}<main>${renderHero()}${ticker()}${renderBook()}<section id="memes" class="meme-gallery" aria-labelledby="meme-title"><div class="meme-gallery-inner">${renderGalleryIntro()}${renderBullRun()}<section class="brand-motion" aria-labelledby="motion-title"><div class="meme-section-heading"><div><p class="meme-greeting">One character. Every side of the conversation.</p><h2 id="motion-title">A Shiba for every <span>moment.</span></h2></div></div>${renderStrip("left")}${renderStrip("right")}</section>${communityCards()}<section class="meme-interlude" aria-label="Shiba on the group chat call">${image("images/community/phone-call-interlude.png", "A close-up of the Shiba banker taking a phone call.", "", false, 1254, 1254, "interlude")}<p>THE GROUP CHAT IS CALLING.</p></section>${ledger()}${buying()}${roadmapSection()}${renderVoices()}${renderArchive()}</div></section>${closing()}</main>${footer()}${renderMemeDialog()}<div id="toast" class="toast fixed bottom-6 left-1/2 z-100 -translate-x-1/2 rounded-lg px-5 py-3 text-sm shadow-lg" role="status" aria-live="polite" hidden></div></div>`;
 }

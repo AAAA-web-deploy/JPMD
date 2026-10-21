@@ -88,7 +88,11 @@ try {
     assert.ok(element.getAttribute("sizes"), `Missing sizes: ${label}`);
     const original = element.getAttribute("src");
     if (original) {
-      assert.match(original, /\/images\/.+\.(png|jpe?g)$/, `Fallback must be the original: ${label}`);
+      assert.match(
+        original,
+        /\/images\/(.+\.(png|jpe?g)|voices\/(larry-fink|emma-landriault|matthew-dawson)\.webp)$/,
+        `Fallback must be the original: ${label}`,
+      );
       references.add(original);
     }
     for (const candidate of srcset.split(",")) {
@@ -115,7 +119,7 @@ try {
     assert.ok(
       css.includes(".story-book") &&
         css.includes(".bull-run-frame") &&
-        css.includes(".chain-reveal"),
+        css.includes(".voices-stage"),
     );
     for (const match of css.matchAll(/url\(["']?(\/[^\s)"']+)["']?\)/g))
       references.add(match[1]);

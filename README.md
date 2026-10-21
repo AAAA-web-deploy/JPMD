@@ -1,6 +1,6 @@
 # Shiba P. Morgan Inu
 
-A complete Node.js, TypeScript, and Tailwind CSS codebase for the Shiba P. Morgan Inu adaptation of [the supplied reference](https://www.robincoinrhcto.xyz/). It follows the reference's composition, section order, image reuse, responsive rules, and interactions, with the previously requested Shiba identity, warm neutral palette, genuine Vitalik photograph, and static-only media.
+A complete Node.js, TypeScript, and Tailwind CSS codebase for the Shiba P. Morgan Inu adaptation of [the supplied reference](https://www.robincoinrhcto.xyz/). It follows the reference's composition, section order, image reuse, responsive rules, and interactions, with the previously requested Shiba identity, warm neutral palette, a pinned "Wall Street Meets Ethereum" quote section, and static-only media.
 
 This is a locally buildable project. It has not been published. Browser-rendered visual comparison remains outstanding; this delivery does not claim verified pixel-for-pixel parity.
 
@@ -34,7 +34,7 @@ The production server defaults to `http://127.0.0.1:3000` and serves only `dist/
 - A cover and five illustrated chapters with manual 3D turns, keyboard navigation, transition locking, and a dedicated phone cover.
 - "Meet the many moods of Shiba" gallery with six filters (All Shibas, Wall Street, Ethereum, Trading Desk, Shiba Culture, Shiba Society), eight-at-a-time expansion, editable caption viewer, original-image download, caption copy, and X share links. Its images are listed in `moodImages` in `src/content.ts`: Wall Street (6), Ethereum (8), Trading Desk (5), and Shiba Culture (8) come from `src/data/mood-gallery.json` (file, filter, title used as the caption, description, and optional alt text; without `alt` the description is the alt text), and Shiba Society holds the 10 former Community images, 37 in All Shibas. A filter with no images shows a "coming soon" note. The strips and archive show 48 of the 67 collection images (`packMemes` in `src/content.ts`).
 - **Bull Run — Ride the Red!**, a canvas mini-game: Shiba rides his bull down Wall Street and jumps red candlesticks. Keyboard, tap, and on-screen jump controls; score, best score saved on the device, pause, retry, and optional sound.
-- Two opposing image strips, four social cards, interlude, project registry, purchase guide, illustrated roadmap, sticky Ethereum reveal, genuine Vitalik photograph, archive, closing panorama, and footer.
+- Two opposing image strips, four social cards, interlude, project registry, purchase guide, illustrated roadmap, pinned "Wall Street Meets Ethereum" speaker quotes (stacked cards with reduced motion or no JavaScript), archive, closing panorama, and footer.
 - Reduced-motion styles, focus treatments, Escape dismissal, accessible labels, lazy images, local fonts, and a static SVG icon sprite.
 - Original assets, inventory checksums, placement records, credits, source code, dependency lockfile, tests, and a production server.
 
@@ -50,7 +50,7 @@ Chapters, captions, and creative roadmap copy live in `src/content.ts`. Section 
 
 Current copy, exact palette, new scenes, and the Bull Run character art are implementation material for review, not additional user approvals. See `docs/APPROVED_REQUIREMENTS.md`.
 
-The financiers, cat, frog, and Shiba form a fictional story. The historical Vitalik photograph is editorial context; neither it nor the story establishes a partnership or endorsement.
+The financiers, cat, frog, and Shiba form a fictional story. The "Wall Street Meets Ethereum" quotes are attributed, sourced statements shown with AI-generated portrait illustrations; neither they nor the story establish a partnership or endorsement.
 
 ## Bull Run mini-game
 
@@ -89,7 +89,7 @@ The ZIP excludes `node_modules/` and `dist/`; `npm ci` and `npm run build` recre
 
 ## Credits and font rights
 
-Keep the visible Vitalik credit: **Romanpoet, 4 June 2016, CC BY-SA 4.0**, [Wikimedia Commons source](https://commons.wikimedia.org/wiki/File:VitalikButerinProfile.jpg). The supplied photograph is unchanged and displayed proportionally.
+The speaker portraits in `public/images/voices/` are supplied AI-generated illustrations; each quote links to its source. The Vitalik photograph is no longer displayed; if it is shown again, keep its credit: **Romanpoet, 4 June 2016, CC BY-SA 4.0**, [Wikimedia Commons source](https://commons.wikimedia.org/wiki/File:VitalikButerinProfile.jpg).
 
 Anton and Inter include their SIL Open Font License files. The supplied Reika reference font has no embedded redistribution or web-use license; inclusion does not convey those rights. Obtain the applicable font rights for publication or replace the `--brand` font and its preload. Detailed records are in `docs/asset-pack/CREDITS.md` and `docs/asset-pack/licenses/`.
 

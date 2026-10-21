@@ -6,8 +6,8 @@ import { initGallery, initImageStrips } from "./components/gallery.ts";
 import { initHero } from "./components/hero.ts";
 import { initBullRun } from "./components/bullRun.ts";
 import { announce, copyText, mustQuery } from "./lib/browser.ts";
+import { initVoices } from "./components/voices.ts";
 import { icon, safeExternalUrl } from "./lib/html.ts";
-import { revealProgress } from "./lib/geometry.ts";
 
 function initNavigation(): () => void {
   const header = mustQuery<HTMLElement>(".header");
@@ -81,38 +81,6 @@ function initNavigation(): () => void {
   return () => controller.abort();
 }
 
-function initEffects(): () => void {
-  const section = mustQuery<HTMLElement>("#ethereum");
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-  let frame = 0;
-  const update = (): void => {
-    frame = 0;
-    const rect = section.getBoundingClientRect();
-    const progress = revealProgress(
-      rect.top,
-      rect.height,
-      window.innerHeight,
-      reduced.matches,
-    );
-    section.style.setProperty("--chain-blend", String(progress.blend));
-    section.style.setProperty("--chain-reveal", String(progress.name));
-    section.style.setProperty("--chain-photo", String(progress.photo));
-  };
-  const queue = (): void => {
-    if (!frame) frame = requestAnimationFrame(update);
-  };
-  update();
-  window.addEventListener("scroll", queue, { passive: true });
-  window.addEventListener("resize", queue);
-  reduced.addEventListener("change", queue);
-  return () => {
-    cancelAnimationFrame(frame);
-    window.removeEventListener("scroll", queue);
-    window.removeEventListener("resize", queue);
-    reduced.removeEventListener("change", queue);
-  };
-}
-
 function initContract(): () => void {
   const button = mustQuery<HTMLButtonElement>("[data-copy-contract]");
   const copy = async (): Promise<void> => {
@@ -158,7 +126,7 @@ for (const initialize of [
   initGallery,
   initImageStrips,
   () => initBullRun(),
-  initEffects,
+  initVoices,
   initContract,
 ]) {
   try {

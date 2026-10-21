@@ -1,0 +1,67 @@
+{
+  "sectionId": "ethereum",
+  "title": "Wall Street Meets Ethereum",
+  "subtitle": "A new chapter, in their own words.",
+  "speakers": [
+    {
+      "id": "larry-fink",
+      "name": "Larry Fink",
+      "role": "Chairman and CEO, BlackRock",
+      "quote": "Every stock, every bond, every fund—every asset—can be tokenized.",
+      "sourceUrl": "https://www.blackrock.com/corporate/investor-relations/2025-larry-fink-annual-chairmans-letter",
+      "imagePath": "images/voices/larry-fink.webp",
+      "originalPath": "originals/larry-fink.png",
+      "width": 1254,
+      "height": 1254,
+      "alt": "AI-generated circular portrait illustration of Larry Fink",
+      "sourceLabel": "Source"
+    },
+    {
+      "id": "emma-landriault",
+      "name": "Emma Landriault",
+      "role": "Global Head of Kinexys Labs, J.P. Morgan",
+      "quote": "Tokenized financial infrastructure is no longer theoretical.",
+      "sourceUrl": "https://www.jpmorgan.com/payments/newsroom/jpm-coin-live-on-ethereum",
+      "imagePath": "images/voices/emma-landriault.webp",
+      "originalPath": "originals/emma-landriault.png",
+      "width": 1254,
+      "height": 1254,
+      "alt": "AI-generated circular portrait illustration of Emma Landriault",
+      "sourceLabel": "Source"
+    },
+    {
+      "id": "matthew-dawson",
+      "name": "Matthew Dawson",
+      "role": "Co-founder, Ethereum Institutional",
+      "quote": "It's a clear signal that institutional finance is moving onto public, verifiable infrastructure.",
+      "sourceUrl": "https://www.theblock.co/news/business/2026-10-19-jpmorgan-jpm-coin-deposit-token-ethereum-418874",
+      "imagePath": "images/voices/matthew-dawson.webp",
+      "originalPath": "originals/matthew-dawson.png",
+      "width": 1254,
+      "height": 1254,
+      "alt": "AI-generated circular portrait illustration of Matthew Dawson",
+      "sourceLabel": "Source"
+    }
+  ],
+  "animation": {
+    "order": [
+      "larry-fink",
+      "emma-landriault",
+      "matthew-dawson"
+    ],
+    "sectionHeightSvh": 350,
+    "transitionMs": 400,
+    "portraitTranslationPx": 16,
+    "portraitStartScale": 0.98,
+    "quoteTranslationPx": 8,
+    "entryMs": 400
+  },
+  "presentation": {
+    "background": "warm ivory",
+    "desktop": "portrait left, quote right",
+    "mobile": "portrait above quote",
+    "selectors": "three named buttons beneath the composition",
+    "reducedMotion": "three ordinary stacked cards",
+    "noJavascript": "three ordinary stacked cards"
+  }
+}

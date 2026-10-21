@@ -115,7 +115,9 @@ test("full page preserves section order, image reuse, and static-only content", 
     assert.equal(new Set(shown).size, 48);
     assert.match(html, /48 images\. Scroll the pack/);
     assert.equal(document.querySelectorAll(".roadmap-card").length, 4);
-    assert.equal(document.querySelectorAll(".chain-leaves i").length, 22);
+    const voices = document.querySelector("#ethereum")!;
+    assert.equal(voices.querySelector("h2")?.textContent, "Wall Street Meets Ethereum");
+    assert.equal(voices.querySelectorAll(".chain-leaves, .chain-selfie, .chain-name").length, 0);
     assert.equal(document.querySelectorAll("iframe").length, 0);
     assert.equal(
       document.querySelectorAll('input[type="file"], [data-studio], .studio').length,
@@ -148,10 +150,11 @@ test("full page preserves section order, image reuse, and static-only content", 
         "The hero stage has no play control, orbit circles, or greeting.",
       );
     }
-    assert.ok(
-      document.querySelector('img[src*="vitalik-buterin-romanpoet-2016.jpg"]'),
+    assert.deepEqual(
+      [...document.querySelectorAll("#ethereum .voice-portrait img")].map((img) => img.getAttribute("src")),
+      ["/images/voices/larry-fink.webp", "/images/voices/emma-landriault.webp", "/images/voices/matthew-dawson.webp"],
     );
-    assert.match(html, /creativecommons\.org\/licenses\/by-sa\/4\.0/);
+    assert.equal(document.querySelectorAll('img[src*="vitalik-buterin-romanpoet-2016.jpg"]').length, 0);
     const heroMedia = heroVideo ? [heroVideo.src, heroVideo.poster] : [];
     assert.doesNotMatch(
       heroMedia.reduce((text, file) => text.replaceAll(`/${file}`, ""), html),

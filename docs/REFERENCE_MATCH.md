@@ -18,7 +18,7 @@ Reference: https://www.robincoinrhcto.xyz/. This implements the Shiba adaptation
 | Registry           | `page.ts`, `config.ts`                          | 440px record panel, main art and two badges; unannounced fields explicit                                        |
 | Purchase guide     | `page.ts`                                       | Illustration/instructions, four steps and four actions; no assumed listing                                      |
 | Roadmap            | `page.ts`, `content.ts`                         | Four cards arranged 1/2 then 4/3, dashed path; creative chapters                                                |
-| Ecosystem reveal   | `page.ts`, `main.ts`                            | Sticky scroll blend, heading/photo reveal, 22 leaves, attributed Vitalik portrait                               |
+| Ecosystem reveal   | `voices.ts`                                     | "Wall Street Meets Ethereum": three sourced quotes, pinned stages with selectors; stacked cards as fallback     |
 | Archive            | `gallery.ts`                                    | 48 of the 67 identities; ten desktop columns                                                                         |
 | Closing and footer | `page.ts`                                       | 3:1 panorama, live copy/actions, navigation, project record                                                     |
 

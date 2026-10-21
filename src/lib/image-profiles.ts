@@ -43,6 +43,11 @@ export const imageProfiles = {
     sizes: "min(100vw - 48px, 640px)",
     widths: [320, 480, 640, 960],
   },
+  // Circular speaker portraits in #ethereum: 180–220px on phones, 300–360px on desktop.
+  voices: {
+    sizes: "(max-width: 800px) 220px, 360px",
+    widths: [320, 480, 640, 960, 1254],
+  },
 } satisfies Record<string, { sizes: string; widths: readonly number[] }>;
 
 export type ImageProfile = keyof typeof imageProfiles;
@@ -65,7 +70,11 @@ export const imageSources: readonly {
   { match: /^images\/editorial\/[^/]+\.jpg$/, profiles: ["chainSelfie"] },
   { match: /^images\/community\/closing-panorama-v2\.png$/, profiles: ["closing"], native: true },
   { match: /^images\/community\/phone-call-interlude\.png$/, profiles: ["interlude"], native: true },
+  { match: /^images\/voices\/(larry-fink|emma-landriault|matthew-dawson)\.webp$/, profiles: ["voices"], native: true },
 ];
+
+/** WebP is accepted as a source only for these supplied lossless portraits. */
+export const webpSource = /^images\/voices\/(larry-fink|emma-landriault|matthew-dawson)\.webp$/;
 
 export const faviconSource = "images/brand/shiba-portrait-clean.png";
 export const favicons = [
